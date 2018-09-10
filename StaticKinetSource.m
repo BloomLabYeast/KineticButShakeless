@@ -1362,7 +1362,7 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29StructureDiameternmSpinner.HorizontalAlignment = 'center';
             app.Spc29StructureDiameternmSpinner.FontName = 'Arial';
             app.Spc29StructureDiameternmSpinner.Position = [145 69 66 22];
-            app.Spc29StructureDiameternmSpinner.Value = 250;
+            app.Spc29StructureDiameternmSpinner.Value = 100;
 
             % Create Spc29NumberofFluorophoreSpinnerLabel
             app.Spc29NumberofFluorophoreSpinnerLabel = uilabel(app.Spc29StructurePanel);
