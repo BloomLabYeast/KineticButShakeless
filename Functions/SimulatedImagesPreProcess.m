@@ -17,6 +17,7 @@ end
 cd('ColorCombine')
 cd('Images')
 ThreshCheck
+cd ..
 end
 
         
