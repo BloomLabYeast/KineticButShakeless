@@ -26,7 +26,7 @@ for img = 1:8
     end
     RGBImg = cat(3,RedChannel, GreenChannel, BlueChannel);
     filename = strcat(name,'_ColorCombine.tiff');
-    bfsave(uint16(RGBImg),filename);
+    imwrite(uint16(RGBImg),filename);
     copyfile(filename,'..\ColorCombine\Images')
 end
 end
