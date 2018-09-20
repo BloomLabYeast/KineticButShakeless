@@ -4,7 +4,7 @@ cd('ColorCombine')
 mkdir('Images')
 mkdir('Quarantine')
 cd ..
-folderlist = dir('*_tif');
+folderlist = dir('*_TIF');
 for folderidx = 1:numel(folderlist)
     cd(folderlist(folderidx).name)
     filelist = dir('*.tif');
