@@ -1,7 +1,13 @@
-function ColorCombine(dimensions)
+function ColorCombine(foldername,dimensions)
 RedDir = dir('*_R_*.tiff');
 GreenDir = dir('*_G_*.tiff');
 BlueDir = dir('*_B_*.tiff');
+if numel(RedDir) == 0 && numel(GreenDir) == 0 && numel(BlueDir) == 0
+    failID = fopen('..\FailedCC.txt','a');
+    fprintf(failID,strcat(foldername,'\n'));
+    fclose all;
+    return 
+end
 for img = 1:8
     if numel(RedDir) ~= 0
         RedChannel = imread(RedDir(img).name);

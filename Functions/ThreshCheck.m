@@ -3,7 +3,7 @@ im_files = dir('*.tiff');
 flaggedstr = {};
 %Loop through files
 for n = 1:numel(im_files)
-    im_cell = bfopen(im_files(n).name);
+    im_cell = bfopen2(im_files(n).name);
     im = bf2mat(im_cell);
     threshRFP = multithresh(im(:,:,1));
     threshGFP = multithresh(im(:,:,2));

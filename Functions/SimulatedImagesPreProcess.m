@@ -11,11 +11,12 @@ for folderidx = 1:numel(folderlist)
     for fileidx = 1:numel(filelist)
         [dimensions] = Max3DProjection(filelist(fileidx).name);
     end
-    ColorCombine(dimensions)
+    ColorCombine(folderlist(folderidx).name,dimensions)
     cd ..
 end
 cd('ColorCombine')
 cd('Images')
+warning('off','all')
 ThreshCheck
 cd ..
 cd ..

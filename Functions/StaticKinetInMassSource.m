@@ -2,7 +2,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
-        UIFigure                        matlab.ui.Figure
+        StaticKinetinMassUIFigure       matlab.ui.Figure
         N_Nuf2StructurePanel            matlab.ui.container.Panel
         N_Nuf2TubuleDiameternmSpinnerLabel  matlab.ui.control.Label
         N_Nuf2TubuleDiameternmSpinner   matlab.ui.control.Spinner
@@ -66,6 +66,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         StatusEditFieldLabel            matlab.ui.control.Label
         StatusEditField                 matlab.ui.control.EditField
         GenerateTIFsCheckBox            matlab.ui.control.CheckBox
+        PreProcessTIFsCheckBox          matlab.ui.control.CheckBox
         N_Nuf2StructureLabel            matlab.ui.control.Label
         Spc29StructurePanel             matlab.ui.container.Panel
         Spc29TubuleDiameternmSpinnerLabel  matlab.ui.control.Label
@@ -158,6 +159,11 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             else
                 app.GenerateOutputButton.Enable = "on";
             end
+            if app.GenerateTIFsCheckBox.Value == true
+                app.PreProcessTIFsCheckBox.Enable = "on";
+            else
+                app.PreProcessTIFsCheckBox.Enable = "off";
+            end                
         end
         
         function SaveBioDistanceData(app)
@@ -329,7 +335,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         end
     
         function MainLoop(app)
-            folderstructure = strcat(app.FileFolderNameStringEditField.Value,'_%0',num2str(floor(log10(app.NumberotXMLstoGenerateSpinner.Value))+1),'d');
+            folderstructure = strcat(app.FileFolderNameStringEditField.Value,'_%0',num2str(floor(log10(app.NumberotXMLstoGenerateSpinner.Value))+1),'d','_DATA');
             filestructure = strcat(app.FileFolderNameStringEditField.Value,'_%0',num2str(floor(log10(app.NumberotXMLstoGenerateSpinner.Value))+1),'d.xml');
             for fileidx = 1:app.NumberotXMLstoGenerateSpinner.Value
                 mkdir(sprintf(folderstructure,fileidx))
@@ -345,7 +351,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             folderlist = dir(sprintf('%s*',app.FileFolderNameStringEditField.Value));
             commandstring = 'python.exe BrownianXMLtoTIFF.py ';
             if any(strcmp("All",app.MasterPointInfo.Color))
-                commandstring = strcat(commandstring,{' '},'-out %%s %%s');
+                commandstring = strcat(commandstring,{' '},'-out %s %s');
             else
                 if any(strcmp("Green",app.MasterPointInfo.Color))
                     commandstring = strcat(commandstring,{' '}, '-green ');
@@ -360,12 +366,19 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             end
             parfor n = 1:numel(folderlist)
                 [~,basename,~] = fileparts(folderlist(n).name);
-                system(sprintf(commandstring{1}, strcat(basename,'_tif'), basename))
+                newfolderbase = basename(1:end-5);
+                system(sprintf(commandstring{1}, strcat(newfolderbase,'_TIF'), basename))
             end
         end
     
         function CopyBtoF(app)
             copyfile('BrownianXMLtoTIFF.py',app.FileFolderNameStringEditField.Value)
+        end
+    
+        function PreProcess(app)
+            cd(app.FileFolderNameStringEditField.Value)
+            SimulatedImagesPreProcess
+            cd ..
         end
     end
 
@@ -379,7 +392,8 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             GenerateSimuLinkData(app)
         end
 
-        % Callback function: FileFolderNameStringEditField
+        % Callback function: FileFolderNameStringEditField, 
+        % GenerateTIFsCheckBox
         function OutputParameterChange(app, event)
             OutputParameterCheck(app)
         end
@@ -411,6 +425,9 @@ classdef StaticKinetInMass < matlab.apps.AppBase
                     GenerateTIFs(app)
                 end
                 cd ..
+                if app.GenerateTIFsCheckBox.Value == true && strcmp(app.PreProcessTIFsCheckBox.Enable,"on") && app.PreProcessTIFsCheckBox.Value == true
+                    PreProcess(app)
+                end
                 app.StatusEditField.Value = 'Finished!';
             end 
         end
@@ -422,13 +439,13 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         % Create UIFigure and components
         function createComponents(app)
 
-            % Create UIFigure
-            app.UIFigure = uifigure;
-            app.UIFigure.Position = [100 100 890 566];
-            app.UIFigure.Name = 'UI Figure';
+            % Create StaticKinetinMassUIFigure
+            app.StaticKinetinMassUIFigure = uifigure;
+            app.StaticKinetinMassUIFigure.Position = [100 100 890 566];
+            app.StaticKinetinMassUIFigure.Name = 'Static Kinet in Mass';
 
             % Create N_Nuf2StructurePanel
-            app.N_Nuf2StructurePanel = uipanel(app.UIFigure);
+            app.N_Nuf2StructurePanel = uipanel(app.StaticKinetinMassUIFigure);
             app.N_Nuf2StructurePanel.BorderType = 'none';
             app.N_Nuf2StructurePanel.FontName = 'Arial';
             app.N_Nuf2StructurePanel.FontSize = 16;
@@ -680,24 +697,24 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.N_Nuf2RotationLabel.Text = 'Rotation';
 
             % Create N_Nuf2CheckBox
-            app.N_Nuf2CheckBox = uicheckbox(app.UIFigure);
+            app.N_Nuf2CheckBox = uicheckbox(app.StaticKinetinMassUIFigure);
             app.N_Nuf2CheckBox.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureParameterChange, true);
             app.N_Nuf2CheckBox.Text = '';
             app.N_Nuf2CheckBox.Position = [199 432 14 23];
 
             % Create OutputPanel
-            app.OutputPanel = uipanel(app.UIFigure);
+            app.OutputPanel = uipanel(app.StaticKinetinMassUIFigure);
             app.OutputPanel.BorderType = 'none';
             app.OutputPanel.TitlePosition = 'centertop';
             app.OutputPanel.Title = 'Output';
             app.OutputPanel.FontName = 'Arial';
             app.OutputPanel.FontSize = 26;
-            app.OutputPanel.Position = [542 83 298 385];
+            app.OutputPanel.Position = [542 62 298 406];
 
             % Create FileFolderNameStringEditFieldLabel
             app.FileFolderNameStringEditFieldLabel = uilabel(app.OutputPanel);
             app.FileFolderNameStringEditFieldLabel.HorizontalAlignment = 'right';
-            app.FileFolderNameStringEditFieldLabel.Position = [8 313 136 22];
+            app.FileFolderNameStringEditFieldLabel.Position = [8 334 136 22];
             app.FileFolderNameStringEditFieldLabel.Text = 'File/Folder Name String:';
 
             % Create FileFolderNameStringEditField
@@ -705,14 +722,14 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.FileFolderNameStringEditField.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.FileFolderNameStringEditField.ValueChangingFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.FileFolderNameStringEditField.HorizontalAlignment = 'center';
-            app.FileFolderNameStringEditField.Position = [146 313 130 22];
+            app.FileFolderNameStringEditField.Position = [146 334 130 22];
 
             % Create MicroscopeSimulatorParametersPanel
             app.MicroscopeSimulatorParametersPanel = uipanel(app.OutputPanel);
             app.MicroscopeSimulatorParametersPanel.BorderType = 'none';
             app.MicroscopeSimulatorParametersPanel.TitlePosition = 'centertop';
             app.MicroscopeSimulatorParametersPanel.Title = 'Microscope Simulator Parameters';
-            app.MicroscopeSimulatorParametersPanel.Position = [6 136 287 165];
+            app.MicroscopeSimulatorParametersPanel.Position = [6 157 287 165];
 
             % Create GainEditFieldLabel
             app.GainEditFieldLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
@@ -726,7 +743,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.GainEditField.Limits = [0 Inf];
             app.GainEditField.HorizontalAlignment = 'center';
             app.GainEditField.Position = [39 29 64 22];
-            app.GainEditField.Value = 260;
+            app.GainEditField.Value = 76660;
 
             % Create OffsetEditFieldLabel
             app.OffsetEditFieldLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
@@ -848,7 +865,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create StatusOutputPanel
             app.StatusOutputPanel = uipanel(app.OutputPanel);
-            app.StatusOutputPanel.Position = [1 2 296 103];
+            app.StatusOutputPanel.Position = [1 4 296 103];
 
             % Create GenerateOutputButton
             app.GenerateOutputButton = uibutton(app.StatusOutputPanel, 'push');
@@ -871,18 +888,24 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create GenerateTIFsCheckBox
             app.GenerateTIFsCheckBox = uicheckbox(app.OutputPanel);
+            app.GenerateTIFsCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.GenerateTIFsCheckBox.Text = 'Generate TIF''s';
-            app.GenerateTIFsCheckBox.Position = [99 109 102 22];
+            app.GenerateTIFsCheckBox.Position = [99 130 102 22];
+
+            % Create PreProcessTIFsCheckBox
+            app.PreProcessTIFsCheckBox = uicheckbox(app.OutputPanel);
+            app.PreProcessTIFsCheckBox.Text = 'Pre-Process TIF''s';
+            app.PreProcessTIFsCheckBox.Position = [99 110 118 22];
 
             % Create N_Nuf2StructureLabel
-            app.N_Nuf2StructureLabel = uilabel(app.UIFigure);
+            app.N_Nuf2StructureLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.N_Nuf2StructureLabel.FontName = 'Arial';
             app.N_Nuf2StructureLabel.FontSize = 18;
             app.N_Nuf2StructureLabel.Position = [64 432 136 22];
             app.N_Nuf2StructureLabel.Text = 'N-Terminal Nuf2';
 
             % Create Spc29StructurePanel
-            app.Spc29StructurePanel = uipanel(app.UIFigure);
+            app.Spc29StructurePanel = uipanel(app.StaticKinetinMassUIFigure);
             app.Spc29StructurePanel.BorderType = 'none';
             app.Spc29StructurePanel.FontName = 'Arial';
             app.Spc29StructurePanel.FontSize = 16;
@@ -1006,40 +1029,40 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29DistancetonmSpinner.Value = 350;
 
             % Create Spc29CheckBox
-            app.Spc29CheckBox = uicheckbox(app.UIFigure);
+            app.Spc29CheckBox = uicheckbox(app.StaticKinetinMassUIFigure);
             app.Spc29CheckBox.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureParameterChange, true);
             app.Spc29CheckBox.Text = '';
             app.Spc29CheckBox.Position = [430 432 14 23];
 
             % Create Spc29StructureLabel
-            app.Spc29StructureLabel = uilabel(app.UIFigure);
+            app.Spc29StructureLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.Spc29StructureLabel.FontName = 'Arial';
             app.Spc29StructureLabel.FontSize = 18;
             app.Spc29StructureLabel.Position = [373 431 57 22];
             app.Spc29StructureLabel.Text = 'Spc29';
 
             % Create NumberofComplexesSwitchLabel
-            app.NumberofComplexesSwitchLabel = uilabel(app.UIFigure);
+            app.NumberofComplexesSwitchLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.NumberofComplexesSwitchLabel.HorizontalAlignment = 'center';
             app.NumberofComplexesSwitchLabel.FontName = 'Arial';
             app.NumberofComplexesSwitchLabel.Position = [304 468 125 22];
             app.NumberofComplexesSwitchLabel.Text = 'Number of Complexes';
 
             % Create NumberofComplexesSwitch
-            app.NumberofComplexesSwitch = uiswitch(app.UIFigure, 'slider');
+            app.NumberofComplexesSwitch = uiswitch(app.StaticKinetinMassUIFigure, 'slider');
             app.NumberofComplexesSwitch.Items = {'1', '2'};
             app.NumberofComplexesSwitch.FontName = 'Arial';
             app.NumberofComplexesSwitch.Position = [446 470 42 19];
             app.NumberofComplexesSwitch.Value = '1';
 
             % Create NumberotXMLstoGenerateSpinnerLabel
-            app.NumberotXMLstoGenerateSpinnerLabel = uilabel(app.UIFigure);
+            app.NumberotXMLstoGenerateSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.NumberotXMLstoGenerateSpinnerLabel.HorizontalAlignment = 'center';
             app.NumberotXMLstoGenerateSpinnerLabel.Position = [299 515 175 22];
             app.NumberotXMLstoGenerateSpinnerLabel.Text = 'Number ot XMLs to Generate';
 
             % Create NumberotXMLstoGenerateSpinner
-            app.NumberotXMLstoGenerateSpinner = uispinner(app.UIFigure);
+            app.NumberotXMLstoGenerateSpinner = uispinner(app.StaticKinetinMassUIFigure);
             app.NumberotXMLstoGenerateSpinner.LowerLimitInclusive = 'off';
             app.NumberotXMLstoGenerateSpinner.UpperLimitInclusive = 'off';
             app.NumberotXMLstoGenerateSpinner.Limits = [0 Inf];
@@ -1059,7 +1082,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             createComponents(app)
 
             % Register the app with App Designer
-            registerApp(app, app.UIFigure)
+            registerApp(app, app.StaticKinetinMassUIFigure)
 
             % Execute the startup function
             runStartupFcn(app, @startupFcn)
@@ -1073,7 +1096,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         function delete(app)
 
             % Delete UIFigure when app is deleted
-            delete(app.UIFigure)
+            delete(app.StaticKinetinMassUIFigure)
         end
     end
 end

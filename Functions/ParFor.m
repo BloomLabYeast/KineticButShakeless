@@ -5,5 +5,6 @@ commandstring = strcat(commandstring,{' '}, '-red ');
 commandstring = strcat(commandstring,{' '}, '-out %s %s');
 parfor n = 1:numel(folderlist)
     [~,basename,~] = fileparts(folderlist(n).name);
-    system(sprintf(commandstring{1}, strcat(basename,'_TIF'), basename))
+    newfolderbase = basename(:end-5);
+    system(sprintf(commandstring{1}, strcat(newfolderbase,'_TIF'), basename))
 end
