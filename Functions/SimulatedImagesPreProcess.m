@@ -5,7 +5,7 @@ mkdir('Images')
 mkdir('Quarantine')
 cd ..
 folderlist = dir('*_TIF');
-for folderidx = 1:numel(folderlist)
+parfor folderidx = 1:numel(folderlist)
     cd(folderlist(folderidx).name)
     filelist = dir('*.tif');
     for fileidx = 1:numel(filelist)
