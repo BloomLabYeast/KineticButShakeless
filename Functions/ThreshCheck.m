@@ -2,6 +2,7 @@ function ThreshCheck
 im_files = dir('*.tiff');
 flaggedstr = {};
 %Loop through files
+fwait = waitbar(0,'Initializing');
 for n = 1:numel(im_files)
     im_cell = bfopen2(im_files(n).name);
     im = bf2mat(im_cell);
@@ -26,6 +27,7 @@ for n = 1:numel(im_files)
         end
         movefile(im_files(n).name,'..\Quarantine');
     end
+    waitbar(n/numel(im_files),fwait,sprintf('Processing %d/%d',n,numel(im_files)));
 end
 if ~isempty(flaggedstr)
     fileID = fopen('..\InspectionFlag.txt','w');
