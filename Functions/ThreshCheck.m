@@ -1,9 +1,8 @@
 function ThreshCheck
 im_files = dir('*.tiff');
-flaggedstr = {};
 %Loop through files
-fwait = waitbar(0,'Initializing');
-for n = 1:numel(im_files)
+parfor n = 1:numel(im_files)
+    warning('off','all')
     im_cell = bfopen2(im_files(n).name);
     im = bf2mat(im_cell);
     threshRFP = multithresh(im(:,:,1));
@@ -17,23 +16,16 @@ for n = 1:numel(im_files)
     propsBFP = regionprops(bin_imBFP, 'centroid');
     if (numel(propsRFP) ~= 2 && max(max(im(:,:,1))) ~= 0) || (numel(propsGFP) ~= 2 && max(max(im(:,:,2))) ~= 0) || (numel(propsBFP) ~= 2 && max(max(im(:,:,3))) ~= 0)
         if numel(propsRFP) ~= 2
-            flaggedstr{end+1} = strcat(im_files(n).name,',RFP,',num2str(numel(propsRFP)));
+            %flaggedstr{end+1} = strcat(im_files(n).name,',RFP,',num2str(numel(propsRFP)));
         end
         if numel(propsGFP) ~= 2
-            flaggedstr{end+1} = strcat(im_files(n).name,',GFP,',num2str(numel(propsGFP)));
+            %flaggedstr{end+1} = strcat(im_files(n).name,',GFP,',num2str(numel(propsGFP)));
         end
         if numel(propsBFP) ~= 2
-            flaggedstr{end+1} = strcat(im_files(n).name,',BFP,',num2str(numel(propsBFP)));
+            %flaggedstr{end+1} = strcat(im_files(n).name,',BFP,',num2str(numel(propsBFP)));
         end
         movefile(im_files(n).name,'..\Quarantine');
     end
-    waitbar(n/numel(im_files),fwait,sprintf('Processing %d/%d',n,numel(im_files)));
-end
-if ~isempty(flaggedstr)
-    fileID = fopen('..\InspectionFlag.txt','w');
-    for idx = 1:numel(flaggedstr)
-        fprintf(fileID,strcat(flaggedstr{idx},' \n'));
-    end
-    fclose all;
+    fprintf('Analyzed : %s\n',im_files(n).name);
 end
 end

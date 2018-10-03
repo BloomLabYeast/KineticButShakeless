@@ -21,5 +21,3 @@ ThreshCheck
 cd ..
 cd ..
 end
-
-        
