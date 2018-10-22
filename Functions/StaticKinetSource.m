@@ -12,41 +12,12 @@ classdef StaticKinet < matlab.apps.AppBase
         HelpMenu                        matlab.ui.container.Menu
         DocumentationMenu               matlab.ui.container.Menu
         N_Nuf2StructurePanel            matlab.ui.container.Panel
-        N_Nuf2TubuleDiameternmSpinnerLabel  matlab.ui.control.Label
-        N_Nuf2StructureDiameternmSpinnerLabel  matlab.ui.control.Label
         N_Nuf2NumberofFluorophoreSpinnerLabel  matlab.ui.control.Label
-        N_Nuf2ColorChannelDropDownLabel  matlab.ui.control.Label
-        N_Nuf2NumberofChromosomesSpinnerLabel  matlab.ui.control.Label
         N_Nuf2LengthnmSpinnerLabel      matlab.ui.control.Label
         N_Nuf2LengthnmSpinner           matlab.ui.control.Spinner
-        N_Nuf2TubuleDiameternmSpinner   matlab.ui.control.Spinner
-        N_Nuf2StructureDiameternmSpinner  matlab.ui.control.Spinner
         N_Nuf2NumberofFluorophoreSpinner  matlab.ui.control.Spinner
+        N_Nuf2ColorChannelDropDownLabel  matlab.ui.control.Label
         N_Nuf2ColorChannelDropDown      matlab.ui.control.DropDown
-        N_Nuf2NumberofChromosomesSpinner  matlab.ui.control.Spinner
-        N_Nuf2StaggerDropDownLabel      matlab.ui.control.Label
-        N_Nuf2StaggerDropDown           matlab.ui.control.DropDown
-        N_Nuf2RangenmSpinnerLabel       matlab.ui.control.Label
-        N_Nuf2RangenmSpinner            matlab.ui.control.Spinner
-        N_Nuf2RotationPanel             matlab.ui.container.Panel
-        N_Nuf2RotationParametersPanel   matlab.ui.container.ButtonGroup
-        N_Nuf2FixedRotationButton       matlab.ui.control.RadioButton
-        N_Nuf2RandomRotationButton      matlab.ui.control.RadioButton
-        N_Nuf2RandomRotationParametersdegPanel  matlab.ui.container.Panel
-        N_Nuf2LowLimSpinnerLabel        matlab.ui.control.Label
-        N_Nuf2LowLimSpinner             matlab.ui.control.Spinner
-        N_Nuf2UpLimSpinnerLabel         matlab.ui.control.Label
-        N_Nuf2UpLimSpinner              matlab.ui.control.Spinner
-        N_Nuf2FixedRotationParametersdegPanel  matlab.ui.container.Panel
-        N_Nuf2XSpinnerLabel             matlab.ui.control.Label
-        N_Nuf2XSpinner                  matlab.ui.control.Spinner
-        N_Nuf2YSpinnerLabel             matlab.ui.control.Label
-        N_Nuf2YSpinner                  matlab.ui.control.Spinner
-        N_Nuf2ZSpinnerLabel             matlab.ui.control.Label
-        N_Nuf2ZSpinner                  matlab.ui.control.Spinner
-        N_Nuf2RotationCheckBox          matlab.ui.control.CheckBox
-        N_Nuf2RotationLabel             matlab.ui.control.Label
-        N_Nuf2CheckBox                  matlab.ui.control.CheckBox
         OutputPanel                     matlab.ui.container.Panel
         FileFolderNameStringLabel       matlab.ui.control.Label
         FileFolderNameStringEditField   matlab.ui.control.EditField
@@ -66,6 +37,13 @@ classdef StaticKinet < matlab.apps.AppBase
         NumberofPlanesSpinner           matlab.ui.control.Spinner
         SpacingBetweenPlanesnmSpinnerLabel  matlab.ui.control.Label
         SpacingBetweenPlanesnmSpinner   matlab.ui.control.Spinner
+        WidthpixelsSpinnerLabel         matlab.ui.control.Label
+        WidthpixelsSpinner              matlab.ui.control.Spinner
+        HeightpixelsSpinnerLabel        matlab.ui.control.Label
+        HeightpixelsSpinner             matlab.ui.control.Spinner
+        PixelSizenmSpinnerLabel         matlab.ui.control.Label
+        PixelSizenmSpinner              matlab.ui.control.Spinner
+        PreProcessTIFsCheckBox          matlab.ui.control.CheckBox
         StatusOutputPanel               matlab.ui.container.Panel
         GenerateOutputButton            matlab.ui.control.Button
         StatusLabel                     matlab.ui.control.Label
@@ -98,7 +76,6 @@ classdef StaticKinet < matlab.apps.AppBase
         XLowerLimnmEditField3           matlab.ui.control.NumericEditField
         XUpperLimnmEditField_3Label     matlab.ui.control.Label
         XUpperLimnmEditField3           matlab.ui.control.NumericEditField
-        N_Nuf2StructureLabel            matlab.ui.control.Label
         GraphPanel                      matlab.ui.container.Panel
         DViewPopOutButton               matlab.ui.control.Button
         AxisLimitsButtonGroup           matlab.ui.container.ButtonGroup
@@ -121,77 +98,112 @@ classdef StaticKinet < matlab.apps.AppBase
         Spc29LengthnmSpinner            matlab.ui.control.Spinner
         Spc29DistancetonmSpinnerLabel   matlab.ui.control.Label
         Spc29DistancetonmSpinner        matlab.ui.control.Spinner
+        MicrotubuleDiameternmLabel      matlab.ui.control.Label
+        MicrotubuleDiameternmSpinner    matlab.ui.control.Spinner
+        StructureDiameternmSpinnerLabel  matlab.ui.control.Label
+        StructureDiameternmSpinner      matlab.ui.control.Spinner
+        NumberofChromosomesSpinnerLabel  matlab.ui.control.Label
+        NumberofChromosomesSpinner      matlab.ui.control.Spinner
+        StaggerDropDownLabel            matlab.ui.control.Label
+        StaggerDropDown                 matlab.ui.control.DropDown
+        RangenmSpinnerLabel             matlab.ui.control.Label
+        RangenmSpinner                  matlab.ui.control.Spinner
+        N_Nuf2CheckBox                  matlab.ui.control.CheckBox
         Spc29CheckBox                   matlab.ui.control.CheckBox
-        Spc29StructureLabel             matlab.ui.control.Label
+        KinetochoreProteinPanel         matlab.ui.container.Panel
+        LengthofUnboundnmSpinnerLabel   matlab.ui.control.Label
+        LengthofUnboundnmSpinner        matlab.ui.control.Spinner
+        NumberofComplexesSpinnerLabel   matlab.ui.control.Label
+        NumberofComplexesSpinner        matlab.ui.control.Spinner
+        DistanceofTapernmSpinnerLabel   matlab.ui.control.Label
+        DistanceofTapernmSpinner        matlab.ui.control.Spinner
+        NumberofBoundComplexesSpinnerLabel  matlab.ui.control.Label
+        NumberofBoundComplexesSpinner   matlab.ui.control.Spinner
+        RadialDispofTapernmSpinnerLabel  matlab.ui.control.Label
+        RadialDispofTapernmSpinner      matlab.ui.control.Spinner
+        AngleRangeforUnbounddegSpinnerLabel  matlab.ui.control.Label
+        LowerAngleSpinner               matlab.ui.control.Spinner
+        UpperAngleLabel                 matlab.ui.control.Label
+        UpperAngleSpinner               matlab.ui.control.Spinner
+        ofLengthMarkedSpinnerLabel      matlab.ui.control.Label
+        ofLengthMarkedSpinner           matlab.ui.control.Spinner
+        KinetochoreColorChannelLabel    matlab.ui.control.Label
+        KinetochoreColorChannel         matlab.ui.control.DropDown
+        KinetochoreCheckBox             matlab.ui.control.CheckBox
+        RotationPanel                   matlab.ui.container.Panel
+        RotationParametersPanel         matlab.ui.container.ButtonGroup
+        FixedRotationButton             matlab.ui.control.RadioButton
+        RandomRotationButton            matlab.ui.control.RadioButton
+        RotationCheckBox                matlab.ui.control.CheckBox
+        RotationLabel                   matlab.ui.control.Label
+        RandomRotationParametersdegPanel  matlab.ui.container.Panel
+        LowLimSpinnerLabel              matlab.ui.control.Label
+        LowLimSpinner                   matlab.ui.control.Spinner
+        UpLimSpinnerLabel               matlab.ui.control.Label
+        UpLimSpinner                    matlab.ui.control.Spinner
+        FixedRotationParametersdegPanel  matlab.ui.container.Panel
+        XSpinnerLabel                   matlab.ui.control.Label
+        XSpinner                        matlab.ui.control.Spinner
+        YSpinnerLabel                   matlab.ui.control.Label
+        YSpinner                        matlab.ui.control.Spinner
+        ZSpinnerLabel                   matlab.ui.control.Label
+        ZSpinner                        matlab.ui.control.Spinner
     end
 
 
-    properties (Access = public)
+    properties (Access = private)
         N_Nuf2PointInfo % Contains information about the points that make up the N_Nuf2 structure
+        KinetochorePointInfo % Contains information about the points that make up the kinetochore complex
         Spc29PointInfo % Continas information about the points that make up the Spc29 structure
         MasterPointInfo % Contains information about the points that make up the entire simulation
         LengthSimth % Array of possible stagger lengths acquired from running Coupled Model Crosslinked Simulation by Stevens et al.
         BioDistances % Description
         BioDistanceCorrection % Description
+        Rotation % Description
+        Stagger % Description
     end
 
-    properties (Access = private)
-    end
-
-    methods (Access = public)
-    
-        % Function that produces fluorophore location for a single cylinder for the N_Nuf2 model
+    methods (Access = private)
         function GeneralParametreCheck(app)
-            N_Nuf2ParametersCheck(app)
-            N_Nuf2ParameterLocationCheck(app)
-            Spc29ParametersCheck(app)
+            MainParameterCheck(app)
             OutputParameterCheck(app)
             OutputParameterLocationCheck(app)
             AxisParameterCheck(app)            
         end
     
-        function N_Nuf2ParametersCheck(app)
-            if app.N_Nuf2CheckBox.Value == false
-                app.N_Nuf2StructurePanel.Visible = 'off';
+        function MainParameterCheck(app)
+            if strcmp(app.StaggerDropDown.Value, 'Random')
+                app.RangenmSpinner.Visible = "on";
+                app.RangenmSpinnerLabel.Visible = "on";
             else
-                app.N_Nuf2StructurePanel.Visible = 'on';
-                if strcmp(app.N_Nuf2StaggerDropDown.Value,'Random')
-                    app.N_Nuf2RangenmSpinnerLabel.Visible = 'on';
-                    app.N_Nuf2RangenmSpinner.Visible = 'on';
-                else
-                    app.N_Nuf2RangenmSpinnerLabel.Visible = 'off';
-                    app.N_Nuf2RangenmSpinner.Visible = 'off';
-                end
-                if app.N_Nuf2RotationCheckBox.Value == false
-                    app.N_Nuf2RotationParametersPanel.Visible = 'off';
-                else
-                    app.N_Nuf2RotationParametersPanel.Visible = 'on';
-                    if app.N_Nuf2FixedRotationButton.Value == true
-                        app.N_Nuf2FixedRotationParametersdegPanel.Visible = 'on';
-                        app.N_Nuf2RandomRotationParametersdegPanel.Visible = 'off';
-                    else
-                        app.N_Nuf2FixedRotationParametersdegPanel.Visible = 'off';
-                        app.N_Nuf2RandomRotationParametersdegPanel.Visible = 'on';
-                    end
-                end
-            end               
-        end
-    
-        function N_Nuf2ParameterLocationCheck(app)
-            if strcmp(app.N_Nuf2StaggerDropDown.Value,'Random')
-                app.N_Nuf2RotationPanel.Position = [1 10 260 106];
+                app.RangenmSpinner.Visible = "off";
+                app.RangenmSpinnerLabel.Visible = "off";
+            end  
+            if app.RotationCheckBox.Value == false
+                app.RotationParametersPanel.Visible = 'off';
+                app.FixedRotationParametersdegPanel.Visible = 'off';
+                app.RandomRotationParametersdegPanel.Visible = 'off';
             else
-                app.N_Nuf2RotationPanel.Position = [1 37 260 106];
+                app.RotationParametersPanel.Visible = 'on';
+                if app.FixedRotationButton.Value == true
+                    app.FixedRotationParametersdegPanel.Visible = 'on';
+                    app.RandomRotationParametersdegPanel.Visible = 'off';
+                else
+                    app.FixedRotationParametersdegPanel.Visible = 'off';
+                    app.RandomRotationParametersdegPanel.Visible = 'on';
+                end
             end
         end
     
-        function Spc29ParametersCheck(app)
-            if app.Spc29CheckBox.Value == false
-                app.Spc29StructurePanel.Visible = 'off';
-            else
-                app.Spc29StructurePanel.Visible = 'on';
-            end               
+        function KinetochoreValueChangeCheck(app)
+            if app.NumberofComplexesSpinner.Value < app.NumberofBoundComplexesSpinner.Value
+                app.NumberofBoundComplexesSpinner.Value = app.NumberofComplexesSpinner.Value;
+            end
+            if app.LowerAngleSpinner.Value > app.UpperAngleSpinner.Value
+                app.UpperAngleSpinner.Value = app.LowerAngleSpinner.Value;
+            end
         end
+            
     
         function OutputParameterCheck(app)
             if app.GenerateXMLCheckBox.Value == true
@@ -204,16 +216,21 @@ classdef StaticKinet < matlab.apps.AppBase
             else
                 app.GenerateOutputButton.Enable = "on";
             end
+            if app.GenerateTIFsCheckBox.Value == true
+                app.PreProcessTIFsCheckBox.Enable = "on";
+            else
+                app.PreProcessTIFsCheckBox.Enable = "off";
+            end 
         end
     
         function OutputParameterLocationCheck(app)
             if app.GenerateXMLCheckBox.Value == true
-                app.StatusOutputPanel.Position = [2 10 296 103];
+                app.StatusOutputPanel.Position = [2 7 296 103];
             else
-                app.StatusOutputPanel.Position = [2 161 296 103];
+                app.StatusOutputPanel.Position = [2 231 296 103];
             end
         end
-        
+    
         function AxisParameterCheck(app)
             if app.AutomaticButton.Value == true
                 app.GraphPanel.Position = [493 330 151 85];
@@ -223,98 +240,142 @@ classdef StaticKinet < matlab.apps.AppBase
                 app.AxisLimPanel.Visible = "on";
             end
         end
-        
+    
         function SaveBioDistanceData(app)
             app.BioDistances = [-192,-1344,-640,-256,-576,-192,-768,192,-448,-1920,-512,-576,-960,-832,-128,-896,-512,-256,-704,-704,-256,-512,-256,-832,-1216,-64,-576,-768,-1024,-256,-768,-256,0,-960,-1088,-640,-832,-1024,-768,-1088,-704,-1216,-1408,-832,-896,-704,-320,-896,-512,-512,-1024,-832,-448,-256,-640,-256,-768,-576,192,-192,-384,-640,-768,-960,-768,64,-320,-704,-448,-192,-128,64,-640,-640,-448,-832,-832,-832,-960,-384,-128,-1152,-128,-256,-256,-384,-576,-896,-576,-768,-896,-640,-1024,-832,-896,-704,-320,-896,-512,-512,-192,-768,-768,-512,-960,-576,-448,-1728,-1088,128,-704,-256,-256,-832,-64,-1728,-192,-640,-1088,-832,-960,-704,-256,-1024,-960,-1152,-768,-1024,-384,-64,-512,-512,64,-640,-832,-512,-576,-832,-320,192,64,-1664,-832,-768,-384,-1152,-896,-768,64,-768,-448,-576,-192,0,-640,-768,-704,-256,-192,64,-192,256,-1152,-832,-640,-576,-576,-128,-896,-384,0,-320,-320,-448,-320,-128,-896,-1280,-448,-512,-448,-896,-832,-576,-1152,-320,-832,-256,-576,-512,-128,-704,-320,-832,-320,192,64,-1664,-832,-768,-384,-1152,-896,-768,64,-768,-448,-576,-192,0,-640,-768,0,-1024,-896,-1344,-1600,-256,128,-1216,-704,128,-1216,-960,-768,-832,-832,-320,-640,-640,0,-704,64,-896,-320,-768,-1024,-1216,-768,-448,-832,-960,-960,128,-960,-704,-256,-256,-768,-576,-832,-960,-960,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-1152,0,-320,-320,-448,-704,-704,-512,-1408,-1088,-576,-128,0,-1024,128,-1152,-192,-320,-576,-384,-128,64,-704,-1024,-384,-320,-1024,-832,-448,-1152,-640,-832,-704,-192,-832,128,-768,-576,-832,-960,-960,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-576,-768,-576,-256,-320,-512,-448,-128,-1344,-960,-1024,-128,-832,-1024,-704,-384,-1728,-832,-640,-1024,-1152,-256,-256,-448,-512,-768,-448,-512,-1600,-1216,-448,-512,-768,-768,-320,-448,-896,192,-832,-960,-960,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-128,-1216,-704,-576,-512,-768,-1088,-256,-1152,-384,-384,-896,-832,-576,-448,-576,-640,128,-896,-384,-512,-704,-960,-960,-1152,-384,-576,-960,-320,-832,-960,-960,-704,-1024,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,128,-1152,-128,-1024,-128,-832,-192,-256,320,-448,-1344,-832,-1216,-512,-768,64,-576,-960,-896,-512,-1024,192,-1280,-192,-832,64,-768,-960,-320,-832,-960,-960,-704,-1024,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-1024,-768,-960,64,-1024,-320,128,-256,-512,-192,64,-192,-320,-448,-896,0,-1216,-960,-768,-576,-576,-192,-1216,-512,-1280,-384,-704,64,-512,-512,-704,-384,-896,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-960,192,-128,-1152,-640,-448,-384,-192,-640,-64,-704,-1024,-704,-640,-1216,-704,-512,-256,-512,-640,-256,-704,-256,-832,-704,-576,-256,-704,64,-512,-512,-704,-384,-896,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-128,-192,-448,128,-192,-192,-384,-192,-576,-1280,-448,-1280,-384,-576,-960,-320,-128,-64,-896,-896,-512,-384,0,-192,-640,-640,-384,-384,-320,-640,-128,-960,-960,-576,-384,-320,-448,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-832,-384,-320,64,-960,-1024,256,-832,-768,-320,-768,-576,-64,0,-448,-960,-1088,-384,-192,-640,-256,-1472,-1216,-640,-192,-448,-512,-256,-448,-768,-960,-384,-448,-320,-576,-960,-1024,-320,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,128,-832,-384,-256,-1024,-384,-640,-256,-832,64,-896,64,-640,-320,-704,-320,-1024,-576,-960,0,-1088,-832,-192,-1088,-1024,-512,-640,-832,-256,-960,-512,-640,-384,-704,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-128,-1088,-384,-1088,-192,-512,-960,-320,-960,-704,-512,-960,-64,-320,-128,-704,-640,-1152,-256,-576,-768,-512,-256,-1152,-704,-896,-512,-384,-576,128,128,-704,-384,-704,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-576,-1024,-704,-768,-768,-640,-448,-1280,-1024,-704,-896,-1728,-256,-512,-1024,-64,-384,-128,-1024,-576,-832,-128,-320,-832,-640,64,-256,-384,-192,-768,-704,-960,-64,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-640,-640,-448,-128,-704,-448,-768,-1216,-448,-832,-192,-832,-384,-832,-768,-704,-448,-640,128,64,-448,-640,-768,-64,-704,-1280,-896,-192,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-768,-448,-384,-1152,192,-896,-384,-960,-384,-704,-512,-512,-192,-128,-832,-448,-1024,-256,-128,-576,-256,-192,-192,-832,-192,-1216,-1280,-896,-192,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-1152,-832,-640,-256,-1088,-512,-384,-1280,-320,-512,-256,-384,-1280,-1024,-896,-1216,-640,-640,-640,-1024,128,-256,-1856,-128,-1088,-512,-448,-576,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-960,-512,-192,128,-384,-960,-256,-128,-448,-640,-576,-960,-576,-896,-1024,-512,128,-960,-640,-640,-896,-512,-768,-128,-256,-896,-320,-448,-576,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-192,-128,-1024,-1344,-896,-320,-576,-768,-384,-832,-576,-128,-320,-512,-896,-1600,-256,-256,-448,-256,-704,-1216,-1280,128,-1088,-704,-1088,-512,-256,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-704,-576,-1280,-1536,-448,-768,-1344,-192,-768,-896,-448,-1088,-768,-256,-1408,-704,-1088,-640,-640,-640,-1152,-1216,-1152,-768,-128,-576,-192,-512,-320,-640,-576,-832,192,-512,-832,-832,64,-448,-1088,-256,-256,-1344,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-832,-512,-384,-704,-256,-704,-768,-768,-384,-1344,-832,-64,-704,-256,-576,-768,0,-832,-1152,-768,-704,-704,-768,-1024,-960,-128,-960,-192,-512,-320,-640,-576,-832,192,-512,-832,-832,64,-448,-1088,-256,-256,-1344,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768;-960,-192,-384,1536,-384,-960,640,-1280,-448,-128,576,-768,1216,128,-1024,448,-384,-1344,-64,-640,-768,832,-832,512,704,-704,0,-896,-448,640,256,576,-384,64,-64,640,256,-1088,64,-64,1216,-768,-192,512,704,-1280,704,384,576,1088,832,-896,768,576,0,-576,704,-64,-640,-960,1024,-640,384,-384,-64,-1280,-1088,512,-384,-512,-896,-960,-1024,448,832,0,0,576,64,-1344,832,-256,-512,512,-1408,-1408,576,448,1024,384,128,-576,-576,512,704,-1280,704,384,576,1088,1216,-192,320,0,-640,512,960,256,768,-576,1088,1280,-960,1280,-1024,-64,704,-448,128,384,448,320,-1088,64,832,128,640,512,640,-640,704,-128,-960,320,-640,-704,-512,-256,896,-1024,-576,704,-448,448,-768,-192,-448,832,-640,256,-1024,-320,-448,-768,256,832,-1152,-704,-640,-832,-768,-1408,1088,448,384,-704,0,704,-704,576,-576,640,1024,-512,768,-1088,576,-576,960,384,448,-192,320,-704,-384,448,64,-1088,320,256,448,192,704,-256,896,-1024,-576,704,-448,448,-768,-192,-448,832,-640,256,-1024,-320,-448,-768,256,832,-896,-448,448,448,512,960,-768,-256,704,-1024,64,-64,-512,448,512,448,0,-1152,-768,-384,-640,704,-768,-448,-256,-128,960,1088,320,64,-256,-832,576,64,448,640,-576,832,1280,-640,-448,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-704,-704,-1088,704,-192,-1408,-704,-576,-128,-64,-448,-960,-896,-512,-1152,192,576,832,256,-320,-448,-448,960,64,1024,1088,-832,-1216,-448,-448,768,-192,1088,-448,-64,-576,-576,832,1280,-640,-448,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,256,-832,960,-640,1152,1088,576,-1280,-256,64,-128,448,-832,-512,320,1408,0,-576,320,320,-512,768,-1216,-704,-768,-576,1408,704,-64,-256,1216,768,-640,576,-896,-128,-1152,-960,1280,-640,-448,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-1216,64,-448,-384,960,128,64,704,-1216,1344,832,-64,64,-1152,-512,0,384,-1280,-320,-1088,-1024,-384,768,256,-128,448,320,64,-384,-1024,-512,-256,320,-256,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-448,-448,-1280,-64,1024,1088,-576,768,-960,-1088,-192,64,-256,768,384,-1216,384,384,-960,576,-64,-768,-256,-448,-320,-960,704,64,-384,-1024,-512,-256,320,-256,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-320,64,-576,-128,-768,-576,1536,-1088,-1088,640,576,-896,-576,-1024,768,-256,-896,384,0,-128,-192,1024,-896,128,448,-1024,-512,128,-576,-256,-512,192,1344,832,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-64,-896,960,960,1280,-832,704,704,256,-640,512,192,960,768,-704,-704,-896,-1216,-576,-704,-1024,64,-576,960,576,-896,-832,128,-576,-256,-512,192,1344,832,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-960,960,-384,-448,-704,576,448,-768,128,192,384,320,-576,1024,-64,1024,-1024,-576,384,-448,-640,896,-704,-640,-1088,256,-704,512,576,832,384,-448,384,-192,576,1472,384,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-64,512,-448,448,-512,64,704,-1216,-1088,640,-512,-768,448,-704,768,1152,-320,-448,576,-384,576,256,896,-768,-384,576,-640,-64,-1024,704,-768,256,-896,-512,960,-448,-960,-832,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-1024,768,1152,896,-192,-640,0,-704,-448,-640,256,-896,-704,-768,-576,-832,-576,-192,-320,-640,384,-576,832,576,192,1280,640,128,-960,-576,-1152,-832,-896,-1152,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,640,-832,448,-832,-768,1024,960,-448,-512,-832,-512,1088,-896,-1344,-1024,576,960,-448,-960,1536,-832,-576,-960,192,640,384,-320,704,-320,-1152,-960,448,-896,-1152,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-640,576,-512,-832,-384,1280,-704,0,-448,-128,1280,-512,-1088,-1664,-640,-896,1088,-640,-320,-832,-512,960,-1920,-64,-384,-1088,-768,896,832,-448,-640,-640,-576,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,0,832,1280,-448,-704,192,640,128,320,-384,576,640,832,-576,-1024,512,256,-1088,576,-896,-832,-1088,1088,-64,-704,-896,-1600,320,-1088,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,512,-512,64,-832,-768,-512,640,1216,960,832,-640,384,1024,-896,-128,1024,576,448,576,-768,-768,640,832,-128,-832,256,-1600,320,-1088,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-640,-192,512,1408,576,64,320,-320,384,640,-192,-576,192,256,320,-768,-576,-256,704,-192,256,-960,1024,640,-768,-1152,320,-896,-576,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-64,1152,-576,-1088,1024,192,-512,-896,640,-256,-448,-256,384,-320,-576,960,-960,0,64,-832,-192,-768,-384,-448,-1024,192,-896,-896,-576,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,576,-1408,128,320,448,-704,-832,-256,896,128,-512,-832,704,-320,-320,-192,1088,-1664,640,1408,256,128,576,-640,576,-64,832,448,768,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-896,320,832,-256,896,576,-832,384,-832,1280,576,768,-1152,-384,-576,64,-448,192,-256,-192,576,384,704,320,256,832,704,704,960,832,512,512,-192,-1088,384,64,768,-1088,-576,768,-704,384,512,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-448,704,-1088,896,-768,-1216,-384,448,-704,64,640,-704,-704,1280,576,-512,-960,-448,128,0,64,192,192,1408,-1600,1216,-1216,704,960,832,512,512,-192,-1088,384,64,768,-1088,-576,768,-704,384,512,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832;0,-300,0,0,0,0,-1200,-300,-900,-300,0,0,-300,300,0,600,0,300,-300,0,0,0,0,0,0,0,600,0,-600,0,0,300,600,300,0,600,0,-300,300,0,-300,0,0,-900,-300,-600,600,-600,0,-300,0,900,-300,0,0,0,300,0,-300,300,0,600,0,0,0,300,600,-600,300,-600,-300,300,300,600,-1200,0,300,0,0,900,-300,0,0,-900,0,300,-300,-300,-300,0,600,-300,0,-900,-300,-600,600,-600,0,-300,300,0,0,0,0,0,0,0,300,0,-300,-900,0,-300,0,-600,300,600,300,0,300,0,300,-300,300,300,600,0,-600,-600,-300,0,0,300,0,-900,600,0,-600,-900,600,600,-600,0,0,-300,0,-600,0,-300,0,300,-600,0,-600,-300,-300,0,0,0,0,300,-300,0,300,-600,0,0,0,0,0,0,0,600,-300,0,300,-300,300,300,300,0,300,0,600,600,600,-600,600,0,-300,-300,0,0,-600,-900,600,600,-600,0,0,-300,0,-600,0,-300,0,300,-600,0,-600,-300,300,0,0,-900,0,0,600,0,0,-600,0,0,300,0,-600,300,300,-600,0,0,-300,-300,0,0,0,600,0,-1800,0,300,300,0,0,0,-300,0,0,0,0,0,-300,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,300,900,0,300,0,300,-600,0,-900,-300,0,0,0,-300,0,-300,-300,300,-900,600,0,-300,0,0,-900,600,-300,300,-300,300,-300,300,300,-300,-300,0,0,0,0,-300,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,300,900,-600,0,300,0,0,300,300,300,-300,600,300,-300,300,0,-300,300,300,0,0,-300,0,300,-300,-300,0,0,300,300,-300,600,-300,300,-300,0,0,0,0,0,-300,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-900,600,-600,0,0,-600,0,0,0,-300,0,0,0,300,0,0,0,-600,300,0,-600,-300,-600,300,-300,0,600,600,300,1200,-300,0,-900,-600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,-300,-300,-300,-300,0,-300,0,300,0,0,0,0,300,300,0,-300,600,-300,300,0,600,300,0,0,0,0,600,300,1200,-300,0,-900,-600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-900,0,300,0,0,0,0,0,-300,300,-300,0,900,-1200,-300,-300,0,0,600,900,300,300,300,-600,-300,0,-900,0,0,-300,-600,300,600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,0,-300,0,0,0,300,-300,0,0,0,0,600,300,-300,0,-600,0,-900,-300,-600,-300,0,-300,0,-300,-300,-900,0,0,-300,-600,300,600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-600,0,300,-600,0,300,900,-600,-600,-300,0,0,300,0,-900,0,0,0,-600,0,-300,0,0,0,-300,-600,300,0,0,-300,0,600,-600,-600,0,600,0,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,600,0,600,0,900,0,300,0,0,-300,0,0,0,-900,600,-600,900,-300,-300,300,0,0,0,-300,300,300,600,0,-900,0,-300,-300,0,300,0,0,0,0,-600,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-600,0,-900,600,0,0,0,0,-300,0,-300,600,0,0,-300,300,0,300,0,0,0,-300,0,300,0,-900,1500,-300,0,600,-300,300,0,300,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-600,-300,-300,600,600,0,-300,-300,0,0,0,0,-300,0,-300,0,-300,0,0,-300,-300,-600,-900,-600,-600,0,-300,0,600,300,0,0,300,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-300,-600,0,300,600,300,0,0,-600,0,0,0,-600,0,300,0,-600,0,0,0,-600,600,-600,0,300,0,0,0,-300,0,0,-300,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,300,600,-300,300,600,-300,-1500,0,900,0,0,-900,-300,-300,0,0,0,300,300,0,-300,0,0,0,-300,-900,0,0,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-600,300,0,300,300,0,-300,-600,0,0,600,0,0,-300,-600,300,0,300,0,0,-300,300,0,-300,0,0,0,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,300,300,0,0,300,0,-300,0,0,600,-300,0,-300,-300,0,-900,0,-300,0,300,-600,0,0,-600,900,600,300,-600,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,0,-300,300,300,0,0,0,0,0,-300,-300,0,0,0,-600,0,0,0,0,0,300,0,0,600,-600,0,-600,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,0,-300,-300,-600,-600,0,300,-300,0,300,0,-600,300,0,-300,0,600,0,300,0,1200,-300,0,0,600,-600,0,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,600,-300,-300,-300,300,0,0,300,0,600,-600,0,0,-600,0,0,-600,0,300,0,0,900,-300,0,-600,600,-300,0,-300,-300,0,0,-300,600,-900,300,0,0,-300,-600,-300,300,600,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,600,300,-300,-600,300,600,0,0,0,-300,0,0,0,600,-600,900,-600,0,0,300,-300,300,-600,0,300,600,0,-300,-300,0,0,-300,600,-900,300,0,0,-300,-600,-300,300,600,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300];
         end
-        
+    
         function GenerateSimuLinkData(app)
                 sim('Coupled_Model_crosslinked_intext.slx')
                 app.LengthSimth = kMtsOut(500:end,:);
         end
-        
-        function UpdateDataandPlot(app)
+    
+        function UpdateData(app)
             StructureCalculate(app)
-            app.MasterPointInfo.CoordPoints = horzcat(app.N_Nuf2PointInfo.CoordPoints,app.Spc29PointInfo.CoordPoints);
-            app.MasterPointInfo.Color = horzcat(app.N_Nuf2PointInfo.Color,app.Spc29PointInfo.Color);
-            updateplot(app)
+            app.MasterPointInfo.CoordPoints = [];
+            app.MasterPointInfo.Color = [];
+            if app.N_Nuf2CheckBox.Value == true
+                app.MasterPointInfo.CoordPoints = horzcat(app.MasterPointInfo.CoordPoints, app.N_Nuf2PointInfo.CoordPoints);
+                app.MasterPointInfo.Color = horzcat(app.MasterPointInfo.Color, app.N_Nuf2PointInfo.Color);
+            end
+            if app.Spc29CheckBox.Value == true
+                app.MasterPointInfo.CoordPoints = horzcat(app.MasterPointInfo.CoordPoints, app.Spc29PointInfo.CoordPoints);
+                app.MasterPointInfo.Color = horzcat(app.MasterPointInfo.Color, app.Spc29PointInfo.Color);
+            end
+            if app.KinetochoreCheckBox.Value == true
+                app.MasterPointInfo.CoordPoints = horzcat(app.MasterPointInfo.CoordPoints, app.KinetochorePointInfo.CoordPoints);
+                app.MasterPointInfo.Color = horzcat(app.MasterPointInfo.Color, app.KinetochorePointInfo.Color);
+            end
         end
-        
+    
         function StructureCalculate(app)
-            UpdateBioDistanceCorrection(app)
+            UpdateRandomVariables(app)
             N_Nuf2Calculate(app)
+            KinetochoreCalculate(app)
             Spc29Calculate(app)
         end
     
-        function UpdateBioDistanceCorrection(app)
+        function UpdateRandomVariables(app)
             app.BioDistanceCorrection = app.BioDistances(:,ceil(rand()*length(app.BioDistances)))/2;
-        end
-        
-        function N_Nuf2Calculate(app)
-            if app.N_Nuf2CheckBox.Value == true
-                app.N_Nuf2PointInfo.CoordPoints = [];
-                if strcmp(app.NumberofComplexesSwitch.Value, '1')
-                    N_Nuf2Structure1(app)
-                else
-                    app.N_Nuf2PointInfo.CoordPoints2 = [];
-                    N_Nuf2Structure2(app)
-                end
-                app.N_Nuf2PointInfo.Color = repmat(convertCharsToStrings(app.N_Nuf2ColorChannelDropDown.Value),1,size(app.N_Nuf2PointInfo.CoordPoints,2));
+            if strcmp(app.NumberofComplexesSwitch.Value, '1')
+                NoC = 1;
             else
-                app.N_Nuf2PointInfo.CoordPoints = [];
-                app.N_Nuf2PointInfo.Color = [];
+                NoC = 2;
+            end
+            if app.RotationCheckBox.Value == true
+                app.Rotation = rand(app.NumberofChromosomesSpinner.Value*NoC,3);
+                if app.FixedRotationButton.Value == true
+                    app.Rotation(:,1) = app.XSpinner.Value;
+                    app.Rotation(:,2) = app.YSpinner.Value;
+                    app.Rotation(:,3) = app.ZSpinner.Value;
+                else
+                    rangediff = app.UpLimSpinner.Value - app.LowLimSpinner.Value;
+                    app.Rotation = app.Rotation*rangediff + app.LowLimSpinner.Value;
+                end
+            end
+            if ~strcmp(app.StaggerDropDown.Value, 'None')
+                if strcmp(app.StaggerDropDown.Value, 'Random')
+                    app.Stagger = (rand(1,app.NumberofChromosomesSpinner.Value*NoC)-0.5)*(app.RangenmSpinner.Value*2);
+                else
+                    app.Stagger = (app.LengthSimth(ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSimth,1)),ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSimth,2)))-3.5e-07)*1e9;
+                end
             end
         end
-    
+
+        function N_Nuf2Calculate(app)
+            if strcmp(app.NumberofComplexesSwitch.Value, '1')
+                N_Nuf2Structure1(app)
+            else
+                N_Nuf2Structure2(app)
+            end
+            app.N_Nuf2PointInfo.Color = repmat(convertCharsToStrings(app.N_Nuf2ColorChannelDropDown.Value),1,size(app.N_Nuf2PointInfo.CoordPoints,2));
+        end
+        
         function N_Nuf2Structure1(app)
-            RotationCheck = (strcmp(app.N_Nuf2RotationParametersPanel.Visible,'on')) & (app.N_Nuf2RotationCheckBox.Value == true);
-            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,app.N_Nuf2NumberofChromosomesSpinner.Value,app.N_Nuf2StaggerDropDown.Value,app.N_Nuf2RangenmSpinner.Value,app.LengthSimth,app.N_Nuf2StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.N_Nuf2TubuleDiameternmSpinner.Value,RotationCheck,app.N_Nuf2FixedRotationButton.Value,app.N_Nuf2XSpinner.Value,app.N_Nuf2YSpinner.Value,app.N_Nuf2ZSpinner.Value,app.N_Nuf2LowLimSpinner.Value,app.N_Nuf2UpLimSpinner.Value);
+            RotationCheck = (strcmp(app.RotationParametersPanel.Visible,'on')) & (app.RotationCheckBox.Value == true);
+            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck);
         end
     
         function N_Nuf2Structure2(app)
-            RotationCheck = (strcmp(app.N_Nuf2RotationParametersPanel.Visible,'on')) & (app.N_Nuf2RotationCheckBox.Value == true);
-            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,app.N_Nuf2NumberofChromosomesSpinner.Value,app.N_Nuf2StaggerDropDown.Value,app.N_Nuf2RangenmSpinner.Value,app.LengthSimth,app.N_Nuf2StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.N_Nuf2TubuleDiameternmSpinner.Value,RotationCheck,app.N_Nuf2FixedRotationButton.Value,app.N_Nuf2XSpinner.Value,app.N_Nuf2YSpinner.Value,app.N_Nuf2ZSpinner.Value,app.N_Nuf2LowLimSpinner.Value,app.N_Nuf2UpLimSpinner.Value);
+            RotationCheck = (strcmp(app.RotationParametersPanel.Visible,'on')) & (app.RotationCheckBox.Value == true);
+            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck);
             app.N_Nuf2PointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.N_Nuf2PointInfo.CoordPoints) - app.BioDistanceCorrection;
-            app.N_Nuf2PointInfo.CoordPoints2 = StructurePointsGenerate(app,app.N_Nuf2NumberofChromosomesSpinner.Value,app.N_Nuf2StaggerDropDown.Value,app.N_Nuf2RangenmSpinner.Value,app.LengthSimth,app.N_Nuf2StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.N_Nuf2TubuleDiameternmSpinner.Value,RotationCheck,app.N_Nuf2FixedRotationButton.Value,app.N_Nuf2XSpinner.Value,app.N_Nuf2YSpinner.Value,app.N_Nuf2ZSpinner.Value,app.N_Nuf2LowLimSpinner.Value,app.N_Nuf2UpLimSpinner.Value);
-            app.N_Nuf2PointInfo.CoordPoints2 = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.N_Nuf2PointInfo.CoordPoints2) + app.BioDistanceCorrection;
+            app.N_Nuf2PointInfo.CoordPoints2 = StructurePointsGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck);
+            app.N_Nuf2PointInfo.CoordPoints2 = (RotationMatrixGenerate(app,-app.BioDistanceCorrection)*app.N_Nuf2PointInfo.CoordPoints2) + app.BioDistanceCorrection;
             app.N_Nuf2PointInfo.CoordPoints = horzcat(app.N_Nuf2PointInfo.CoordPoints, app.N_Nuf2PointInfo.CoordPoints2);
         end
     
-        function Spc29Calculate(app)
-            if app.Spc29CheckBox.Value == true
-                app.Spc29PointInfo.CoordPoints = [];
-                if strcmp(app.NumberofComplexesSwitch.Value, '1')
-                    Spc29Structure1(app)
-                else
-                    app.Spc29PointInfo.CoordPoints2 = [];
-                    Spc29Structure2(app)
-                end
-                app.Spc29PointInfo.Color = repmat(convertCharsToStrings(app.Spc29ColorChannelDropDown.Value),1,size(app.Spc29PointInfo.CoordPoints,2));
+        function KinetochoreCalculate(app)
+            if strcmp(app.NumberofComplexesSwitch.Value, '1')
+                KinetochoreStructure1(app)
             else
-                app.Spc29PointInfo.CoordPoints = [];
-                app.Spc29PointInfo.Color = [];
+                KinetochoreStructure2(app)
             end
+            app.KinetochorePointInfo.Color = repmat(convertCharsToStrings(app.KinetochoreColorChannel.Value),1,size(app.KinetochorePointInfo.CoordPoints,2));
+        end
+    
+        function KinetochoreStructure1(app)
+            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,app.DistanceofTapernmSpinner.Value,app.RadialDispofTapernmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofUnboundnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+        end
+    
+        function KinetochoreStructure2(app)
+            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,app.DistanceofTapernmSpinner.Value,app.RadialDispofTapernmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofUnboundnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+            app.KinetochorePointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.KinetochorePointInfo.CoordPoints) - app.BioDistanceCorrection;
+            app.KinetochorePointInfo.CoordPoints2 = KinetochoreGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,app.DistanceofTapernmSpinner.Value,app.RadialDispofTapernmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofUnboundnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+            app.KinetochorePointInfo.CoordPoints2 = (RotationMatrixGenerate(app,-app.BioDistanceCorrection)*app.KinetochorePointInfo.CoordPoints2) + app.BioDistanceCorrection;
+            app.KinetochorePointInfo.CoordPoints = horzcat(app.KinetochorePointInfo.CoordPoints, app.KinetochorePointInfo.CoordPoints2);
+            
+        end
+    
+        function Spc29Calculate(app)
+            if strcmp(app.NumberofComplexesSwitch.Value, '1')
+                Spc29Structure1(app)
+            else
+                Spc29Structure2(app)
+            end
+            app.Spc29PointInfo.Color = repmat(convertCharsToStrings(app.Spc29ColorChannelDropDown.Value),1,size(app.Spc29PointInfo.CoordPoints,2));
         end
     
         function Spc29Structure1(app)
-            app.Spc29PointInfo.CoordPoints = StructurePointsGenerate(app,app.Spc29NumberofTubulesSpinner.Value,"~",0,app.LengthSimth,app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false,false,0,0,0,0,0);
+            app.Spc29PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.Spc29NumberofTubulesSpinner.Value,"~",app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false);
             app.Spc29PointInfo.CoordPoints = app.Spc29PointInfo.CoordPoints - [app.Spc29DistancetonmSpinner.Value;0;0];
         end
     
         function Spc29Structure2(app)
             Spc29Correction = (app.BioDistanceCorrection/norm(app.BioDistanceCorrection'))*(norm(app.BioDistanceCorrection') + app.Spc29DistancetonmSpinner.Value);
-            app.Spc29PointInfo.CoordPoints = StructurePointsGenerate(app,app.Spc29NumberofTubulesSpinner.Value,"~",0,app.LengthSimth,app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false,false,0,0,0,0,0);
+            app.Spc29PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.Spc29NumberofTubulesSpinner.Value,"~",app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false);
             app.Spc29PointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.Spc29PointInfo.CoordPoints) - Spc29Correction;
-            app.Spc29PointInfo.CoordPoints2 = StructurePointsGenerate(app,app.Spc29NumberofTubulesSpinner.Value,"~",0,app.LengthSimth,app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false,false,0,0,0,0,0);
+            app.Spc29PointInfo.CoordPoints2 = StructurePointsGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.Spc29NumberofTubulesSpinner.Value,"~",app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false);
             app.Spc29PointInfo.CoordPoints2 = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.Spc29PointInfo.CoordPoints2) + Spc29Correction;
             app.Spc29PointInfo.CoordPoints = horzcat(app.Spc29PointInfo.CoordPoints, app.Spc29PointInfo.CoordPoints2);
         end
 
-        function updateplot(app)
-            if ~isempty(app.MasterPointInfo.CoordPoints) == 1
-                scatter(app.UIAxes1,app.MasterPointInfo.CoordPoints(1,:),app.MasterPointInfo.CoordPoints(2,:),'filled')
-                scatter(app.UIAxes2,app.MasterPointInfo.CoordPoints(2,:),app.MasterPointInfo.CoordPoints(3,:),'filled')
-                scatter(app.UIAxes3,app.MasterPointInfo.CoordPoints(1,:),app.MasterPointInfo.CoordPoints(3,:),'filled')
+        function UpdatePlot(app)
+            if isempty(app.MasterPointInfo.CoordPoints) == 0
+                cmap = GenerateColorMap(app);
+                scatter(app.UIAxes1,app.MasterPointInfo.CoordPoints(1,:),app.MasterPointInfo.CoordPoints(2,:),[],cmap,'filled')
+                scatter(app.UIAxes2,app.MasterPointInfo.CoordPoints(2,:),app.MasterPointInfo.CoordPoints(3,:),[],cmap,'filled')
+                scatter(app.UIAxes3,app.MasterPointInfo.CoordPoints(1,:),app.MasterPointInfo.CoordPoints(3,:),[],cmap,'filled')
                 if app.AutomaticButton.Value == true
                     InitiateAutoLim(app)
                     PushAxisLimits(app)
@@ -373,7 +434,7 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function GenerateXML(app)
-            xmlstr = sprintf('<?xml version="1.0" encoding="ISO-8859-1"?><SimulatedExperiments file="C:/Users/ayush/Desktop/two_points.xml" modified="Mon Jul 23 13:30:09 2018&#10;" created="Mon Jul 23 13:30:09 2018&#10;"><Version major="2" minor="3" revision="0"/><AFMSimulation pixelSize="10.000000" imageWidth="300" imageHeight="300" clipGroundPlane="false" displayAsWireframe="false" surfaceOpacity="1.000000"/><FluorescenceSimulation focalPlaneIndex="14" focalPlaneSpacing="%.6f" numberOfFocalPlanes="%d" useCustomFocalPlanePositions="false" gain="%.6f" offset="%.6f" maximumVoxelIntensity="%.6f" pixelSize="65.000000" psfName="Gibson-Lanni Widefield" imageWidth="200" imageHeight="200" shearInX="0.000000" shearInY="0.000000" addGaussianNoise="true" noiseStdDev="%.6f" showImageVolumeOutline="false" showRefGrid="true" refGridSpacing="1000.000000" superimposeSimulatedImage="true" superimposeComparisonImage="false" minimumIntensityLevel="0.000000" maximumIntensityLevel="200.000015"><FocalPlanes>', app.SpacingBetweenPlanesnmSpinner.Value,app.NumberofPlanesSpinner.Value, app.GainEditField.Value,app.OffsetEditField.Value,app.MaxVoxelIntensityEditField.Value,app.GaussianNoiseSDEditField.Value);
+            xmlstr = sprintf('<?xml version="1.0" encoding="ISO-8859-1"?><SimulatedExperiments file="C:/Users/ayush/Desktop/two_points.xml" modified="Mon Jul 23 13:30:09 2018&#10;" created="Mon Jul 23 13:30:09 2018&#10;"><Version major="2" minor="3" revision="0"/><AFMSimulation pixelSize="10.000000" imageWidth="300" imageHeight="300" clipGroundPlane="false" displayAsWireframe="false" surfaceOpacity="1.000000"/><FluorescenceSimulation focalPlaneIndex="14" focalPlaneSpacing="%.6f" numberOfFocalPlanes="%d" useCustomFocalPlanePositions="false" gain="%.6f" offset="%.6f" maximumVoxelIntensity="%.6f" pixelSize="%.6f" psfName="Gibson-Lanni Widefield" imageWidth="%d" imageHeight="%d" shearInX="0.000000" shearInY="0.000000" addGaussianNoise="true" noiseStdDev="%.6f" showImageVolumeOutline="false" showRefGrid="true" refGridSpacing="1000.000000" superimposeSimulatedImage="true" superimposeComparisonImage="false" minimumIntensityLevel="0.000000" maximumIntensityLevel="200.000015"><FocalPlanes>', app.SpacingBetweenPlanesnmSpinner.Value,app.NumberofPlanesSpinner.Value, app.GainEditField.Value,app.OffsetEditField.Value,app.MaxVoxelIntensityEditField.Value,app.PixelSizenmSpinner.Value,app.WidthpixelsSpinner.Value,app.HeightpixelsSpinner.Value,app.GaussianNoiseSDEditField.Value);
             for planeidx = 0:app.NumberofPlanesSpinner.Value
                 xmlstr = strcat(xmlstr, sprintf('<Plane index="%d" position="0.000000"/>',planeidx));
             end
@@ -396,44 +457,90 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function GenerateTIF(app)
-            strtemp = strcat({'python XMLtoTIF.py -norename -out'},{' '},{app.FileFolderNameStringEditField.Value},{' '},{app.FileFolderNameStringEditField.Value});
-            system(strtemp{1}); 
+            commandstring = 'python.exe BrownianXMLtoTIFF.py ';
+            basename = app.FileFolderNameStringEditField.Value;
+            if any(strcmp("All",app.MasterPointInfo.Color))
+                commandstring = strcat(commandstring,{' '},'-out %s %s');
+            else
+                if any(strcmp("Green",app.MasterPointInfo.Color))
+                    commandstring = strcat(commandstring,{' '}, '-green ');
+                end
+                if any(strcmp("Red",app.MasterPointInfo.Color))
+                    commandstring = strcat(commandstring,{' '}, '-red ');
+                end
+                if any(strcmp("Blue",app.MasterPointInfo.Color))
+                    commandstring = strcat(commandstring,{' '}, '-blue ');
+                end
+                commandstring = strcat(commandstring,{' '}, '-out %s %s');
+            end
+            system(sprintf(commandstring{1}, strcat(basename,'_TIF'), strcat(basename,'_DATA')))
         end
     
-        function CylinderCoordPoints = CylinderFluorophorePoints(app,NumberofFluorophore,Length,TubuleDiameter,RotationCheck,FixedRotationCheck,XSpinner,YSpinner,ZSpinner,LowLimSpinner,UpLimSpinner)
+        function StructurePoints = StructurePointsGenerate(app,Index,NumberCylinders,Stagger,StructureDiameter,NumberofFluorophore,Length,TubuleDiameter,RotationCheck)
+            StructurePoints = [];
+            CoordAdjustment = zeros(3,1);
+                for angle = 0:(2*pi/NumberCylinders):(2*pi-2*pi/NumberCylinders)
+                    if strcmp(Stagger,'Random') || (strcmp(Stagger,'SimuLink Data (Stevens et al.)') && NumberCylinders <= 32)
+                        CoordAdjustment(1,1) = app.Stagger(Index);
+                    end
+                    CoordAdjustment(2,1) = cos(angle)*StructureDiameter/2;
+                    CoordAdjustment(3,1) = sin(angle)*StructureDiameter/2;
+                    CylinderCoordPoints = CylinderFluorophorePoints(app, Index, NumberofFluorophore,Length,TubuleDiameter,RotationCheck);
+                    StructurePoints = horzcat(StructurePoints, (CylinderCoordPoints + CoordAdjustment));
+                    Index = Index + 1;
+                end
+        end
+    
+        function CylinderCoordPoints = CylinderFluorophorePoints(app,Index, NumberofFluorophore,Length,TubuleDiameter,RotationCheck)
                 CylinderCoordPoints = zeros(3,NumberofFluorophore);
                 for PointIdx = 1:NumberofFluorophore
-                    CylinderCoordPoints(1,PointIdx) = Length*(rand()-0.5);
+                    CylinderCoordPoints(1,PointIdx) = -Length*rand();
                     CoordAng = rand()*2*pi;
                     CylinderCoordPoints(2,PointIdx) = cos(CoordAng)*TubuleDiameter/2;
                     CylinderCoordPoints(3,PointIdx) = sin(CoordAng)*TubuleDiameter/2;
                 end
                 if RotationCheck % Allow for rotation of the initial coordinates
-                    if FixedRotationCheck == true % Rotation that is fixed for each axis
-                        CylinderCoordPoints = rotx(XSpinner)*roty(YSpinner)*rotz(ZSpinner)*CylinderCoordPoints;
-                    else % Rotation that is random, but confined to a certain range of possible angles 
-                        randanglediff = UpLimSpinner - LowLimSpinner;
-                        CylinderCoordPoints = roty(rand()*randanglediff+LowLimSpinner)*rotz(rand()*randanglediff+LowLimSpinner)*CylinderCoordPoints;
-                    end
+                    CylinderCoordPoints = rotx(app.Rotation(Index,1))*roty(app.Rotation(Index,2))*rotz(app.Rotation(Index,3))*CylinderCoordPoints;
                 end
         end
-        
-        function StructurePoints = StructurePointsGenerate(app,NumberCylinders,Stagger,RandomRange,StaggerSample,StructureDiameter,NumberofFluorophore,Length,TubuleDiameter,RotationCheck,FixedRotationCheck,XSpinner,YSpinner,ZSpinner,LowLimSpinner,UpLimSpinner)
-            StructurePoints = [];
+    
+        function KinetochorePoints = KinetochoreGenerate(app,Index,NumberCylinders,Stagger,StructureDiameter,NumberofKComplexes,DistancetoTaper,RadialDisp,NumberofBound,MicrotubuleDiameter,TagPercent,UnboundLength,UpperAngle,LowerAngle)
+            KinetochorePoints = [];
             CoordAdjustment = zeros(3,1);
                 for angle = 0:(2*pi/NumberCylinders):(2*pi-2*pi/NumberCylinders)
-                    if strcmp(Stagger,'Random')
-                        CoordAdjustment(1,1) = (rand()-0.5)*(RandomRange*2);
-                    end
-                    if strcmp(Stagger,'SimuLink Data (Stevens et al.)') & NumberCylinders <= 32
-                        CoordAdjustment(1,1) = (StaggerSample(ceil(rand()*size(StaggerSample,1)),ceil(rand()*size(StaggerSample,2)))-3.5e-07)*1e9;
+                    if strcmp(Stagger,'Random') || (strcmp(Stagger,'SimuLink Data (Stevens et al.)') && NumberCylinders <= 32)
+                        CoordAdjustment(1,1) = app.Stagger(Index);
                     end
                     CoordAdjustment(2,1) = cos(angle)*StructureDiameter/2;
                     CoordAdjustment(3,1) = sin(angle)*StructureDiameter/2;
-                    CylinderCoordPoints = CylinderFluorophorePoints(app,NumberofFluorophore,Length,TubuleDiameter,RotationCheck,FixedRotationCheck,XSpinner,YSpinner,ZSpinner,LowLimSpinner,UpLimSpinner);
-                    StructurePoints = horzcat(StructurePoints, (CylinderCoordPoints + CoordAdjustment));
+                    KCPoints = KCFluorophorePoints(app,angle,NumberofKComplexes,DistancetoTaper,RadialDisp,NumberofBound,MicrotubuleDiameter,TagPercent,UnboundLength,UpperAngle,LowerAngle);
+                    KinetochorePoints = horzcat(KinetochorePoints, (KCPoints + CoordAdjustment));
+                    Index = Index + 1;
                 end
         end
+    
+        function KCCoordPoints = KCFluorophorePoints(app,mainangle,NumberofKComplexes,DistancetoTaper,RadialDisp,NumberofBound,MicrotubuleDiameter,TagPercent,UnboundLength,UpperAngle,LowerAngle)
+            BindingPoint = [DistancetoTaper;cos(mainangle)*RadialDisp;sin(mainangle)*RadialDisp];
+            KCCoordPoints = zeros(3,NumberofKComplexes);
+            KCBoolean = zeros(1,NumberofKComplexes);
+            KCBoolean(randsample(length(KCBoolean),NumberofBound)) = 1;
+            angles = 0:(2*pi/NumberofKComplexes):(2*pi-2*pi/NumberofKComplexes);
+            for KCIndex = 1:NumberofKComplexes
+                if KCBoolean(KCIndex) == 1
+                    N2End = [0;cos(angles(KCIndex))*MicrotubuleDiameter/2;sin(angles(KCIndex))*MicrotubuleDiameter/2];
+                    Difference = BindingPoint - N2End;
+                    Point = Difference*TagPercent/100 + N2End;
+                    KCCoordPoints(:,KCIndex) = Point;
+                else
+                    N2End = [0;cos(angles(KCIndex))*MicrotubuleDiameter/2;sin(angles(KCIndex))*MicrotubuleDiameter/2];
+                    anglediff = UpperAngle - LowerAngle;
+                    randangle = rand()*anglediff + LowerAngle;
+                    Point = [cosd(randangle)*UnboundLength;sind(randangle)*UnboundLength;0]*TagPercent/100;
+                    KCCoordPoints(:,KCIndex) = rotx(rad2deg(angles(KCIndex)))*Point+N2End;
+                end
+            end
+        end
+            
         
         function rotation = RotationMatrixGenerate(app,vector)
             ninit = [1;0;0]; 
@@ -457,9 +564,38 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function MasterPointInforCorrection(app)
-            app.MasterPointInfo.CoordPointsCorrect = app.MasterPointInfo.CoordPoints + [6500;6500;((app.NumberofPlanesSpinner.Value-1)/2)*app.SpacingBetweenPlanesnmSpinner.Value]
+            app.MasterPointInfo.CoordPointsCorrect = app.MasterPointInfo.CoordPoints + [(app.WidthpixelsSpinner.Value*app.PixelSizenmSpinner.Value)/2;(app.HeightpixelsSpinner.Value*app.PixelSizenmSpinner.Value)/2;((app.NumberofPlanesSpinner.Value-1)/2)*app.SpacingBetweenPlanesnmSpinner.Value];
+        end
+    
+        function cmap = GenerateColorMap(app)
+            cmap = [];
+            for coloridx = 1:size(app.MasterPointInfo.Color,2)
+               if app.MasterPointInfo.Color(coloridx) == "Red"
+                   cmap(end+1,:) = [1 0 0];
+               end
+               if app.MasterPointInfo.Color(coloridx) == "Green"
+                   cmap(end+1,:) = [0 1 0];
+               end
+               if app.MasterPointInfo.Color(coloridx) == "Blue"
+                   cmap(end+1,:) = [0 0 1];
+               end
+               if app.MasterPointInfo.Color(coloridx) == "All"
+                   cmap(end+1,:) = [0 0 0];
+               end
+            end
+        end
+    
+        function PreProcess(app)
+            SimulatedImagesPreProcess
+        end
+    
+        function CopyBtoF(app)
+            copyfile('BrownianXMLtoTIFF.py',app.FileFolderNameStringEditField.Value)
         end
     end
+    
+    
+    
 
     methods (Access = private)
 
@@ -468,33 +604,27 @@ classdef StaticKinet < matlab.apps.AppBase
             GeneralParametreCheck(app)
             SaveBioDistanceData(app)
             GenerateSimuLinkData(app)
-            UpdateDataandPlot(app)
+            UpdateData(app)
+            UpdatePlot(app)
         end
 
-        % Callback function: N_Nuf2CheckBox, N_Nuf2RotationCheckBox, 
-        % N_Nuf2RotationParametersPanel, N_Nuf2StaggerDropDown
-        function N_Nuf2StructureParameterChange(app, event)
-            N_Nuf2ParametersCheck(app)
-            N_Nuf2ParameterLocationCheck(app)
-            UpdateDataandPlot(app) 
-        end
-
-        % Callback function: N_Nuf2ColorChannelDropDown, 
-        % N_Nuf2LengthnmSpinner, N_Nuf2LowLimSpinner, 
-        % N_Nuf2NumberofChromosomesSpinner, 
-        % N_Nuf2NumberofFluorophoreSpinner, N_Nuf2RangenmSpinner, 
-        % N_Nuf2StructureDiameternmSpinner, 
-        % N_Nuf2TubuleDiameternmSpinner, N_Nuf2UpLimSpinner, 
-        % N_Nuf2XSpinner, N_Nuf2YSpinner, N_Nuf2ZSpinner
-        function N_Nuf2StructureValueChange(app, event)
-            UpdateDataandPlot(app)
+        % Callback function: LowLimSpinner, 
+        % MicrotubuleDiameternmSpinner, NumberofChromosomesSpinner, 
+        % NumberofComplexesSwitch, RangenmSpinner, RotationCheckBox, 
+        % RotationParametersPanel, StaggerDropDown, 
+        % StructureDiameternmSpinner, UpLimSpinner, XSpinner, YSpinner, 
+        % ZSpinner
+        function MainParameterChange(app, event)
+            MainParameterCheck(app)
+            UpdateData(app)
+            UpdatePlot(app)
         end
 
         % Callback function: FileFolderNameStringEditField, 
         % GenerateTIFsCheckBox, GenerateXMLCheckBox, SaveMATFileCheckBox
         function OutputParameterChange(app, event)
-            OutputParameterCheck(app)
             OutputParameterLocationCheck(app)
+            OutputParameterCheck(app)
         end
 
         % Button pushed function: GenerateOutputButton
@@ -505,7 +635,10 @@ classdef StaticKinet < matlab.apps.AppBase
                 app.StatusEditField.Value = 'Saving/Writing/Taking Pictures. Please Hold.';
                 app.FileFolderNameStringEditField.Value = strtrim(app.FileFolderNameStringEditField.Value);
                 TestOrCreateDirectory(app)
+                CopyBtoF(app)
                 cd(app.FileFolderNameStringEditField.Value)
+                mkdir(strcat(app.FileFolderNameStringEditField.Value,'_Data'))
+                cd(strcat(app.FileFolderNameStringEditField.Value,'_Data'))
                 if app.SaveMATFileCheckBox.Value == true
                     SaveMasterPointInfo(app);
                 end
@@ -517,6 +650,9 @@ classdef StaticKinet < matlab.apps.AppBase
                 if strcmp(app.MicroscopeSimulatorParametersPanel.Visible,'on') & app.GenerateTIFsCheckBox.Value == true
                         GenerateTIF(app)
                 end
+                if strcmp(app.MicroscopeSimulatorParametersPanel.Visible,'on') & app.GenerateTIFsCheckBox.Value == true & app.PreProcessTIFsCheckBox.Value == true
+                    PreProcess(app)
+                end
                 app.StatusEditField.Value = 'Finished!';
             end
         end
@@ -524,8 +660,9 @@ classdef StaticKinet < matlab.apps.AppBase
         % Button pushed function: DViewPopOutButton
         function DViewPopOutButtonPushed(app, event)
             if ~isempty(app.MasterPointInfo.CoordPoints) == 1
+                cmap = GenerateColorMap(app);
                 figure()
-                scatter3(app.MasterPointInfo.CoordPoints(1,:),app.MasterPointInfo.CoordPoints(2,:),app.MasterPointInfo.CoordPoints(3,:),'filled')
+                scatter3(app.MasterPointInfo.CoordPoints(1,:),app.MasterPointInfo.CoordPoints(2,:),app.MasterPointInfo.CoordPoints(3,:),[],cmap,'filled')
                 rotate3d on
             end
         end
@@ -533,7 +670,7 @@ classdef StaticKinet < matlab.apps.AppBase
         % Selection changed function: AxisLimitsButtonGroup
         function AxisLimitsParameterChange(app, event)
             AxisParameterCheck(app)
-            updateplot(app)
+            Updateplot(app)
         end
 
         % Value changed function: XLowerLimnmEditField1, 
@@ -544,7 +681,7 @@ classdef StaticKinet < matlab.apps.AppBase
         % YUpperLimnmEditField1, YUpperLimnmEditField2, 
         % YUpperLimnmEditField3
         function AxisLimitsValueChange(app, event)
-            updateplot(app)
+            Updateplot(app)
         end
 
         % Menu selected function: GitHubMenu
@@ -567,23 +704,34 @@ classdef StaticKinet < matlab.apps.AppBase
             delete(app)
         end
 
-        % Value changed function: NumberofComplexesSwitch
-        function ComplexParameterChange(app, event)
-            UpdateDataandPlot(app)
+        % Callback function: N_Nuf2CheckBox, 
+        % N_Nuf2ColorChannelDropDown, N_Nuf2LengthnmSpinner, 
+        % N_Nuf2NumberofFluorophoreSpinner
+        function N_Nuf2StructureValueChange(app, event)
+            UpdateData(app)
+            UpdatePlot(app)
         end
 
-        % Value changed function: Spc29CheckBox
-        function Spc29StructureParmeterChange(app, event)
-            Spc29ParametersCheck(app)
-            UpdateDataandPlot(app)
-        end
-
-        % Callback function: Spc29ColorChannelDropDown, 
-        % Spc29DistancetonmSpinner, Spc29LengthnmSpinner, 
-        % Spc29NumberofFluorophoreSpinner, Spc29NumberofTubulesSpinner, 
-        % Spc29StructureDiameternmSpinner, Spc29TubuleDiameternmSpinner
+        % Callback function: Spc29CheckBox, 
+        % Spc29ColorChannelDropDown, Spc29DistancetonmSpinner, 
+        % Spc29LengthnmSpinner, Spc29NumberofFluorophoreSpinner, 
+        % Spc29NumberofTubulesSpinner, Spc29StructureDiameternmSpinner, 
+        % Spc29TubuleDiameternmSpinner
         function Spc29StructureValueChange(app, event)
-            UpdateDataandPlot(app)
+            UpdateData(app)
+            UpdatePlot(app)
+        end
+
+        % Callback function: DistanceofTapernmSpinner, 
+        % KinetochoreCheckBox, KinetochoreColorChannel, 
+        % LengthofUnboundnmSpinner, LowerAngleSpinner, 
+        % NumberofBoundComplexesSpinner, NumberofComplexesSpinner, 
+        % RadialDispofTapernmSpinner, UpperAngleSpinner, 
+        % ofLengthMarkedSpinner
+        function KinetochoreStructureValueChange(app, event)
+            KinetochoreValueChangeCheck(app)
+            UpdateData(app)
+            UpdatePlot(app)
         end
     end
 
@@ -641,49 +789,24 @@ classdef StaticKinet < matlab.apps.AppBase
             % Create N_Nuf2StructurePanel
             app.N_Nuf2StructurePanel = uipanel(app.StaticKinetUIFigure);
             app.N_Nuf2StructurePanel.BorderType = 'none';
+            app.N_Nuf2StructurePanel.TitlePosition = 'centertop';
+            app.N_Nuf2StructurePanel.Title = 'N-Terminal Nuf2';
             app.N_Nuf2StructurePanel.FontName = 'Arial';
-            app.N_Nuf2StructurePanel.FontSize = 16;
-            app.N_Nuf2StructurePanel.Position = [20 482 260 313];
-
-            % Create N_Nuf2TubuleDiameternmSpinnerLabel
-            app.N_Nuf2TubuleDiameternmSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2TubuleDiameternmSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2TubuleDiameternmSpinnerLabel.Position = [1 267 145 22];
-            app.N_Nuf2TubuleDiameternmSpinnerLabel.Text = 'Tubule Diameter (nm)';
-
-            % Create N_Nuf2StructureDiameternmSpinnerLabel
-            app.N_Nuf2StructureDiameternmSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2StructureDiameternmSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2StructureDiameternmSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2StructureDiameternmSpinnerLabel.Position = [1 246 145 22];
-            app.N_Nuf2StructureDiameternmSpinnerLabel.Text = 'Structure Diameter (nm)';
+            app.N_Nuf2StructurePanel.FontSize = 24;
+            app.N_Nuf2StructurePanel.Position = [11 611 260 120];
 
             % Create N_Nuf2NumberofFluorophoreSpinnerLabel
             app.N_Nuf2NumberofFluorophoreSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
             app.N_Nuf2NumberofFluorophoreSpinnerLabel.HorizontalAlignment = 'center';
             app.N_Nuf2NumberofFluorophoreSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Position = [1 225 145 22];
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Position = [26 38 145 22];
             app.N_Nuf2NumberofFluorophoreSpinnerLabel.Text = 'Number of Fluorophore';
-
-            % Create N_Nuf2ColorChannelDropDownLabel
-            app.N_Nuf2ColorChannelDropDownLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2ColorChannelDropDownLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2ColorChannelDropDownLabel.FontName = 'Arial';
-            app.N_Nuf2ColorChannelDropDownLabel.Position = [1 183 145 22];
-            app.N_Nuf2ColorChannelDropDownLabel.Text = 'Color Channel';
-
-            % Create N_Nuf2NumberofChromosomesSpinnerLabel
-            app.N_Nuf2NumberofChromosomesSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2NumberofChromosomesSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2NumberofChromosomesSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2NumberofChromosomesSpinnerLabel.Position = [1 204 143 22];
-            app.N_Nuf2NumberofChromosomesSpinnerLabel.Text = 'Number of Chromosomes';
 
             % Create N_Nuf2LengthnmSpinnerLabel
             app.N_Nuf2LengthnmSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
             app.N_Nuf2LengthnmSpinnerLabel.HorizontalAlignment = 'center';
             app.N_Nuf2LengthnmSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2LengthnmSpinnerLabel.Position = [1 288 145 22];
+            app.N_Nuf2LengthnmSpinnerLabel.Position = [77 59 83 22];
             app.N_Nuf2LengthnmSpinnerLabel.Text = 'Length (nm)';
 
             % Create N_Nuf2LengthnmSpinner
@@ -695,34 +818,8 @@ classdef StaticKinet < matlab.apps.AppBase
             app.N_Nuf2LengthnmSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
             app.N_Nuf2LengthnmSpinner.HorizontalAlignment = 'center';
             app.N_Nuf2LengthnmSpinner.FontName = 'Arial';
-            app.N_Nuf2LengthnmSpinner.Position = [145 288 66 22];
+            app.N_Nuf2LengthnmSpinner.Position = [170 59 66 22];
             app.N_Nuf2LengthnmSpinner.Value = 2;
-
-            % Create N_Nuf2TubuleDiameternmSpinner
-            app.N_Nuf2TubuleDiameternmSpinner = uispinner(app.N_Nuf2StructurePanel);
-            app.N_Nuf2TubuleDiameternmSpinner.Step = 5;
-            app.N_Nuf2TubuleDiameternmSpinner.LowerLimitInclusive = 'off';
-            app.N_Nuf2TubuleDiameternmSpinner.UpperLimitInclusive = 'off';
-            app.N_Nuf2TubuleDiameternmSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2TubuleDiameternmSpinner.Limits = [0 Inf];
-            app.N_Nuf2TubuleDiameternmSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2TubuleDiameternmSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2TubuleDiameternmSpinner.FontName = 'Arial';
-            app.N_Nuf2TubuleDiameternmSpinner.Position = [145 267 66 22];
-            app.N_Nuf2TubuleDiameternmSpinner.Value = 25;
-
-            % Create N_Nuf2StructureDiameternmSpinner
-            app.N_Nuf2StructureDiameternmSpinner = uispinner(app.N_Nuf2StructurePanel);
-            app.N_Nuf2StructureDiameternmSpinner.Step = 10;
-            app.N_Nuf2StructureDiameternmSpinner.LowerLimitInclusive = 'off';
-            app.N_Nuf2StructureDiameternmSpinner.UpperLimitInclusive = 'off';
-            app.N_Nuf2StructureDiameternmSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2StructureDiameternmSpinner.Limits = [0 Inf];
-            app.N_Nuf2StructureDiameternmSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2StructureDiameternmSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2StructureDiameternmSpinner.FontName = 'Arial';
-            app.N_Nuf2StructureDiameternmSpinner.Position = [145 246 66 22];
-            app.N_Nuf2StructureDiameternmSpinner.Value = 250;
 
             % Create N_Nuf2NumberofFluorophoreSpinner
             app.N_Nuf2NumberofFluorophoreSpinner = uispinner(app.N_Nuf2StructurePanel);
@@ -734,190 +831,23 @@ classdef StaticKinet < matlab.apps.AppBase
             app.N_Nuf2NumberofFluorophoreSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
             app.N_Nuf2NumberofFluorophoreSpinner.HorizontalAlignment = 'center';
             app.N_Nuf2NumberofFluorophoreSpinner.FontName = 'Arial';
-            app.N_Nuf2NumberofFluorophoreSpinner.Position = [145 225 66 22];
+            app.N_Nuf2NumberofFluorophoreSpinner.Position = [170 38 66 22];
             app.N_Nuf2NumberofFluorophoreSpinner.Value = 20;
+
+            % Create N_Nuf2ColorChannelDropDownLabel
+            app.N_Nuf2ColorChannelDropDownLabel = uilabel(app.N_Nuf2StructurePanel);
+            app.N_Nuf2ColorChannelDropDownLabel.HorizontalAlignment = 'center';
+            app.N_Nuf2ColorChannelDropDownLabel.FontName = 'Arial';
+            app.N_Nuf2ColorChannelDropDownLabel.Position = [76 13 95 22];
+            app.N_Nuf2ColorChannelDropDownLabel.Text = 'Color Channel';
 
             % Create N_Nuf2ColorChannelDropDown
             app.N_Nuf2ColorChannelDropDown = uidropdown(app.N_Nuf2StructurePanel);
             app.N_Nuf2ColorChannelDropDown.Items = {'All', 'Green', 'Red', 'Blue'};
             app.N_Nuf2ColorChannelDropDown.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
             app.N_Nuf2ColorChannelDropDown.FontName = 'Arial';
-            app.N_Nuf2ColorChannelDropDown.Position = [145 183 66 22];
+            app.N_Nuf2ColorChannelDropDown.Position = [170 13 66 22];
             app.N_Nuf2ColorChannelDropDown.Value = 'All';
-
-            % Create N_Nuf2NumberofChromosomesSpinner
-            app.N_Nuf2NumberofChromosomesSpinner = uispinner(app.N_Nuf2StructurePanel);
-            app.N_Nuf2NumberofChromosomesSpinner.LowerLimitInclusive = 'off';
-            app.N_Nuf2NumberofChromosomesSpinner.UpperLimitInclusive = 'off';
-            app.N_Nuf2NumberofChromosomesSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2NumberofChromosomesSpinner.Limits = [0 Inf];
-            app.N_Nuf2NumberofChromosomesSpinner.RoundFractionalValues = 'on';
-            app.N_Nuf2NumberofChromosomesSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2NumberofChromosomesSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2NumberofChromosomesSpinner.FontName = 'Arial';
-            app.N_Nuf2NumberofChromosomesSpinner.Position = [145 204 66 22];
-            app.N_Nuf2NumberofChromosomesSpinner.Value = 16;
-
-            % Create N_Nuf2StaggerDropDownLabel
-            app.N_Nuf2StaggerDropDownLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2StaggerDropDownLabel.HorizontalAlignment = 'right';
-            app.N_Nuf2StaggerDropDownLabel.Position = [4 155 48 22];
-            app.N_Nuf2StaggerDropDownLabel.Text = 'Stagger';
-
-            % Create N_Nuf2StaggerDropDown
-            app.N_Nuf2StaggerDropDown = uidropdown(app.N_Nuf2StructurePanel);
-            app.N_Nuf2StaggerDropDown.Items = {'None', 'Random', 'SimuLink Data (Stevens et al.)'};
-            app.N_Nuf2StaggerDropDown.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureParameterChange, true);
-            app.N_Nuf2StaggerDropDown.Position = [58 154 187 22];
-            app.N_Nuf2StaggerDropDown.Value = 'None';
-
-            % Create N_Nuf2RangenmSpinnerLabel
-            app.N_Nuf2RangenmSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2RangenmSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2RangenmSpinnerLabel.Visible = 'off';
-            app.N_Nuf2RangenmSpinnerLabel.Position = [44 126 87 22];
-            app.N_Nuf2RangenmSpinnerLabel.Text = 'Range +/- (nm)';
-
-            % Create N_Nuf2RangenmSpinner
-            app.N_Nuf2RangenmSpinner = uispinner(app.N_Nuf2StructurePanel);
-            app.N_Nuf2RangenmSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2RangenmSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2RangenmSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2RangenmSpinner.Visible = 'off';
-            app.N_Nuf2RangenmSpinner.Position = [133 126 78 22];
-
-            % Create N_Nuf2RotationPanel
-            app.N_Nuf2RotationPanel = uipanel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2RotationPanel.BorderType = 'none';
-            app.N_Nuf2RotationPanel.Position = [1 37 260 106];
-
-            % Create N_Nuf2RotationParametersPanel
-            app.N_Nuf2RotationParametersPanel = uibuttongroup(app.N_Nuf2RotationPanel);
-            app.N_Nuf2RotationParametersPanel.SelectionChangedFcn = createCallbackFcn(app, @N_Nuf2StructureParameterChange, true);
-            app.N_Nuf2RotationParametersPanel.BorderType = 'none';
-            app.N_Nuf2RotationParametersPanel.BackgroundColor = [0.9412 0.9412 0.9412];
-            app.N_Nuf2RotationParametersPanel.HandleVisibility = 'off';
-            app.N_Nuf2RotationParametersPanel.Position = [4 5 251 84];
-
-            % Create N_Nuf2FixedRotationButton
-            app.N_Nuf2FixedRotationButton = uiradiobutton(app.N_Nuf2RotationParametersPanel);
-            app.N_Nuf2FixedRotationButton.Text = 'Fixed Rotation';
-            app.N_Nuf2FixedRotationButton.Position = [25 63 99 19];
-            app.N_Nuf2FixedRotationButton.Value = true;
-
-            % Create N_Nuf2RandomRotationButton
-            app.N_Nuf2RandomRotationButton = uiradiobutton(app.N_Nuf2RotationParametersPanel);
-            app.N_Nuf2RandomRotationButton.Text = 'Random Rotation';
-            app.N_Nuf2RandomRotationButton.Position = [125 62 115 20];
-
-            % Create N_Nuf2RandomRotationParametersdegPanel
-            app.N_Nuf2RandomRotationParametersdegPanel = uipanel(app.N_Nuf2RotationParametersPanel);
-            app.N_Nuf2RandomRotationParametersdegPanel.BorderType = 'none';
-            app.N_Nuf2RandomRotationParametersdegPanel.TitlePosition = 'centertop';
-            app.N_Nuf2RandomRotationParametersdegPanel.Title = 'Random Rotation Parameters (deg.)';
-            app.N_Nuf2RandomRotationParametersdegPanel.Visible = 'off';
-            app.N_Nuf2RandomRotationParametersdegPanel.Position = [12 0 233 51];
-
-            % Create N_Nuf2LowLimSpinnerLabel
-            app.N_Nuf2LowLimSpinnerLabel = uilabel(app.N_Nuf2RandomRotationParametersdegPanel);
-            app.N_Nuf2LowLimSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2LowLimSpinnerLabel.Position = [2 3 56 22];
-            app.N_Nuf2LowLimSpinnerLabel.Text = 'Low. Lim.';
-
-            % Create N_Nuf2LowLimSpinner
-            app.N_Nuf2LowLimSpinner = uispinner(app.N_Nuf2RandomRotationParametersdegPanel);
-            app.N_Nuf2LowLimSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2LowLimSpinner.Limits = [0 360];
-            app.N_Nuf2LowLimSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2LowLimSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2LowLimSpinner.Position = [63 3 51 22];
-
-            % Create N_Nuf2UpLimSpinnerLabel
-            app.N_Nuf2UpLimSpinnerLabel = uilabel(app.N_Nuf2RandomRotationParametersdegPanel);
-            app.N_Nuf2UpLimSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2UpLimSpinnerLabel.Position = [128 3 50 22];
-            app.N_Nuf2UpLimSpinnerLabel.Text = 'Up. Lim.';
-
-            % Create N_Nuf2UpLimSpinner
-            app.N_Nuf2UpLimSpinner = uispinner(app.N_Nuf2RandomRotationParametersdegPanel);
-            app.N_Nuf2UpLimSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2UpLimSpinner.Limits = [0 360];
-            app.N_Nuf2UpLimSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2UpLimSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2UpLimSpinner.Position = [178 3 52 22];
-
-            % Create N_Nuf2FixedRotationParametersdegPanel
-            app.N_Nuf2FixedRotationParametersdegPanel = uipanel(app.N_Nuf2RotationParametersPanel);
-            app.N_Nuf2FixedRotationParametersdegPanel.BorderType = 'none';
-            app.N_Nuf2FixedRotationParametersdegPanel.TitlePosition = 'centertop';
-            app.N_Nuf2FixedRotationParametersdegPanel.Title = 'Fixed Rotation Parameters (deg.)';
-            app.N_Nuf2FixedRotationParametersdegPanel.Position = [12 3 233 49];
-
-            % Create N_Nuf2XSpinnerLabel
-            app.N_Nuf2XSpinnerLabel = uilabel(app.N_Nuf2FixedRotationParametersdegPanel);
-            app.N_Nuf2XSpinnerLabel.HorizontalAlignment = 'right';
-            app.N_Nuf2XSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2XSpinnerLabel.Position = [10 2 10 22];
-            app.N_Nuf2XSpinnerLabel.Text = 'X';
-
-            % Create N_Nuf2XSpinner
-            app.N_Nuf2XSpinner = uispinner(app.N_Nuf2FixedRotationParametersdegPanel);
-            app.N_Nuf2XSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2XSpinner.Limits = [0 360];
-            app.N_Nuf2XSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2XSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2XSpinner.FontName = 'Arial';
-            app.N_Nuf2XSpinner.Position = [23 2 51 22];
-
-            % Create N_Nuf2YSpinnerLabel
-            app.N_Nuf2YSpinnerLabel = uilabel(app.N_Nuf2FixedRotationParametersdegPanel);
-            app.N_Nuf2YSpinnerLabel.HorizontalAlignment = 'right';
-            app.N_Nuf2YSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2YSpinnerLabel.Position = [88 2 10 22];
-            app.N_Nuf2YSpinnerLabel.Text = 'Y';
-
-            % Create N_Nuf2YSpinner
-            app.N_Nuf2YSpinner = uispinner(app.N_Nuf2FixedRotationParametersdegPanel);
-            app.N_Nuf2YSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2YSpinner.Limits = [0 360];
-            app.N_Nuf2YSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2YSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2YSpinner.FontName = 'Arial';
-            app.N_Nuf2YSpinner.Position = [101 2 51 22];
-
-            % Create N_Nuf2ZSpinnerLabel
-            app.N_Nuf2ZSpinnerLabel = uilabel(app.N_Nuf2FixedRotationParametersdegPanel);
-            app.N_Nuf2ZSpinnerLabel.HorizontalAlignment = 'right';
-            app.N_Nuf2ZSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2ZSpinnerLabel.Position = [165 2 10 22];
-            app.N_Nuf2ZSpinnerLabel.Text = 'Z';
-
-            % Create N_Nuf2ZSpinner
-            app.N_Nuf2ZSpinner = uispinner(app.N_Nuf2FixedRotationParametersdegPanel);
-            app.N_Nuf2ZSpinner.ValueChangingFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2ZSpinner.Limits = [0 360];
-            app.N_Nuf2ZSpinner.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
-            app.N_Nuf2ZSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2ZSpinner.FontName = 'Arial';
-            app.N_Nuf2ZSpinner.Position = [178 2 51 22];
-
-            % Create N_Nuf2RotationCheckBox
-            app.N_Nuf2RotationCheckBox = uicheckbox(app.N_Nuf2RotationPanel);
-            app.N_Nuf2RotationCheckBox.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureParameterChange, true);
-            app.N_Nuf2RotationCheckBox.Text = '';
-            app.N_Nuf2RotationCheckBox.Position = [142 87 16 21];
-
-            % Create N_Nuf2RotationLabel
-            app.N_Nuf2RotationLabel = uilabel(app.N_Nuf2RotationPanel);
-            app.N_Nuf2RotationLabel.FontSize = 14;
-            app.N_Nuf2RotationLabel.Position = [83 86 58 22];
-            app.N_Nuf2RotationLabel.Text = 'Rotation';
-
-            % Create N_Nuf2CheckBox
-            app.N_Nuf2CheckBox = uicheckbox(app.StaticKinetUIFigure);
-            app.N_Nuf2CheckBox.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureParameterChange, true);
-            app.N_Nuf2CheckBox.Text = '';
-            app.N_Nuf2CheckBox.Position = [190 798 14 23];
 
             % Create OutputPanel
             app.OutputPanel = uipanel(app.StaticKinetUIFigure);
@@ -926,12 +856,12 @@ classdef StaticKinet < matlab.apps.AppBase
             app.OutputPanel.Title = 'Output';
             app.OutputPanel.FontName = 'Arial';
             app.OutputPanel.FontSize = 26;
-            app.OutputPanel.Position = [801 430 298 393];
+            app.OutputPanel.Position = [826 396 298 462];
 
             % Create FileFolderNameStringLabel
             app.FileFolderNameStringLabel = uilabel(app.OutputPanel);
             app.FileFolderNameStringLabel.HorizontalAlignment = 'right';
-            app.FileFolderNameStringLabel.Position = [8 321 136 22];
+            app.FileFolderNameStringLabel.Position = [8 390 136 22];
             app.FileFolderNameStringLabel.Text = 'File/Folder Name String:';
 
             % Create FileFolderNameStringEditField
@@ -939,19 +869,19 @@ classdef StaticKinet < matlab.apps.AppBase
             app.FileFolderNameStringEditField.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.FileFolderNameStringEditField.ValueChangingFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.FileFolderNameStringEditField.HorizontalAlignment = 'center';
-            app.FileFolderNameStringEditField.Position = [146 321 130 22];
+            app.FileFolderNameStringEditField.Position = [146 390 130 22];
 
             % Create GenerateXMLCheckBox
             app.GenerateXMLCheckBox = uicheckbox(app.OutputPanel);
             app.GenerateXMLCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.GenerateXMLCheckBox.Text = 'Generate XML';
-            app.GenerateXMLCheckBox.Position = [99 269 100 22];
+            app.GenerateXMLCheckBox.Position = [99 338 100 22];
 
             % Create SaveMATFileCheckBox
             app.SaveMATFileCheckBox = uicheckbox(app.OutputPanel);
             app.SaveMATFileCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.SaveMATFileCheckBox.Text = 'Save MAT File';
-            app.SaveMATFileCheckBox.Position = [99 290 100 22];
+            app.SaveMATFileCheckBox.Position = [99 359 100 22];
 
             % Create MicroscopeSimulatorParametersPanel
             app.MicroscopeSimulatorParametersPanel = uipanel(app.OutputPanel);
@@ -959,12 +889,12 @@ classdef StaticKinet < matlab.apps.AppBase
             app.MicroscopeSimulatorParametersPanel.TitlePosition = 'centertop';
             app.MicroscopeSimulatorParametersPanel.Title = 'Microscope Simulator Parameters';
             app.MicroscopeSimulatorParametersPanel.Visible = 'off';
-            app.MicroscopeSimulatorParametersPanel.Position = [7 115 287 152];
+            app.MicroscopeSimulatorParametersPanel.Position = [7 113 287 223];
 
             % Create GainLabel
             app.GainLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.GainLabel.HorizontalAlignment = 'center';
-            app.GainLabel.Position = [9 53 30 22];
+            app.GainLabel.Position = [9 73 30 22];
             app.GainLabel.Text = 'Gain:';
 
             % Create GainEditField
@@ -972,13 +902,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.GainEditField.UpperLimitInclusive = 'off';
             app.GainEditField.Limits = [0 Inf];
             app.GainEditField.HorizontalAlignment = 'center';
-            app.GainEditField.Position = [39 53 64 22];
-            app.GainEditField.Value = 260;
+            app.GainEditField.Position = [39 73 82 22];
+            app.GainEditField.Value = 76660;
 
             % Create OffsetLabel
             app.OffsetLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.OffsetLabel.HorizontalAlignment = 'center';
-            app.OffsetLabel.Position = [7 26 41 22];
+            app.OffsetLabel.Position = [7 46 41 22];
             app.OffsetLabel.Text = 'Offset:';
 
             % Create OffsetEditField
@@ -986,12 +916,12 @@ classdef StaticKinet < matlab.apps.AppBase
             app.OffsetEditField.UpperLimitInclusive = 'off';
             app.OffsetEditField.Limits = [0 Inf];
             app.OffsetEditField.HorizontalAlignment = 'center';
-            app.OffsetEditField.Position = [56 26 50 22];
+            app.OffsetEditField.Position = [56 46 50 22];
 
             % Create GaussianNoiseSDLabel
             app.GaussianNoiseSDLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.GaussianNoiseSDLabel.HorizontalAlignment = 'center';
-            app.GaussianNoiseSDLabel.Position = [106 53 113 22];
+            app.GaussianNoiseSDLabel.Position = [128 73 113 22];
             app.GaussianNoiseSDLabel.Text = 'Gaussian Noise SD:';
 
             % Create GaussianNoiseSDEditField
@@ -999,12 +929,12 @@ classdef StaticKinet < matlab.apps.AppBase
             app.GaussianNoiseSDEditField.UpperLimitInclusive = 'off';
             app.GaussianNoiseSDEditField.Limits = [0 Inf];
             app.GaussianNoiseSDEditField.HorizontalAlignment = 'center';
-            app.GaussianNoiseSDEditField.Position = [219 53 65 22];
+            app.GaussianNoiseSDEditField.Position = [241 73 43 22];
 
             % Create MaxVoxelIntensityLabel
             app.MaxVoxelIntensityLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.MaxVoxelIntensityLabel.HorizontalAlignment = 'right';
-            app.MaxVoxelIntensityLabel.Position = [107 27 111 22];
+            app.MaxVoxelIntensityLabel.Position = [107 47 111 22];
             app.MaxVoxelIntensityLabel.Text = 'Max. Voxel Intensity:';
 
             % Create MaxVoxelIntensityEditField
@@ -1012,19 +942,19 @@ classdef StaticKinet < matlab.apps.AppBase
             app.MaxVoxelIntensityEditField.UpperLimitInclusive = 'off';
             app.MaxVoxelIntensityEditField.Limits = [0 Inf];
             app.MaxVoxelIntensityEditField.HorizontalAlignment = 'center';
-            app.MaxVoxelIntensityEditField.Position = [221 27 60 22];
+            app.MaxVoxelIntensityEditField.Position = [221 47 60 22];
             app.MaxVoxelIntensityEditField.Value = 200;
 
             % Create GenerateTIFsCheckBox
             app.GenerateTIFsCheckBox = uicheckbox(app.MicroscopeSimulatorParametersPanel);
             app.GenerateTIFsCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.GenerateTIFsCheckBox.Text = 'Generate TIFs';
-            app.GenerateTIFsCheckBox.Position = [99 0 99 22];
+            app.GenerateTIFsCheckBox.Position = [99 23 99 22];
 
             % Create NumberofPlanesSpinnerLabel
             app.NumberofPlanesSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.NumberofPlanesSpinnerLabel.HorizontalAlignment = 'center';
-            app.NumberofPlanesSpinnerLabel.Position = [65 105 102 22];
+            app.NumberofPlanesSpinnerLabel.Position = [65 176 102 22];
             app.NumberofPlanesSpinnerLabel.Text = 'Number of Planes';
 
             % Create NumberofPlanesSpinner
@@ -1033,13 +963,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.NumberofPlanesSpinner.UpperLimitInclusive = 'off';
             app.NumberofPlanesSpinner.Limits = [0 Inf];
             app.NumberofPlanesSpinner.HorizontalAlignment = 'center';
-            app.NumberofPlanesSpinner.Position = [171 105 51 22];
+            app.NumberofPlanesSpinner.Position = [171 176 51 22];
             app.NumberofPlanesSpinner.Value = 7;
 
             % Create SpacingBetweenPlanesnmSpinnerLabel
             app.SpacingBetweenPlanesnmSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.SpacingBetweenPlanesnmSpinnerLabel.HorizontalAlignment = 'center';
-            app.SpacingBetweenPlanesnmSpinnerLabel.Position = [25 79 167 22];
+            app.SpacingBetweenPlanesnmSpinnerLabel.Position = [25 150 167 22];
             app.SpacingBetweenPlanesnmSpinnerLabel.Text = 'Spacing Between Planes (nm)';
 
             % Create SpacingBetweenPlanesnmSpinner
@@ -1049,12 +979,64 @@ classdef StaticKinet < matlab.apps.AppBase
             app.SpacingBetweenPlanesnmSpinner.UpperLimitInclusive = 'off';
             app.SpacingBetweenPlanesnmSpinner.Limits = [0 Inf];
             app.SpacingBetweenPlanesnmSpinner.HorizontalAlignment = 'center';
-            app.SpacingBetweenPlanesnmSpinner.Position = [196 79 66 22];
+            app.SpacingBetweenPlanesnmSpinner.Position = [196 150 66 22];
             app.SpacingBetweenPlanesnmSpinner.Value = 300;
+
+            % Create WidthpixelsSpinnerLabel
+            app.WidthpixelsSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
+            app.WidthpixelsSpinnerLabel.HorizontalAlignment = 'center';
+            app.WidthpixelsSpinnerLabel.Position = [2 121 78 22];
+            app.WidthpixelsSpinnerLabel.Text = 'Width (pixels)';
+
+            % Create WidthpixelsSpinner
+            app.WidthpixelsSpinner = uispinner(app.MicroscopeSimulatorParametersPanel);
+            app.WidthpixelsSpinner.Step = 10;
+            app.WidthpixelsSpinner.UpperLimitInclusive = 'off';
+            app.WidthpixelsSpinner.Limits = [1 Inf];
+            app.WidthpixelsSpinner.ValueDisplayFormat = '%.0f';
+            app.WidthpixelsSpinner.HorizontalAlignment = 'center';
+            app.WidthpixelsSpinner.Position = [81 121 61 22];
+            app.WidthpixelsSpinner.Value = 40;
+
+            % Create HeightpixelsSpinnerLabel
+            app.HeightpixelsSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
+            app.HeightpixelsSpinnerLabel.HorizontalAlignment = 'center';
+            app.HeightpixelsSpinnerLabel.Position = [147 121 82 22];
+            app.HeightpixelsSpinnerLabel.Text = 'Height (pixels)';
+
+            % Create HeightpixelsSpinner
+            app.HeightpixelsSpinner = uispinner(app.MicroscopeSimulatorParametersPanel);
+            app.HeightpixelsSpinner.Step = 10;
+            app.HeightpixelsSpinner.UpperLimitInclusive = 'off';
+            app.HeightpixelsSpinner.Limits = [1 Inf];
+            app.HeightpixelsSpinner.ValueDisplayFormat = '%.0f';
+            app.HeightpixelsSpinner.HorizontalAlignment = 'center';
+            app.HeightpixelsSpinner.Position = [230 121 57 22];
+            app.HeightpixelsSpinner.Value = 40;
+
+            % Create PixelSizenmSpinnerLabel
+            app.PixelSizenmSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
+            app.PixelSizenmSpinnerLabel.HorizontalAlignment = 'center';
+            app.PixelSizenmSpinnerLabel.Position = [66 97 86 22];
+            app.PixelSizenmSpinnerLabel.Text = 'Pixel Size (nm)';
+
+            % Create PixelSizenmSpinner
+            app.PixelSizenmSpinner = uispinner(app.MicroscopeSimulatorParametersPanel);
+            app.PixelSizenmSpinner.LowerLimitInclusive = 'off';
+            app.PixelSizenmSpinner.UpperLimitInclusive = 'off';
+            app.PixelSizenmSpinner.Limits = [0 Inf];
+            app.PixelSizenmSpinner.HorizontalAlignment = 'center';
+            app.PixelSizenmSpinner.Position = [157 97 64 22];
+            app.PixelSizenmSpinner.Value = 65;
+
+            % Create PreProcessTIFsCheckBox
+            app.PreProcessTIFsCheckBox = uicheckbox(app.MicroscopeSimulatorParametersPanel);
+            app.PreProcessTIFsCheckBox.Text = 'Pre-Process TIF''s';
+            app.PreProcessTIFsCheckBox.Position = [98 2 118 22];
 
             % Create StatusOutputPanel
             app.StatusOutputPanel = uipanel(app.OutputPanel);
-            app.StatusOutputPanel.Position = [2 161 296 103];
+            app.StatusOutputPanel.Position = [2 231 296 103];
 
             % Create GenerateOutputButton
             app.GenerateOutputButton = uibutton(app.StatusOutputPanel, 'push');
@@ -1267,13 +1249,6 @@ classdef StaticKinet < matlab.apps.AppBase
             app.XUpperLimnmEditField3.HorizontalAlignment = 'center';
             app.XUpperLimnmEditField3.Position = [1017 33 38 22];
 
-            % Create N_Nuf2StructureLabel
-            app.N_Nuf2StructureLabel = uilabel(app.StaticKinetUIFigure);
-            app.N_Nuf2StructureLabel.FontName = 'Arial';
-            app.N_Nuf2StructureLabel.FontSize = 18;
-            app.N_Nuf2StructureLabel.Position = [55 798 136 22];
-            app.N_Nuf2StructureLabel.Text = 'N-Terminal Nuf2';
-
             % Create GraphPanel
             app.GraphPanel = uipanel(app.StaticKinetUIFigure);
             app.GraphPanel.BorderType = 'none';
@@ -1307,28 +1282,30 @@ classdef StaticKinet < matlab.apps.AppBase
             app.NumberofComplexesSwitchLabel = uilabel(app.StaticKinetUIFigure);
             app.NumberofComplexesSwitchLabel.HorizontalAlignment = 'center';
             app.NumberofComplexesSwitchLabel.FontName = 'Arial';
-            app.NumberofComplexesSwitchLabel.Position = [470 829 125 22];
+            app.NumberofComplexesSwitchLabel.Position = [11 830 125 22];
             app.NumberofComplexesSwitchLabel.Text = 'Number of Complexes';
 
             % Create NumberofComplexesSwitch
             app.NumberofComplexesSwitch = uiswitch(app.StaticKinetUIFigure, 'slider');
             app.NumberofComplexesSwitch.Items = {'1', '2'};
-            app.NumberofComplexesSwitch.ValueChangedFcn = createCallbackFcn(app, @ComplexParameterChange, true);
+            app.NumberofComplexesSwitch.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
             app.NumberofComplexesSwitch.FontName = 'Arial';
-            app.NumberofComplexesSwitch.Position = [612 831 42 19];
+            app.NumberofComplexesSwitch.Position = [153 832 42 19];
             app.NumberofComplexesSwitch.Value = '1';
 
             % Create Spc29StructurePanel
             app.Spc29StructurePanel = uipanel(app.StaticKinetUIFigure);
             app.Spc29StructurePanel.BorderType = 'none';
+            app.Spc29StructurePanel.TitlePosition = 'centertop';
+            app.Spc29StructurePanel.Title = 'Spc-29';
             app.Spc29StructurePanel.FontName = 'Arial';
-            app.Spc29StructurePanel.FontSize = 16;
-            app.Spc29StructurePanel.Position = [283 643 221 155];
+            app.Spc29StructurePanel.FontSize = 24;
+            app.Spc29StructurePanel.Position = [277 538 221 193];
 
             % Create Spc29TubuleDiameternmSpinnerLabel
             app.Spc29TubuleDiameternmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29TubuleDiameternmSpinnerLabel.HorizontalAlignment = 'center';
-            app.Spc29TubuleDiameternmSpinnerLabel.Position = [1 90 145 22];
+            app.Spc29TubuleDiameternmSpinnerLabel.Position = [1 95 145 22];
             app.Spc29TubuleDiameternmSpinnerLabel.Text = 'Tubule Diameter (nm)';
 
             % Create Spc29TubuleDiameternmSpinner
@@ -1341,14 +1318,14 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29TubuleDiameternmSpinner.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29TubuleDiameternmSpinner.HorizontalAlignment = 'center';
             app.Spc29TubuleDiameternmSpinner.FontName = 'Arial';
-            app.Spc29TubuleDiameternmSpinner.Position = [145 90 66 22];
+            app.Spc29TubuleDiameternmSpinner.Position = [145 95 66 22];
             app.Spc29TubuleDiameternmSpinner.Value = 25;
 
             % Create Spc29StructureDiameternmSpinnerLabel
             app.Spc29StructureDiameternmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29StructureDiameternmSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29StructureDiameternmSpinnerLabel.FontName = 'Arial';
-            app.Spc29StructureDiameternmSpinnerLabel.Position = [1 69 145 22];
+            app.Spc29StructureDiameternmSpinnerLabel.Position = [1 74 145 22];
             app.Spc29StructureDiameternmSpinnerLabel.Text = 'Structure Diameter (nm)';
 
             % Create Spc29StructureDiameternmSpinner
@@ -1361,14 +1338,14 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29StructureDiameternmSpinner.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29StructureDiameternmSpinner.HorizontalAlignment = 'center';
             app.Spc29StructureDiameternmSpinner.FontName = 'Arial';
-            app.Spc29StructureDiameternmSpinner.Position = [145 69 66 22];
+            app.Spc29StructureDiameternmSpinner.Position = [145 74 66 22];
             app.Spc29StructureDiameternmSpinner.Value = 100;
 
             % Create Spc29NumberofFluorophoreSpinnerLabel
             app.Spc29NumberofFluorophoreSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29NumberofFluorophoreSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29NumberofFluorophoreSpinnerLabel.FontName = 'Arial';
-            app.Spc29NumberofFluorophoreSpinnerLabel.Position = [1 48 145 22];
+            app.Spc29NumberofFluorophoreSpinnerLabel.Position = [1 53 145 22];
             app.Spc29NumberofFluorophoreSpinnerLabel.Text = 'Number of Fluorophore';
 
             % Create Spc29NumberofFluorophoreSpinner
@@ -1381,14 +1358,14 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29NumberofFluorophoreSpinner.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29NumberofFluorophoreSpinner.HorizontalAlignment = 'center';
             app.Spc29NumberofFluorophoreSpinner.FontName = 'Arial';
-            app.Spc29NumberofFluorophoreSpinner.Position = [145 48 66 22];
+            app.Spc29NumberofFluorophoreSpinner.Position = [145 53 66 22];
             app.Spc29NumberofFluorophoreSpinner.Value = 20;
 
             % Create Spc29ColorChannelDropDownLabel
             app.Spc29ColorChannelDropDownLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29ColorChannelDropDownLabel.HorizontalAlignment = 'center';
             app.Spc29ColorChannelDropDownLabel.FontName = 'Arial';
-            app.Spc29ColorChannelDropDownLabel.Position = [1 6 145 22];
+            app.Spc29ColorChannelDropDownLabel.Position = [28 7 91 22];
             app.Spc29ColorChannelDropDownLabel.Text = 'Color Channel';
 
             % Create Spc29ColorChannelDropDown
@@ -1396,14 +1373,14 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29ColorChannelDropDown.Items = {'All', 'Green', 'Red', 'Blue'};
             app.Spc29ColorChannelDropDown.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29ColorChannelDropDown.FontName = 'Arial';
-            app.Spc29ColorChannelDropDown.Position = [145 6 66 22];
+            app.Spc29ColorChannelDropDown.Position = [145 8 66 22];
             app.Spc29ColorChannelDropDown.Value = 'All';
 
             % Create Spc29NumberofTubulesSpinnerLabel
             app.Spc29NumberofTubulesSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29NumberofTubulesSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29NumberofTubulesSpinnerLabel.FontName = 'Arial';
-            app.Spc29NumberofTubulesSpinnerLabel.Position = [19 27 107 22];
+            app.Spc29NumberofTubulesSpinnerLabel.Position = [19 32 107 22];
             app.Spc29NumberofTubulesSpinnerLabel.Text = 'Number of Tubules';
 
             % Create Spc29NumberofTubulesSpinner
@@ -1416,14 +1393,14 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29NumberofTubulesSpinner.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29NumberofTubulesSpinner.HorizontalAlignment = 'center';
             app.Spc29NumberofTubulesSpinner.FontName = 'Arial';
-            app.Spc29NumberofTubulesSpinner.Position = [145 27 66 22];
+            app.Spc29NumberofTubulesSpinner.Position = [145 32 66 22];
             app.Spc29NumberofTubulesSpinner.Value = 16;
 
             % Create Spc29LengthnmSpinnerLabel
             app.Spc29LengthnmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29LengthnmSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29LengthnmSpinnerLabel.FontName = 'Arial';
-            app.Spc29LengthnmSpinnerLabel.Position = [1 130 145 22];
+            app.Spc29LengthnmSpinnerLabel.Position = [1 135 145 22];
             app.Spc29LengthnmSpinnerLabel.Text = 'Length (nm)';
 
             % Create Spc29LengthnmSpinner
@@ -1435,13 +1412,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29LengthnmSpinner.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29LengthnmSpinner.HorizontalAlignment = 'center';
             app.Spc29LengthnmSpinner.FontName = 'Arial';
-            app.Spc29LengthnmSpinner.Position = [145 130 66 22];
+            app.Spc29LengthnmSpinner.Position = [145 135 66 22];
             app.Spc29LengthnmSpinner.Value = 2;
 
             % Create Spc29DistancetonmSpinnerLabel
             app.Spc29DistancetonmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29DistancetonmSpinnerLabel.HorizontalAlignment = 'center';
-            app.Spc29DistancetonmSpinnerLabel.Position = [18 111 112 22];
+            app.Spc29DistancetonmSpinnerLabel.Position = [18 116 112 22];
             app.Spc29DistancetonmSpinnerLabel.Text = 'Distance to (+) (nm)';
 
             % Create Spc29DistancetonmSpinner
@@ -1452,21 +1429,390 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29DistancetonmSpinner.Limits = [0 Inf];
             app.Spc29DistancetonmSpinner.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29DistancetonmSpinner.HorizontalAlignment = 'center';
-            app.Spc29DistancetonmSpinner.Position = [145 111 66 22];
+            app.Spc29DistancetonmSpinner.Position = [145 116 66 22];
             app.Spc29DistancetonmSpinner.Value = 350;
+
+            % Create MicrotubuleDiameternmLabel
+            app.MicrotubuleDiameternmLabel = uilabel(app.StaticKinetUIFigure);
+            app.MicrotubuleDiameternmLabel.HorizontalAlignment = 'center';
+            app.MicrotubuleDiameternmLabel.Position = [435 830 148 22];
+            app.MicrotubuleDiameternmLabel.Text = 'Microtubule Diameter (nm)';
+
+            % Create MicrotubuleDiameternmSpinner
+            app.MicrotubuleDiameternmSpinner = uispinner(app.StaticKinetUIFigure);
+            app.MicrotubuleDiameternmSpinner.Step = 5;
+            app.MicrotubuleDiameternmSpinner.LowerLimitInclusive = 'off';
+            app.MicrotubuleDiameternmSpinner.UpperLimitInclusive = 'off';
+            app.MicrotubuleDiameternmSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.MicrotubuleDiameternmSpinner.Limits = [0 Inf];
+            app.MicrotubuleDiameternmSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.MicrotubuleDiameternmSpinner.HorizontalAlignment = 'center';
+            app.MicrotubuleDiameternmSpinner.FontName = 'Arial';
+            app.MicrotubuleDiameternmSpinner.Position = [586 830 66 22];
+            app.MicrotubuleDiameternmSpinner.Value = 25;
+
+            % Create StructureDiameternmSpinnerLabel
+            app.StructureDiameternmSpinnerLabel = uilabel(app.StaticKinetUIFigure);
+            app.StructureDiameternmSpinnerLabel.HorizontalAlignment = 'center';
+            app.StructureDiameternmSpinnerLabel.FontName = 'Arial';
+            app.StructureDiameternmSpinnerLabel.Position = [17 803 134 22];
+            app.StructureDiameternmSpinnerLabel.Text = 'Structure Diameter (nm)';
+
+            % Create StructureDiameternmSpinner
+            app.StructureDiameternmSpinner = uispinner(app.StaticKinetUIFigure);
+            app.StructureDiameternmSpinner.Step = 10;
+            app.StructureDiameternmSpinner.LowerLimitInclusive = 'off';
+            app.StructureDiameternmSpinner.UpperLimitInclusive = 'off';
+            app.StructureDiameternmSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.StructureDiameternmSpinner.Limits = [0 Inf];
+            app.StructureDiameternmSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.StructureDiameternmSpinner.HorizontalAlignment = 'center';
+            app.StructureDiameternmSpinner.FontName = 'Arial';
+            app.StructureDiameternmSpinner.Position = [158 803 67 22];
+            app.StructureDiameternmSpinner.Value = 250;
+
+            % Create NumberofChromosomesSpinnerLabel
+            app.NumberofChromosomesSpinnerLabel = uilabel(app.StaticKinetUIFigure);
+            app.NumberofChromosomesSpinnerLabel.HorizontalAlignment = 'center';
+            app.NumberofChromosomesSpinnerLabel.FontName = 'Arial';
+            app.NumberofChromosomesSpinnerLabel.Position = [215 830 143 22];
+            app.NumberofChromosomesSpinnerLabel.Text = 'Number of Chromosomes';
+
+            % Create NumberofChromosomesSpinner
+            app.NumberofChromosomesSpinner = uispinner(app.StaticKinetUIFigure);
+            app.NumberofChromosomesSpinner.LowerLimitInclusive = 'off';
+            app.NumberofChromosomesSpinner.UpperLimitInclusive = 'off';
+            app.NumberofChromosomesSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.NumberofChromosomesSpinner.Limits = [0 Inf];
+            app.NumberofChromosomesSpinner.RoundFractionalValues = 'on';
+            app.NumberofChromosomesSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.NumberofChromosomesSpinner.HorizontalAlignment = 'center';
+            app.NumberofChromosomesSpinner.FontName = 'Arial';
+            app.NumberofChromosomesSpinner.Position = [359 830 66 22];
+            app.NumberofChromosomesSpinner.Value = 16;
+
+            % Create StaggerDropDownLabel
+            app.StaggerDropDownLabel = uilabel(app.StaticKinetUIFigure);
+            app.StaggerDropDownLabel.HorizontalAlignment = 'center';
+            app.StaggerDropDownLabel.Position = [235 804 48 22];
+            app.StaggerDropDownLabel.Text = 'Stagger';
+
+            % Create StaggerDropDown
+            app.StaggerDropDown = uidropdown(app.StaticKinetUIFigure);
+            app.StaggerDropDown.Items = {'None', 'Random', 'SimuLink Data (Stevens et al.)'};
+            app.StaggerDropDown.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.StaggerDropDown.Position = [289 803 187 22];
+            app.StaggerDropDown.Value = 'None';
+
+            % Create RangenmSpinnerLabel
+            app.RangenmSpinnerLabel = uilabel(app.StaticKinetUIFigure);
+            app.RangenmSpinnerLabel.HorizontalAlignment = 'center';
+            app.RangenmSpinnerLabel.Visible = 'off';
+            app.RangenmSpinnerLabel.Position = [486 800 87 22];
+            app.RangenmSpinnerLabel.Text = 'Range +/- (nm)';
+
+            % Create RangenmSpinner
+            app.RangenmSpinner = uispinner(app.StaticKinetUIFigure);
+            app.RangenmSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.RangenmSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.RangenmSpinner.HorizontalAlignment = 'center';
+            app.RangenmSpinner.Visible = 'off';
+            app.RangenmSpinner.Position = [575 800 78 22];
+
+            % Create N_Nuf2CheckBox
+            app.N_Nuf2CheckBox = uicheckbox(app.StaticKinetUIFigure);
+            app.N_Nuf2CheckBox.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
+            app.N_Nuf2CheckBox.Text = '';
+            app.N_Nuf2CheckBox.Position = [232 704 14 23];
 
             % Create Spc29CheckBox
             app.Spc29CheckBox = uicheckbox(app.StaticKinetUIFigure);
-            app.Spc29CheckBox.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureParmeterChange, true);
+            app.Spc29CheckBox.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29CheckBox.Text = '';
-            app.Spc29CheckBox.Position = [421 798 14 23];
+            app.Spc29CheckBox.Position = [430 704 14 23];
 
-            % Create Spc29StructureLabel
-            app.Spc29StructureLabel = uilabel(app.StaticKinetUIFigure);
-            app.Spc29StructureLabel.FontName = 'Arial';
-            app.Spc29StructureLabel.FontSize = 18;
-            app.Spc29StructureLabel.Position = [364 797 57 22];
-            app.Spc29StructureLabel.Text = 'Spc29';
+            % Create KinetochoreProteinPanel
+            app.KinetochoreProteinPanel = uipanel(app.StaticKinetUIFigure);
+            app.KinetochoreProteinPanel.Title = 'Kinetochore Protein';
+            app.KinetochoreProteinPanel.FontSize = 24;
+            app.KinetochoreProteinPanel.Position = [540 509 260 278];
+
+            % Create LengthofUnboundnmSpinnerLabel
+            app.LengthofUnboundnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.LengthofUnboundnmSpinnerLabel.HorizontalAlignment = 'right';
+            app.LengthofUnboundnmSpinnerLabel.Position = [31 138 134 22];
+            app.LengthofUnboundnmSpinnerLabel.Text = 'Length of Unbound (nm)';
+
+            % Create LengthofUnboundnmSpinner
+            app.LengthofUnboundnmSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.LengthofUnboundnmSpinner.Step = 10;
+            app.LengthofUnboundnmSpinner.LowerLimitInclusive = 'off';
+            app.LengthofUnboundnmSpinner.UpperLimitInclusive = 'off';
+            app.LengthofUnboundnmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LengthofUnboundnmSpinner.Limits = [0 Inf];
+            app.LengthofUnboundnmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LengthofUnboundnmSpinner.HorizontalAlignment = 'center';
+            app.LengthofUnboundnmSpinner.Position = [172 138 64 22];
+            app.LengthofUnboundnmSpinner.Value = 70;
+
+            % Create NumberofComplexesSpinnerLabel
+            app.NumberofComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.NumberofComplexesSpinnerLabel.HorizontalAlignment = 'right';
+            app.NumberofComplexesSpinnerLabel.Position = [42 212 125 22];
+            app.NumberofComplexesSpinnerLabel.Text = 'Number of Complexes';
+
+            % Create NumberofComplexesSpinner
+            app.NumberofComplexesSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.NumberofComplexesSpinner.UpperLimitInclusive = 'off';
+            app.NumberofComplexesSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.NumberofComplexesSpinner.Limits = [0 Inf];
+            app.NumberofComplexesSpinner.RoundFractionalValues = 'on';
+            app.NumberofComplexesSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.NumberofComplexesSpinner.HorizontalAlignment = 'center';
+            app.NumberofComplexesSpinner.Position = [172 212 64 22];
+            app.NumberofComplexesSpinner.Value = 8;
+
+            % Create DistanceofTapernmSpinnerLabel
+            app.DistanceofTapernmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.DistanceofTapernmSpinnerLabel.HorizontalAlignment = 'right';
+            app.DistanceofTapernmSpinnerLabel.Position = [31 64 134 22];
+            app.DistanceofTapernmSpinnerLabel.Text = 'Distance of Taper (nm)';
+
+            % Create DistanceofTapernmSpinner
+            app.DistanceofTapernmSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.DistanceofTapernmSpinner.LowerLimitInclusive = 'off';
+            app.DistanceofTapernmSpinner.UpperLimitInclusive = 'off';
+            app.DistanceofTapernmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.DistanceofTapernmSpinner.Limits = [0 Inf];
+            app.DistanceofTapernmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.DistanceofTapernmSpinner.HorizontalAlignment = 'center';
+            app.DistanceofTapernmSpinner.Position = [172 64 64 22];
+            app.DistanceofTapernmSpinner.Value = 20;
+
+            % Create NumberofBoundComplexesSpinnerLabel
+            app.NumberofBoundComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.NumberofBoundComplexesSpinnerLabel.HorizontalAlignment = 'right';
+            app.NumberofBoundComplexesSpinnerLabel.Position = [4 191 163 22];
+            app.NumberofBoundComplexesSpinnerLabel.Text = 'Number of Bound Complexes';
+
+            % Create NumberofBoundComplexesSpinner
+            app.NumberofBoundComplexesSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.NumberofBoundComplexesSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.NumberofBoundComplexesSpinner.Limits = [0 Inf];
+            app.NumberofBoundComplexesSpinner.RoundFractionalValues = 'on';
+            app.NumberofBoundComplexesSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.NumberofBoundComplexesSpinner.HorizontalAlignment = 'center';
+            app.NumberofBoundComplexesSpinner.Position = [172 191 64 22];
+            app.NumberofBoundComplexesSpinner.Value = 8;
+
+            % Create RadialDispofTapernmSpinnerLabel
+            app.RadialDispofTapernmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.RadialDispofTapernmSpinnerLabel.HorizontalAlignment = 'right';
+            app.RadialDispofTapernmSpinnerLabel.Position = [22 44 145 22];
+            app.RadialDispofTapernmSpinnerLabel.Text = 'Radial Disp. of Taper (nm)';
+
+            % Create RadialDispofTapernmSpinner
+            app.RadialDispofTapernmSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.RadialDispofTapernmSpinner.UpperLimitInclusive = 'off';
+            app.RadialDispofTapernmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.RadialDispofTapernmSpinner.Limits = [0 Inf];
+            app.RadialDispofTapernmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.RadialDispofTapernmSpinner.HorizontalAlignment = 'center';
+            app.RadialDispofTapernmSpinner.Position = [172 44 64 22];
+
+            % Create AngleRangeforUnbounddegSpinnerLabel
+            app.AngleRangeforUnbounddegSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.AngleRangeforUnbounddegSpinnerLabel.HorizontalAlignment = 'right';
+            app.AngleRangeforUnbounddegSpinnerLabel.Position = [44 113 179 22];
+            app.AngleRangeforUnbounddegSpinnerLabel.Text = 'Angle Range for Unbound (deg.)';
+
+            % Create LowerAngleSpinner
+            app.LowerAngleSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.LowerAngleSpinner.Step = 5;
+            app.LowerAngleSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LowerAngleSpinner.Limits = [-90 90];
+            app.LowerAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LowerAngleSpinner.HorizontalAlignment = 'center';
+            app.LowerAngleSpinner.Position = [49 90 67 22];
+            app.LowerAngleSpinner.Value = -90;
+
+            % Create UpperAngleLabel
+            app.UpperAngleLabel = uilabel(app.KinetochoreProteinPanel);
+            app.UpperAngleLabel.HorizontalAlignment = 'center';
+            app.UpperAngleLabel.Position = [122 90 21 22];
+            app.UpperAngleLabel.Text = 'to';
+
+            % Create UpperAngleSpinner
+            app.UpperAngleSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.UpperAngleSpinner.Step = 5;
+            app.UpperAngleSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.UpperAngleSpinner.Limits = [-90 90];
+            app.UpperAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.UpperAngleSpinner.HorizontalAlignment = 'center';
+            app.UpperAngleSpinner.Position = [154 90 67 22];
+            app.UpperAngleSpinner.Value = 90;
+
+            % Create ofLengthMarkedSpinnerLabel
+            app.ofLengthMarkedSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.ofLengthMarkedSpinnerLabel.HorizontalAlignment = 'right';
+            app.ofLengthMarkedSpinnerLabel.Position = [54 171 113 22];
+            app.ofLengthMarkedSpinnerLabel.Text = '% of Length Marked';
+
+            % Create ofLengthMarkedSpinner
+            app.ofLengthMarkedSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.ofLengthMarkedSpinner.LowerLimitInclusive = 'off';
+            app.ofLengthMarkedSpinner.UpperLimitInclusive = 'off';
+            app.ofLengthMarkedSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.ofLengthMarkedSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.ofLengthMarkedSpinner.HorizontalAlignment = 'center';
+            app.ofLengthMarkedSpinner.Position = [172 171 64 22];
+
+            % Create KinetochoreColorChannelLabel
+            app.KinetochoreColorChannelLabel = uilabel(app.KinetochoreProteinPanel);
+            app.KinetochoreColorChannelLabel.HorizontalAlignment = 'center';
+            app.KinetochoreColorChannelLabel.FontName = 'Arial';
+            app.KinetochoreColorChannelLabel.Position = [53 21 91 22];
+            app.KinetochoreColorChannelLabel.Text = 'Color Channel';
+
+            % Create KinetochoreColorChannel
+            app.KinetochoreColorChannel = uidropdown(app.KinetochoreProteinPanel);
+            app.KinetochoreColorChannel.Items = {'All', 'Green', 'Red', 'Blue'};
+            app.KinetochoreColorChannel.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.KinetochoreColorChannel.FontName = 'Arial';
+            app.KinetochoreColorChannel.Position = [170 22 66 22];
+            app.KinetochoreColorChannel.Value = 'All';
+
+            % Create KinetochoreCheckBox
+            app.KinetochoreCheckBox = uicheckbox(app.StaticKinetUIFigure);
+            app.KinetochoreCheckBox.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.KinetochoreCheckBox.Text = '';
+            app.KinetochoreCheckBox.Position = [762 759 18 22];
+
+            % Create RotationPanel
+            app.RotationPanel = uipanel(app.StaticKinetUIFigure);
+            app.RotationPanel.BorderType = 'none';
+            app.RotationPanel.Position = [11 744 516 52];
+
+            % Create RotationParametersPanel
+            app.RotationParametersPanel = uibuttongroup(app.RotationPanel);
+            app.RotationParametersPanel.SelectionChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.RotationParametersPanel.BorderType = 'none';
+            app.RotationParametersPanel.BackgroundColor = [0.9412 0.9412 0.9412];
+            app.RotationParametersPanel.HandleVisibility = 'off';
+            app.RotationParametersPanel.Position = [1 5 260 30];
+
+            % Create FixedRotationButton
+            app.FixedRotationButton = uiradiobutton(app.RotationParametersPanel);
+            app.FixedRotationButton.Text = 'Fixed Rotation';
+            app.FixedRotationButton.Position = [25 9 99 19];
+            app.FixedRotationButton.Value = true;
+
+            % Create RandomRotationButton
+            app.RandomRotationButton = uiradiobutton(app.RotationParametersPanel);
+            app.RandomRotationButton.Text = 'Random Rotation';
+            app.RandomRotationButton.Position = [125 8 115 20];
+
+            % Create RotationCheckBox
+            app.RotationCheckBox = uicheckbox(app.RotationPanel);
+            app.RotationCheckBox.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.RotationCheckBox.Text = '';
+            app.RotationCheckBox.Position = [161 32 16 21];
+
+            % Create RotationLabel
+            app.RotationLabel = uilabel(app.RotationPanel);
+            app.RotationLabel.FontSize = 14;
+            app.RotationLabel.Position = [102 31 58 22];
+            app.RotationLabel.Text = 'Rotation';
+
+            % Create RandomRotationParametersdegPanel
+            app.RandomRotationParametersdegPanel = uipanel(app.RotationPanel);
+            app.RandomRotationParametersdegPanel.BorderType = 'none';
+            app.RandomRotationParametersdegPanel.TitlePosition = 'centertop';
+            app.RandomRotationParametersdegPanel.Title = 'Random Rotation Parameters (deg.)';
+            app.RandomRotationParametersdegPanel.Position = [254 2 233 51];
+
+            % Create LowLimSpinnerLabel
+            app.LowLimSpinnerLabel = uilabel(app.RandomRotationParametersdegPanel);
+            app.LowLimSpinnerLabel.HorizontalAlignment = 'center';
+            app.LowLimSpinnerLabel.Position = [2 3 56 22];
+            app.LowLimSpinnerLabel.Text = 'Low. Lim.';
+
+            % Create LowLimSpinner
+            app.LowLimSpinner = uispinner(app.RandomRotationParametersdegPanel);
+            app.LowLimSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.LowLimSpinner.Limits = [0 360];
+            app.LowLimSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.LowLimSpinner.HorizontalAlignment = 'center';
+            app.LowLimSpinner.Position = [63 3 51 22];
+
+            % Create UpLimSpinnerLabel
+            app.UpLimSpinnerLabel = uilabel(app.RandomRotationParametersdegPanel);
+            app.UpLimSpinnerLabel.HorizontalAlignment = 'center';
+            app.UpLimSpinnerLabel.Position = [128 3 50 22];
+            app.UpLimSpinnerLabel.Text = 'Up. Lim.';
+
+            % Create UpLimSpinner
+            app.UpLimSpinner = uispinner(app.RandomRotationParametersdegPanel);
+            app.UpLimSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.UpLimSpinner.Limits = [0 360];
+            app.UpLimSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.UpLimSpinner.HorizontalAlignment = 'center';
+            app.UpLimSpinner.Position = [178 3 52 22];
+
+            % Create FixedRotationParametersdegPanel
+            app.FixedRotationParametersdegPanel = uipanel(app.RotationPanel);
+            app.FixedRotationParametersdegPanel.BorderType = 'none';
+            app.FixedRotationParametersdegPanel.TitlePosition = 'centertop';
+            app.FixedRotationParametersdegPanel.Title = 'Fixed Rotation Parameters (deg.)';
+            app.FixedRotationParametersdegPanel.Position = [253 2 233 51];
+
+            % Create XSpinnerLabel
+            app.XSpinnerLabel = uilabel(app.FixedRotationParametersdegPanel);
+            app.XSpinnerLabel.HorizontalAlignment = 'right';
+            app.XSpinnerLabel.FontName = 'Arial';
+            app.XSpinnerLabel.Position = [10 4 10 22];
+            app.XSpinnerLabel.Text = 'X';
+
+            % Create XSpinner
+            app.XSpinner = uispinner(app.FixedRotationParametersdegPanel);
+            app.XSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.XSpinner.Limits = [0 360];
+            app.XSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.XSpinner.HorizontalAlignment = 'center';
+            app.XSpinner.FontName = 'Arial';
+            app.XSpinner.Position = [23 4 51 22];
+
+            % Create YSpinnerLabel
+            app.YSpinnerLabel = uilabel(app.FixedRotationParametersdegPanel);
+            app.YSpinnerLabel.HorizontalAlignment = 'right';
+            app.YSpinnerLabel.FontName = 'Arial';
+            app.YSpinnerLabel.Position = [88 4 10 22];
+            app.YSpinnerLabel.Text = 'Y';
+
+            % Create YSpinner
+            app.YSpinner = uispinner(app.FixedRotationParametersdegPanel);
+            app.YSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.YSpinner.Limits = [0 360];
+            app.YSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.YSpinner.HorizontalAlignment = 'center';
+            app.YSpinner.FontName = 'Arial';
+            app.YSpinner.Position = [101 4 51 22];
+
+            % Create ZSpinnerLabel
+            app.ZSpinnerLabel = uilabel(app.FixedRotationParametersdegPanel);
+            app.ZSpinnerLabel.HorizontalAlignment = 'right';
+            app.ZSpinnerLabel.FontName = 'Arial';
+            app.ZSpinnerLabel.Position = [165 4 10 22];
+            app.ZSpinnerLabel.Text = 'Z';
+
+            % Create ZSpinner
+            app.ZSpinner = uispinner(app.FixedRotationParametersdegPanel);
+            app.ZSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.ZSpinner.Limits = [0 360];
+            app.ZSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.ZSpinner.HorizontalAlignment = 'center';
+            app.ZSpinner.FontName = 'Arial';
+            app.ZSpinner.Position = [178 4 51 22];
         end
     end
 
