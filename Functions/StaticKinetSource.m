@@ -156,7 +156,7 @@ classdef StaticKinet < matlab.apps.AppBase
         KinetochorePointInfo % Contains information about the points that make up the kinetochore complex
         Spc29PointInfo % Continas information about the points that make up the Spc29 structure
         MasterPointInfo % Contains information about the points that make up the entire simulation
-        LengthSimth % Array of possible stagger lengths acquired from running Coupled Model Crosslinked Simulation by Stevens et al.
+        LengthSim % Array of possible stagger lengths acquired from running Coupled Model Crosslinked Simulation by Stevens et al.
         BioDistances % Description
         BioDistanceCorrection % Description
         Rotation % Description
@@ -166,6 +166,7 @@ classdef StaticKinet < matlab.apps.AppBase
     methods (Access = private)
         function GeneralParametreCheck(app)
             MainParameterCheck(app)
+            KinetochoreValueChangeCheck(app)
             OutputParameterCheck(app)
             OutputParameterLocationCheck(app)
             AxisParameterCheck(app)            
@@ -200,7 +201,9 @@ classdef StaticKinet < matlab.apps.AppBase
                 app.NumberofBoundComplexesSpinner.Value = app.NumberofComplexesSpinner.Value;
             end
             if app.LowerAngleSpinner.Value > app.UpperAngleSpinner.Value
+                tempUpper = app.UpperAngleSpinner.Value;
                 app.UpperAngleSpinner.Value = app.LowerAngleSpinner.Value;
+                app.LowerAngleSpinner.Value = tempUpper;
             end
         end
             
@@ -247,7 +250,7 @@ classdef StaticKinet < matlab.apps.AppBase
     
         function GenerateSimuLinkData(app)
                 sim('Coupled_Model_crosslinked_intext.slx')
-                app.LengthSimth = kMtsOut(500:end,:);
+                app.LengthSim = kMtsOut(500:end,:);
         end
     
         function UpdateData(app)
@@ -297,7 +300,7 @@ classdef StaticKinet < matlab.apps.AppBase
                 if strcmp(app.StaggerDropDown.Value, 'Random')
                     app.Stagger = (rand(1,app.NumberofChromosomesSpinner.Value*NoC)-0.5)*(app.RangenmSpinner.Value*2);
                 else
-                    app.Stagger = (app.LengthSimth(ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSimth,1)),ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSimth,2)))-3.5e-07)*1e9;
+                    app.Stagger = (app.LengthSim(ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,1)),ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,2)))-3.5e-07)*1e9;
                 end
             end
         end
@@ -562,7 +565,6 @@ classdef StaticKinet < matlab.apps.AppBase
                 mkdir(app.FileFolderNameStringEditField.Value)
             end
         end
-    
         function MasterPointInforCorrection(app)
             app.MasterPointInfo.CoordPointsCorrect = app.MasterPointInfo.CoordPoints + [(app.WidthpixelsSpinner.Value*app.PixelSizenmSpinner.Value)/2;(app.HeightpixelsSpinner.Value*app.PixelSizenmSpinner.Value)/2;((app.NumberofPlanesSpinner.Value-1)/2)*app.SpacingBetweenPlanesnmSpinner.Value];
         end
@@ -584,7 +586,6 @@ classdef StaticKinet < matlab.apps.AppBase
                end
             end
         end
-    
         function PreProcess(app)
             SimulatedImagesPreProcess
         end
@@ -637,8 +638,8 @@ classdef StaticKinet < matlab.apps.AppBase
                 TestOrCreateDirectory(app)
                 CopyBtoF(app)
                 cd(app.FileFolderNameStringEditField.Value)
-                mkdir(strcat(app.FileFolderNameStringEditField.Value,'_Data'))
-                cd(strcat(app.FileFolderNameStringEditField.Value,'_Data'))
+                mkdir(strcat(app.FileFolderNameStringEditField.Value,'_DATA'))
+                cd(strcat(app.FileFolderNameStringEditField.Value,'_DATA'))
                 if app.SaveMATFileCheckBox.Value == true
                     SaveMasterPointInfo(app);
                 end
@@ -647,10 +648,10 @@ classdef StaticKinet < matlab.apps.AppBase
                     GenerateXML(app);
                 end
                 cd ..
-                if strcmp(app.MicroscopeSimulatorParametersPanel.Visible,'on') & app.GenerateTIFsCheckBox.Value == true
-                        GenerateTIF(app)
+                if strcmp(app.MicroscopeSimulatorParametersPanel.Visible,'on') && app.GenerateTIFsCheckBox.Value == true
+                    GenerateTIF(app)
                 end
-                if strcmp(app.MicroscopeSimulatorParametersPanel.Visible,'on') & app.GenerateTIFsCheckBox.Value == true & app.PreProcessTIFsCheckBox.Value == true
+                if strcmp(app.MicroscopeSimulatorParametersPanel.Visible,'on') && app.GenerateTIFsCheckBox.Value == true && app.PreProcessTIFsCheckBox.Value == true
                     PreProcess(app)
                 end
                 app.StatusEditField.Value = 'Finished!';
@@ -670,7 +671,7 @@ classdef StaticKinet < matlab.apps.AppBase
         % Selection changed function: AxisLimitsButtonGroup
         function AxisLimitsParameterChange(app, event)
             AxisParameterCheck(app)
-            Updateplot(app)
+            UpdatePlot(app)
         end
 
         % Value changed function: XLowerLimnmEditField1, 
@@ -681,7 +682,7 @@ classdef StaticKinet < matlab.apps.AppBase
         % YUpperLimnmEditField1, YUpperLimnmEditField2, 
         % YUpperLimnmEditField3
         function AxisLimitsValueChange(app, event)
-            Updateplot(app)
+            UpdatePlot(app)
         end
 
         % Menu selected function: GitHubMenu
@@ -1533,6 +1534,7 @@ classdef StaticKinet < matlab.apps.AppBase
 
             % Create KinetochoreProteinPanel
             app.KinetochoreProteinPanel = uipanel(app.StaticKinetUIFigure);
+            app.KinetochoreProteinPanel.BorderType = 'none';
             app.KinetochoreProteinPanel.Title = 'Kinetochore Protein';
             app.KinetochoreProteinPanel.FontSize = 24;
             app.KinetochoreProteinPanel.Position = [540 509 260 278];
@@ -1540,7 +1542,7 @@ classdef StaticKinet < matlab.apps.AppBase
             % Create LengthofUnboundnmSpinnerLabel
             app.LengthofUnboundnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.LengthofUnboundnmSpinnerLabel.HorizontalAlignment = 'right';
-            app.LengthofUnboundnmSpinnerLabel.Position = [31 138 134 22];
+            app.LengthofUnboundnmSpinnerLabel.Position = [31 139 134 22];
             app.LengthofUnboundnmSpinnerLabel.Text = 'Length of Unbound (nm)';
 
             % Create LengthofUnboundnmSpinner
@@ -1552,13 +1554,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.LengthofUnboundnmSpinner.Limits = [0 Inf];
             app.LengthofUnboundnmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.LengthofUnboundnmSpinner.HorizontalAlignment = 'center';
-            app.LengthofUnboundnmSpinner.Position = [172 138 64 22];
+            app.LengthofUnboundnmSpinner.Position = [172 139 64 22];
             app.LengthofUnboundnmSpinner.Value = 70;
 
             % Create NumberofComplexesSpinnerLabel
             app.NumberofComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.NumberofComplexesSpinnerLabel.HorizontalAlignment = 'right';
-            app.NumberofComplexesSpinnerLabel.Position = [42 212 125 22];
+            app.NumberofComplexesSpinnerLabel.Position = [42 213 125 22];
             app.NumberofComplexesSpinnerLabel.Text = 'Number of Complexes';
 
             % Create NumberofComplexesSpinner
@@ -1569,13 +1571,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.NumberofComplexesSpinner.RoundFractionalValues = 'on';
             app.NumberofComplexesSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.NumberofComplexesSpinner.HorizontalAlignment = 'center';
-            app.NumberofComplexesSpinner.Position = [172 212 64 22];
+            app.NumberofComplexesSpinner.Position = [172 213 64 22];
             app.NumberofComplexesSpinner.Value = 8;
 
             % Create DistanceofTapernmSpinnerLabel
             app.DistanceofTapernmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.DistanceofTapernmSpinnerLabel.HorizontalAlignment = 'right';
-            app.DistanceofTapernmSpinnerLabel.Position = [31 64 134 22];
+            app.DistanceofTapernmSpinnerLabel.Position = [31 65 134 22];
             app.DistanceofTapernmSpinnerLabel.Text = 'Distance of Taper (nm)';
 
             % Create DistanceofTapernmSpinner
@@ -1586,13 +1588,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.DistanceofTapernmSpinner.Limits = [0 Inf];
             app.DistanceofTapernmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.DistanceofTapernmSpinner.HorizontalAlignment = 'center';
-            app.DistanceofTapernmSpinner.Position = [172 64 64 22];
+            app.DistanceofTapernmSpinner.Position = [172 65 64 22];
             app.DistanceofTapernmSpinner.Value = 20;
 
             % Create NumberofBoundComplexesSpinnerLabel
             app.NumberofBoundComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.NumberofBoundComplexesSpinnerLabel.HorizontalAlignment = 'right';
-            app.NumberofBoundComplexesSpinnerLabel.Position = [4 191 163 22];
+            app.NumberofBoundComplexesSpinnerLabel.Position = [4 192 163 22];
             app.NumberofBoundComplexesSpinnerLabel.Text = 'Number of Bound Complexes';
 
             % Create NumberofBoundComplexesSpinner
@@ -1602,13 +1604,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.NumberofBoundComplexesSpinner.RoundFractionalValues = 'on';
             app.NumberofBoundComplexesSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.NumberofBoundComplexesSpinner.HorizontalAlignment = 'center';
-            app.NumberofBoundComplexesSpinner.Position = [172 191 64 22];
+            app.NumberofBoundComplexesSpinner.Position = [172 192 64 22];
             app.NumberofBoundComplexesSpinner.Value = 8;
 
             % Create RadialDispofTapernmSpinnerLabel
             app.RadialDispofTapernmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.RadialDispofTapernmSpinnerLabel.HorizontalAlignment = 'right';
-            app.RadialDispofTapernmSpinnerLabel.Position = [22 44 145 22];
+            app.RadialDispofTapernmSpinnerLabel.Position = [22 45 145 22];
             app.RadialDispofTapernmSpinnerLabel.Text = 'Radial Disp. of Taper (nm)';
 
             % Create RadialDispofTapernmSpinner
@@ -1618,12 +1620,12 @@ classdef StaticKinet < matlab.apps.AppBase
             app.RadialDispofTapernmSpinner.Limits = [0 Inf];
             app.RadialDispofTapernmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.RadialDispofTapernmSpinner.HorizontalAlignment = 'center';
-            app.RadialDispofTapernmSpinner.Position = [172 44 64 22];
+            app.RadialDispofTapernmSpinner.Position = [172 45 64 22];
 
             % Create AngleRangeforUnbounddegSpinnerLabel
             app.AngleRangeforUnbounddegSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.AngleRangeforUnbounddegSpinnerLabel.HorizontalAlignment = 'right';
-            app.AngleRangeforUnbounddegSpinnerLabel.Position = [44 113 179 22];
+            app.AngleRangeforUnbounddegSpinnerLabel.Position = [44 114 179 22];
             app.AngleRangeforUnbounddegSpinnerLabel.Text = 'Angle Range for Unbound (deg.)';
 
             % Create LowerAngleSpinner
@@ -1633,13 +1635,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.LowerAngleSpinner.Limits = [-90 90];
             app.LowerAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.LowerAngleSpinner.HorizontalAlignment = 'center';
-            app.LowerAngleSpinner.Position = [49 90 67 22];
+            app.LowerAngleSpinner.Position = [49 91 67 22];
             app.LowerAngleSpinner.Value = -90;
 
             % Create UpperAngleLabel
             app.UpperAngleLabel = uilabel(app.KinetochoreProteinPanel);
             app.UpperAngleLabel.HorizontalAlignment = 'center';
-            app.UpperAngleLabel.Position = [122 90 21 22];
+            app.UpperAngleLabel.Position = [122 91 21 22];
             app.UpperAngleLabel.Text = 'to';
 
             % Create UpperAngleSpinner
@@ -1649,13 +1651,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.UpperAngleSpinner.Limits = [-90 90];
             app.UpperAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.UpperAngleSpinner.HorizontalAlignment = 'center';
-            app.UpperAngleSpinner.Position = [154 90 67 22];
+            app.UpperAngleSpinner.Position = [154 91 67 22];
             app.UpperAngleSpinner.Value = 90;
 
             % Create ofLengthMarkedSpinnerLabel
             app.ofLengthMarkedSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.ofLengthMarkedSpinnerLabel.HorizontalAlignment = 'right';
-            app.ofLengthMarkedSpinnerLabel.Position = [54 171 113 22];
+            app.ofLengthMarkedSpinnerLabel.Position = [54 172 113 22];
             app.ofLengthMarkedSpinnerLabel.Text = '% of Length Marked';
 
             % Create ofLengthMarkedSpinner
@@ -1665,13 +1667,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.ofLengthMarkedSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.ofLengthMarkedSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.ofLengthMarkedSpinner.HorizontalAlignment = 'center';
-            app.ofLengthMarkedSpinner.Position = [172 171 64 22];
+            app.ofLengthMarkedSpinner.Position = [172 172 64 22];
 
             % Create KinetochoreColorChannelLabel
             app.KinetochoreColorChannelLabel = uilabel(app.KinetochoreProteinPanel);
             app.KinetochoreColorChannelLabel.HorizontalAlignment = 'center';
             app.KinetochoreColorChannelLabel.FontName = 'Arial';
-            app.KinetochoreColorChannelLabel.Position = [53 21 91 22];
+            app.KinetochoreColorChannelLabel.Position = [53 22 91 22];
             app.KinetochoreColorChannelLabel.Text = 'Color Channel';
 
             % Create KinetochoreColorChannel
@@ -1679,7 +1681,7 @@ classdef StaticKinet < matlab.apps.AppBase
             app.KinetochoreColorChannel.Items = {'All', 'Green', 'Red', 'Blue'};
             app.KinetochoreColorChannel.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.KinetochoreColorChannel.FontName = 'Arial';
-            app.KinetochoreColorChannel.Position = [170 22 66 22];
+            app.KinetochoreColorChannel.Position = [170 23 66 22];
             app.KinetochoreColorChannel.Value = 'All';
 
             % Create KinetochoreCheckBox

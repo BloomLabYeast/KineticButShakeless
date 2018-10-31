@@ -1,6 +1,6 @@
 function [dimensions] = Max3DProjection(filename)
 [~,name,~] = fileparts(filename);
-name = erase(name,'_0000');
+name = erase(name,'_0000_');
 bfdata = bfopen2(filename);
 imdata = bf2mat(bfdata);
 maxprojection = max(imdata,[],3);
