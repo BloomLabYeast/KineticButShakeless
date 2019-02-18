@@ -1,17 +1,17 @@
 import smtplib
 import sys
 
-gmail_user = 'comingfrommatlab@gmail.com'  
-gmail_password = 'matlab123'
+gmail_user = argv[1]  
+gmail_password = argv[2]
 
 sent_from = gmail_user  
-to = sys.argv[1]
+to = sys.argv[3]
 subject = 'OMG Super Important Message'
 
 email_text = """ From:%s
 To: %s
 Subject: %s
-""" % (gmail_user,to, sys.argv[2])
+""" % (gmail_user,to, sys.argv[4])
 
 try:  
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
