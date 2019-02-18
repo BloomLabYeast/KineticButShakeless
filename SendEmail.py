@@ -1,8 +1,8 @@
 import smtplib
 import sys
 
-gmail_user = argv[1]  
-gmail_password = argv[2]
+gmail_user = sys.argv[1]  
+gmail_password = sys.argv[2]
 
 sent_from = gmail_user  
 to = sys.argv[3]
