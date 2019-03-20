@@ -111,24 +111,22 @@ classdef StaticKinet < matlab.apps.AppBase
         N_Nuf2CheckBox                  matlab.ui.control.CheckBox
         Spc29CheckBox                   matlab.ui.control.CheckBox
         KinetochoreProteinPanel         matlab.ui.container.Panel
-        LengthofUnboundnmSpinnerLabel   matlab.ui.control.Label
-        LengthofUnboundnmSpinner        matlab.ui.control.Spinner
+        LengthofArmnmSpinnerLabel       matlab.ui.control.Label
+        LengthofArmnmSpinner            matlab.ui.control.Spinner
         NumberofComplexesSpinnerLabel   matlab.ui.control.Label
         NumberofComplexesSpinner        matlab.ui.control.Spinner
-        DistanceofTapernmSpinnerLabel   matlab.ui.control.Label
-        DistanceofTapernmSpinner        matlab.ui.control.Spinner
         NumberofBoundComplexesSpinnerLabel  matlab.ui.control.Label
         NumberofBoundComplexesSpinner   matlab.ui.control.Spinner
-        RadialDispofTapernmSpinnerLabel  matlab.ui.control.Label
-        RadialDispofTapernmSpinner      matlab.ui.control.Spinner
-        AngleRangeforUnbounddegSpinnerLabel  matlab.ui.control.Label
-        LowerAngleSpinner               matlab.ui.control.Spinner
-        UpperAngleLabel                 matlab.ui.control.Label
-        UpperAngleSpinner               matlab.ui.control.Spinner
         ofLengthMarkedSpinnerLabel      matlab.ui.control.Label
         ofLengthMarkedSpinner           matlab.ui.control.Spinner
         KinetochoreColorChannelLabel    matlab.ui.control.Label
         KinetochoreColorChannel         matlab.ui.control.DropDown
+        AnglefromMTAxisnmSpinnerLabel   matlab.ui.control.Label
+        AnglefromMTAxisnmSpinner        matlab.ui.control.Spinner
+        UpperAngleLabel                 matlab.ui.control.Label
+        UpperAngleSpinner               matlab.ui.control.Spinner
+        AngleRangeforUnbounddegSpinnerLabel  matlab.ui.control.Label
+        LowerAngleSpinner               matlab.ui.control.Spinner
         KinetochoreCheckBox             matlab.ui.control.CheckBox
         RotationPanel                   matlab.ui.container.Panel
         RotationParametersPanel         matlab.ui.container.ButtonGroup
@@ -157,14 +155,15 @@ classdef StaticKinet < matlab.apps.AppBase
         Spc29PointInfo % Continas information about the points that make up the Spc29 structure
         MasterPointInfo % Contains information about the points that make up the entire simulation
         LengthSim % Array of possible stagger lengths acquired from running Coupled Model Crosslinked Simulation by Stevens et al.
-        BioDistances % Description
-        BioDistanceCorrection % Description
-        Rotation % Description
-        Stagger % Description
+        BioDistances % Array that contains distances of complexes that were acquired from experimental images
+        BioDistanceCorrection % Distance choosen from the BioDistances array that all of the structure generators use when the number of complexes are set to 2.
+        Rotation % An array of randomized rotation values based on the given parameters that the structure generators use if rotation is needed
+        Stagger % An array of values that represent stagger, either from Stevens et al. or random, that the structure generators use if a stagger is needed
     end
 
     methods (Access = private)
         function GeneralParametreCheck(app)
+            % Function that runs through all of the parameter checks
             MainParameterCheck(app)
             KinetochoreValueChangeCheck(app)
             OutputParameterCheck(app)
@@ -173,23 +172,24 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function MainParameterCheck(app)
-            if strcmp(app.StaggerDropDown.Value, 'Random')
-                app.RangenmSpinner.Visible = "on";
+            % Checks to if any of the changes in the Main parameters result in whether certain options need to be visible or not
+            if strcmp(app.StaggerDropDown.Value, 'Random') % Check to see if stagger is set to Random
+                app.RangenmSpinner.Visible = "on"; % If so, make the choice for the random range available
                 app.RangenmSpinnerLabel.Visible = "on";
             else
-                app.RangenmSpinner.Visible = "off";
+                app.RangenmSpinner.Visible = "off"; % If not, make the choice for the random range hidden
                 app.RangenmSpinnerLabel.Visible = "off";
             end  
-            if app.RotationCheckBox.Value == false
-                app.RotationParametersPanel.Visible = 'off';
+            if app.RotationCheckBox.Value == false %Check to see if the Rotation Check Box is not chceked
+                app.RotationParametersPanel.Visible = 'off'; % If it is not checked, then turn off access/visibility of the Rotation Panel
                 app.FixedRotationParametersdegPanel.Visible = 'off';
                 app.RandomRotationParametersdegPanel.Visible = 'off';
             else
-                app.RotationParametersPanel.Visible = 'on';
-                if app.FixedRotationButton.Value == true
+                app.RotationParametersPanel.Visible = 'on'; % If it is checked, check to see which type of rotation is selected
+                if app.FixedRotationButton.Value == true % If Fixed Rotation is selected, then allow that panel to be seen and hide the others
                     app.FixedRotationParametersdegPanel.Visible = 'on';
                     app.RandomRotationParametersdegPanel.Visible = 'off';
-                else
+                else % If the Random Rotation is selected, then allow that panel to be seen and hide the other
                     app.FixedRotationParametersdegPanel.Visible = 'off';
                     app.RandomRotationParametersdegPanel.Visible = 'on';
                 end
@@ -197,37 +197,38 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function KinetochoreValueChangeCheck(app)
-            if app.NumberofComplexesSpinner.Value < app.NumberofBoundComplexesSpinner.Value
-                app.NumberofBoundComplexesSpinner.Value = app.NumberofComplexesSpinner.Value;
+            % Checks to see if any of the changes in the Kinetochore parameters need to edited or fixed
+            if app.NumberofComplexesSpinner.Value < app.NumberofBoundComplexesSpinner.Value % Check to see if the user requested more bound complexes than complexes to begin with
+                app.NumberofBoundComplexesSpinner.Value = app.NumberofComplexesSpinner.Value; % If so, set the number of bound complexes to the number of complexes in general
             end
-            if app.LowerAngleSpinner.Value > app.UpperAngleSpinner.Value
-                tempUpper = app.UpperAngleSpinner.Value;
-                app.UpperAngleSpinner.Value = app.LowerAngleSpinner.Value;
-                app.LowerAngleSpinner.Value = tempUpper;
+            if app.LowerAngleSpinner.Value > app.UpperAngleSpinner.Value % Check to see if the Lower Limit is greater than the Upper Limit
+                [app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value] = deal(app.LowerAngleSpinner.Value,app.UpperAngleSpinner.Value); %If so, switch their values
             end
         end
             
     
         function OutputParameterCheck(app)
-            if app.GenerateXMLCheckBox.Value == true
-                app.MicroscopeSimulatorParametersPanel.Visible = 'on';
+            % Checks to see if any of the changes in the Output Parameters lead to access to other options
+            if app.GenerateXMLCheckBox.Value == true % Check to see if XMLS are to be generated
+                app.MicroscopeSimulatorParametersPanel.Visible = 'on'; % If so, show the controls for the XML
             else
-                app.MicroscopeSimulatorParametersPanel.Visible = 'off';
+                app.MicroscopeSimulatorParametersPanel.Visible = 'off'; % If not, hide them
             end
-            if isempty(app.FileFolderNameStringEditField.Value) || (app.GenerateXMLCheckBox.Value == false && app.SaveMATFileCheckBox.Value == false)
-                app.GenerateOutputButton.Enable = "off";
+            if isempty(app.FileFolderNameStringEditField.Value) || (app.GenerateXMLCheckBox.Value == false && app.SaveMATFileCheckBox.Value == false) % Check to see if something has been written in the Foldername Field and atleast one of the output have been choosen
+                app.GenerateOutputButton.Enable = "off"; % If not, prevent user from generating an output
             else
-                app.GenerateOutputButton.Enable = "on";
+                app.GenerateOutputButton.Enable = "on"; % If so, allow user to generate output
             end
-            if app.GenerateTIFsCheckBox.Value == true
-                app.PreProcessTIFsCheckBox.Enable = "on";
+            if app.GenerateTIFsCheckBox.Value == true % Check to see if Generate TIF's has been selected
+                app.PreProcessTIFsCheckBox.Enable = "on"; % If so, allow the user to choose whether to pre-process them
             else
-                app.PreProcessTIFsCheckBox.Enable = "off";
+                app.PreProcessTIFsCheckBox.Enable = "off"; % If not, hide the option to pre-process them
             end 
         end
     
         function OutputParameterLocationCheck(app)
-            if app.GenerateXMLCheckBox.Value == true
+            %Checks to see if whether any changes in the Output parameter selection require reorganizing of the section
+            if app.GenerateXMLCheckBox.Value == true%
                 app.StatusOutputPanel.Position = [2 7 296 103];
             else
                 app.StatusOutputPanel.Position = [2 231 296 103];
@@ -235,6 +236,7 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function AxisParameterCheck(app)
+            % Checks to see if the choosen axis setting requires reorganizing of the panel
             if app.AutomaticButton.Value == true
                 app.GraphPanel.Position = [493 330 151 85];
                 app.AxisLimPanel.Visible = "off";
@@ -245,33 +247,37 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function SaveBioDistanceData(app)
+            % Saves the massive array that contains the possible distances in the format of [X;Y;Z], so each vector is in its own column
             app.BioDistances = [-192,-1344,-640,-256,-576,-192,-768,192,-448,-1920,-512,-576,-960,-832,-128,-896,-512,-256,-704,-704,-256,-512,-256,-832,-1216,-64,-576,-768,-1024,-256,-768,-256,0,-960,-1088,-640,-832,-1024,-768,-1088,-704,-1216,-1408,-832,-896,-704,-320,-896,-512,-512,-1024,-832,-448,-256,-640,-256,-768,-576,192,-192,-384,-640,-768,-960,-768,64,-320,-704,-448,-192,-128,64,-640,-640,-448,-832,-832,-832,-960,-384,-128,-1152,-128,-256,-256,-384,-576,-896,-576,-768,-896,-640,-1024,-832,-896,-704,-320,-896,-512,-512,-192,-768,-768,-512,-960,-576,-448,-1728,-1088,128,-704,-256,-256,-832,-64,-1728,-192,-640,-1088,-832,-960,-704,-256,-1024,-960,-1152,-768,-1024,-384,-64,-512,-512,64,-640,-832,-512,-576,-832,-320,192,64,-1664,-832,-768,-384,-1152,-896,-768,64,-768,-448,-576,-192,0,-640,-768,-704,-256,-192,64,-192,256,-1152,-832,-640,-576,-576,-128,-896,-384,0,-320,-320,-448,-320,-128,-896,-1280,-448,-512,-448,-896,-832,-576,-1152,-320,-832,-256,-576,-512,-128,-704,-320,-832,-320,192,64,-1664,-832,-768,-384,-1152,-896,-768,64,-768,-448,-576,-192,0,-640,-768,0,-1024,-896,-1344,-1600,-256,128,-1216,-704,128,-1216,-960,-768,-832,-832,-320,-640,-640,0,-704,64,-896,-320,-768,-1024,-1216,-768,-448,-832,-960,-960,128,-960,-704,-256,-256,-768,-576,-832,-960,-960,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-1152,0,-320,-320,-448,-704,-704,-512,-1408,-1088,-576,-128,0,-1024,128,-1152,-192,-320,-576,-384,-128,64,-704,-1024,-384,-320,-1024,-832,-448,-1152,-640,-832,-704,-192,-832,128,-768,-576,-832,-960,-960,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-576,-768,-576,-256,-320,-512,-448,-128,-1344,-960,-1024,-128,-832,-1024,-704,-384,-1728,-832,-640,-1024,-1152,-256,-256,-448,-512,-768,-448,-512,-1600,-1216,-448,-512,-768,-768,-320,-448,-896,192,-832,-960,-960,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-128,-1216,-704,-576,-512,-768,-1088,-256,-1152,-384,-384,-896,-832,-576,-448,-576,-640,128,-896,-384,-512,-704,-960,-960,-1152,-384,-576,-960,-320,-832,-960,-960,-704,-1024,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,128,-1152,-128,-1024,-128,-832,-192,-256,320,-448,-1344,-832,-1216,-512,-768,64,-576,-960,-896,-512,-1024,192,-1280,-192,-832,64,-768,-960,-320,-832,-960,-960,-704,-1024,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-1024,-768,-960,64,-1024,-320,128,-256,-512,-192,64,-192,-320,-448,-896,0,-1216,-960,-768,-576,-576,-192,-1216,-512,-1280,-384,-704,64,-512,-512,-704,-384,-896,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-960,192,-128,-1152,-640,-448,-384,-192,-640,-64,-704,-1024,-704,-640,-1216,-704,-512,-256,-512,-640,-256,-704,-256,-832,-704,-576,-256,-704,64,-512,-512,-704,-384,-896,-320,-256,-832,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-128,-192,-448,128,-192,-192,-384,-192,-576,-1280,-448,-1280,-384,-576,-960,-320,-128,-64,-896,-896,-512,-384,0,-192,-640,-640,-384,-384,-320,-640,-128,-960,-960,-576,-384,-320,-448,-192,0,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-832,-384,-320,64,-960,-1024,256,-832,-768,-320,-768,-576,-64,0,-448,-960,-1088,-384,-192,-640,-256,-1472,-1216,-640,-192,-448,-512,-256,-448,-768,-960,-384,-448,-320,-576,-960,-1024,-320,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,128,-832,-384,-256,-1024,-384,-640,-256,-832,64,-896,64,-640,-320,-704,-320,-1024,-576,-960,0,-1088,-832,-192,-1088,-1024,-512,-640,-832,-256,-960,-512,-640,-384,-704,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-128,-1088,-384,-1088,-192,-512,-960,-320,-960,-704,-512,-960,-64,-320,-128,-704,-640,-1152,-256,-576,-768,-512,-256,-1152,-704,-896,-512,-384,-576,128,128,-704,-384,-704,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-576,-1024,-704,-768,-768,-640,-448,-1280,-1024,-704,-896,-1728,-256,-512,-1024,-64,-384,-128,-1024,-576,-832,-128,-320,-832,-640,64,-256,-384,-192,-768,-704,-960,-64,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-640,-640,-448,-128,-704,-448,-768,-1216,-448,-832,-192,-832,-384,-832,-768,-704,-448,-640,128,64,-448,-640,-768,-64,-704,-1280,-896,-192,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-768,-448,-384,-1152,192,-896,-384,-960,-384,-704,-512,-512,-192,-128,-832,-448,-1024,-256,-128,-576,-256,-192,-192,-832,-192,-1216,-1280,-896,-192,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-1152,-832,-640,-256,-1088,-512,-384,-1280,-320,-512,-256,-384,-1280,-1024,-896,-1216,-640,-640,-640,-1024,128,-256,-1856,-128,-1088,-512,-448,-576,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-960,-512,-192,128,-384,-960,-256,-128,-448,-640,-576,-960,-576,-896,-1024,-512,128,-960,-640,-640,-896,-512,-768,-128,-256,-896,-320,-448,-576,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-192,-128,-1024,-1344,-896,-320,-576,-768,-384,-832,-576,-128,-320,-512,-896,-1600,-256,-256,-448,-256,-704,-1216,-1280,128,-1088,-704,-1088,-512,-256,-64,-640,-512,-832,-1088,-1088,-1216,-448,-640,-704,-768,-448,-896,-1024,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-640,-704,-576,-1280,-1536,-448,-768,-1344,-192,-768,-896,-448,-1088,-768,-256,-1408,-704,-1088,-640,-640,-640,-1152,-1216,-1152,-768,-128,-576,-192,-512,-320,-640,-576,-832,192,-512,-832,-832,64,-448,-1088,-256,-256,-1344,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768,-832,-512,-384,-704,-256,-704,-768,-768,-384,-1344,-832,-64,-704,-256,-576,-768,0,-832,-1152,-768,-704,-704,-768,-1024,-960,-128,-960,-192,-512,-320,-640,-576,-832,192,-512,-832,-832,64,-448,-1088,-256,-256,-1344,-576,-1216,-1216,-896,-640,-1408,-960,-320,-576,-192,0,-640,-768;-960,-192,-384,1536,-384,-960,640,-1280,-448,-128,576,-768,1216,128,-1024,448,-384,-1344,-64,-640,-768,832,-832,512,704,-704,0,-896,-448,640,256,576,-384,64,-64,640,256,-1088,64,-64,1216,-768,-192,512,704,-1280,704,384,576,1088,832,-896,768,576,0,-576,704,-64,-640,-960,1024,-640,384,-384,-64,-1280,-1088,512,-384,-512,-896,-960,-1024,448,832,0,0,576,64,-1344,832,-256,-512,512,-1408,-1408,576,448,1024,384,128,-576,-576,512,704,-1280,704,384,576,1088,1216,-192,320,0,-640,512,960,256,768,-576,1088,1280,-960,1280,-1024,-64,704,-448,128,384,448,320,-1088,64,832,128,640,512,640,-640,704,-128,-960,320,-640,-704,-512,-256,896,-1024,-576,704,-448,448,-768,-192,-448,832,-640,256,-1024,-320,-448,-768,256,832,-1152,-704,-640,-832,-768,-1408,1088,448,384,-704,0,704,-704,576,-576,640,1024,-512,768,-1088,576,-576,960,384,448,-192,320,-704,-384,448,64,-1088,320,256,448,192,704,-256,896,-1024,-576,704,-448,448,-768,-192,-448,832,-640,256,-1024,-320,-448,-768,256,832,-896,-448,448,448,512,960,-768,-256,704,-1024,64,-64,-512,448,512,448,0,-1152,-768,-384,-640,704,-768,-448,-256,-128,960,1088,320,64,-256,-832,576,64,448,640,-576,832,1280,-640,-448,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-704,-704,-1088,704,-192,-1408,-704,-576,-128,-64,-448,-960,-896,-512,-1152,192,576,832,256,-320,-448,-448,960,64,1024,1088,-832,-1216,-448,-448,768,-192,1088,-448,-64,-576,-576,832,1280,-640,-448,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,256,-832,960,-640,1152,1088,576,-1280,-256,64,-128,448,-832,-512,320,1408,0,-576,320,320,-512,768,-1216,-704,-768,-576,1408,704,-64,-256,1216,768,-640,576,-896,-128,-1152,-960,1280,-640,-448,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-1216,64,-448,-384,960,128,64,704,-1216,1344,832,-64,64,-1152,-512,0,384,-1280,-320,-1088,-1024,-384,768,256,-128,448,320,64,-384,-1024,-512,-256,320,-256,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-448,-448,-1280,-64,1024,1088,-576,768,-960,-1088,-192,64,-256,768,384,-1216,384,384,-960,576,-64,-768,-256,-448,-320,-960,704,64,-384,-1024,-512,-256,320,-256,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-320,64,-576,-128,-768,-576,1536,-1088,-1088,640,576,-896,-576,-1024,768,-256,-896,384,0,-128,-192,1024,-896,128,448,-1024,-512,128,-576,-256,-512,192,1344,832,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-64,-896,960,960,1280,-832,704,704,256,-640,512,192,960,768,-704,-704,-896,-1216,-576,-704,-1024,64,-576,960,576,-896,-832,128,-576,-256,-512,192,1344,832,-768,960,-256,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-960,960,-384,-448,-704,576,448,-768,128,192,384,320,-576,1024,-64,1024,-1024,-576,384,-448,-640,896,-704,-640,-1088,256,-704,512,576,832,384,-448,384,-192,576,1472,384,-1280,-512,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-64,512,-448,448,-512,64,704,-1216,-1088,640,-512,-768,448,-704,768,1152,-320,-448,576,-384,576,256,896,-768,-384,576,-640,-64,-1024,704,-768,256,-896,-512,960,-448,-960,-832,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-1024,768,1152,896,-192,-640,0,-704,-448,-640,256,-896,-704,-768,-576,-832,-576,-192,-320,-640,384,-576,832,576,192,1280,640,128,-960,-576,-1152,-832,-896,-1152,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,640,-832,448,-832,-768,1024,960,-448,-512,-832,-512,1088,-896,-1344,-1024,576,960,-448,-960,1536,-832,-576,-960,192,640,384,-320,704,-320,-1152,-960,448,-896,-1152,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-640,576,-512,-832,-384,1280,-704,0,-448,-128,1280,-512,-1088,-1664,-640,-896,1088,-640,-320,-832,-512,960,-1920,-64,-384,-1088,-768,896,832,-448,-640,-640,-576,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,0,832,1280,-448,-704,192,640,128,320,-384,576,640,832,-576,-1024,512,256,-1088,576,-896,-832,-1088,1088,-64,-704,-896,-1600,320,-1088,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,512,-512,64,-832,-768,-512,640,1216,960,832,-640,384,1024,-896,-128,1024,576,448,576,-768,-768,640,832,-128,-832,256,-1600,320,-1088,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-640,-192,512,1408,576,64,320,-320,384,640,-192,-576,192,256,320,-768,-576,-256,704,-192,256,-960,1024,640,-768,-1152,320,-896,-576,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-64,1152,-576,-1088,1024,192,-512,-896,640,-256,-448,-256,384,-320,-576,960,-960,0,64,-832,-192,-768,-384,-448,-1024,192,-896,-896,-576,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,576,-1408,128,320,448,-704,-832,-256,896,128,-512,-832,704,-320,-320,-192,1088,-1664,640,1408,256,128,576,-640,576,-64,832,448,768,-896,832,640,-64,-320,256,704,704,-320,-192,256,-512,128,-64,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-896,320,832,-256,896,576,-832,384,-832,1280,576,768,-1152,-384,-576,64,-448,192,-256,-192,576,384,704,320,256,832,704,704,960,832,512,512,-192,-1088,384,64,768,-1088,-576,768,-704,384,512,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832,-448,704,-1088,896,-768,-1216,-384,448,-704,64,640,-704,-704,1280,576,-512,-960,-448,128,0,64,192,192,1408,-1600,1216,-1216,704,960,832,512,512,-192,-1088,384,64,768,-1088,-576,768,-704,384,512,896,0,256,768,-704,576,-832,640,-320,-448,-768,256,832;0,-300,0,0,0,0,-1200,-300,-900,-300,0,0,-300,300,0,600,0,300,-300,0,0,0,0,0,0,0,600,0,-600,0,0,300,600,300,0,600,0,-300,300,0,-300,0,0,-900,-300,-600,600,-600,0,-300,0,900,-300,0,0,0,300,0,-300,300,0,600,0,0,0,300,600,-600,300,-600,-300,300,300,600,-1200,0,300,0,0,900,-300,0,0,-900,0,300,-300,-300,-300,0,600,-300,0,-900,-300,-600,600,-600,0,-300,300,0,0,0,0,0,0,0,300,0,-300,-900,0,-300,0,-600,300,600,300,0,300,0,300,-300,300,300,600,0,-600,-600,-300,0,0,300,0,-900,600,0,-600,-900,600,600,-600,0,0,-300,0,-600,0,-300,0,300,-600,0,-600,-300,-300,0,0,0,0,300,-300,0,300,-600,0,0,0,0,0,0,0,600,-300,0,300,-300,300,300,300,0,300,0,600,600,600,-600,600,0,-300,-300,0,0,-600,-900,600,600,-600,0,0,-300,0,-600,0,-300,0,300,-600,0,-600,-300,300,0,0,-900,0,0,600,0,0,-600,0,0,300,0,-600,300,300,-600,0,0,-300,-300,0,0,0,600,0,-1800,0,300,300,0,0,0,-300,0,0,0,0,0,-300,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,300,900,0,300,0,300,-600,0,-900,-300,0,0,0,-300,0,-300,-300,300,-900,600,0,-300,0,0,-900,600,-300,300,-300,300,-300,300,300,-300,-300,0,0,0,0,-300,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,300,900,-600,0,300,0,0,300,300,300,-300,600,300,-300,300,0,-300,300,300,0,0,-300,0,300,-300,-300,0,0,300,300,-300,600,-300,300,-300,0,0,0,0,0,-300,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-900,600,-600,0,0,-600,0,0,0,-300,0,0,0,300,0,0,0,-600,300,0,-600,-300,-600,300,-300,0,600,600,300,1200,-300,0,-900,-600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,-300,-300,-300,-300,0,-300,0,300,0,0,0,0,300,300,0,-300,600,-300,300,0,600,300,0,0,0,0,600,300,1200,-300,0,-900,-600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-900,0,300,0,0,0,0,0,-300,300,-300,0,900,-1200,-300,-300,0,0,600,900,300,300,300,-600,-300,0,-900,0,0,-300,-600,300,600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,0,-300,0,0,0,300,-300,0,0,0,0,600,300,-300,0,-600,0,-900,-300,-600,-300,0,-300,0,-300,-300,-900,0,0,-300,-600,300,600,300,300,-600,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-600,0,300,-600,0,300,900,-600,-600,-300,0,0,300,0,-900,0,0,0,-600,0,-300,0,0,0,-300,-600,300,0,0,-300,0,600,-600,-600,0,600,0,900,300,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,600,0,600,0,900,0,300,0,0,-300,0,0,0,-900,600,-600,900,-300,-300,300,0,0,0,-300,300,300,600,0,-900,0,-300,-300,0,300,0,0,0,0,-600,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-600,0,-900,600,0,0,0,0,-300,0,-300,600,0,0,-300,300,0,300,0,0,0,-300,0,300,0,-900,1500,-300,0,600,-300,300,0,300,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-600,-300,-300,600,600,0,-300,-300,0,0,0,0,-300,0,-300,0,-300,0,0,-300,-300,-600,-900,-600,-600,0,-300,0,600,300,0,0,300,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-300,-600,0,300,600,300,0,0,-600,0,0,0,-600,0,300,0,-600,0,0,0,-600,600,-600,0,300,0,0,0,-300,0,0,-300,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,300,600,-300,300,600,-300,-1500,0,900,0,0,-900,-300,-300,0,0,0,300,300,0,-300,0,0,0,-300,-900,0,0,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,-600,300,0,300,300,0,-300,-600,0,0,600,0,0,-300,-600,300,0,300,0,0,-300,300,0,-300,0,0,0,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,300,300,0,0,300,0,-300,0,0,600,-300,0,-300,-300,0,-900,0,-300,0,300,-600,0,0,-600,900,600,300,-600,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,0,-300,300,300,0,0,0,0,0,-300,-300,0,0,0,-600,0,0,0,0,0,300,0,0,600,-600,0,-600,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,-300,0,-300,-300,-600,-600,0,300,-300,0,300,0,-600,300,0,-300,0,600,0,300,0,1200,-300,0,0,600,-600,0,0,300,300,0,0,-600,-300,0,0,0,0,0,-600,0,-300,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,600,-300,-300,-300,300,0,0,300,0,600,-600,0,0,-600,0,0,-600,0,300,0,0,900,-300,0,-600,600,-300,0,-300,-300,0,0,-300,600,-900,300,0,0,-300,-600,-300,300,600,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300,0,600,300,-300,-600,300,600,0,0,0,-300,0,0,0,600,-600,900,-600,0,0,300,-300,300,-600,0,300,600,0,-300,-300,0,0,-300,600,-900,300,0,0,-300,-600,-300,300,600,-900,0,0,-600,-300,-600,0,0,300,-600,0,-600,-300];
         end
     
         function GenerateSimuLinkData(app)
-                sim('Coupled_Model_crosslinked_intext.slx')
-                app.LengthSim = kMtsOut(500:end,:);
+            % Run the simulation model and save the Microtubule Lengnths after the burn-in of 500 time-steps to later be accessed
+            sim('Coupled_Model_crosslinked_intext.slx')
+            app.LengthSim = kMtsOut(500:end,:);
         end
     
         function UpdateData(app)
-            StructureCalculate(app)
-            app.MasterPointInfo.CoordPoints = [];
+            % Main function that calculates a structure and saves them to MasterPointInfo property depending on whether its associated checkbox has been checked
+            StructureCalculate(app) % Generate all of the structures and same them in their respective properties
+            app.MasterPointInfo.CoordPoints = []; % Initialize the Coordinate Points array and color vector
             app.MasterPointInfo.Color = [];
-            if app.N_Nuf2CheckBox.Value == true
+            if app.N_Nuf2CheckBox.Value == true % If N-Terminal Nuf-2 checkbox has been selected, then add its information to the MasterPointInfo property
                 app.MasterPointInfo.CoordPoints = horzcat(app.MasterPointInfo.CoordPoints, app.N_Nuf2PointInfo.CoordPoints);
                 app.MasterPointInfo.Color = horzcat(app.MasterPointInfo.Color, app.N_Nuf2PointInfo.Color);
             end
-            if app.Spc29CheckBox.Value == true
+            if app.Spc29CheckBox.Value == true % If Spc29 checkbox has been selected, then add its information to the MasterPointInfo property
                 app.MasterPointInfo.CoordPoints = horzcat(app.MasterPointInfo.CoordPoints, app.Spc29PointInfo.CoordPoints);
                 app.MasterPointInfo.Color = horzcat(app.MasterPointInfo.Color, app.Spc29PointInfo.Color);
             end
-            if app.KinetochoreCheckBox.Value == true
+            if app.KinetochoreCheckBox.Value == true % If the Kinetochore complex checkbox has been selected, then add its information to the MasterPointInfo property
                 app.MasterPointInfo.CoordPoints = horzcat(app.MasterPointInfo.CoordPoints, app.KinetochorePointInfo.CoordPoints);
                 app.MasterPointInfo.Color = horzcat(app.MasterPointInfo.Color, app.KinetochorePointInfo.Color);
             end
         end
     
         function StructureCalculate(app)
+            %Main function that updates the neccesssary variables and generates the structure
             UpdateRandomVariables(app)
             N_Nuf2Calculate(app)
             KinetochoreCalculate(app)
@@ -279,44 +285,47 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function UpdateRandomVariables(app)
+            % Generates the needed random varaibles so that all of the structure's componenets are correctly aligned relative to one another
             app.BioDistanceCorrection = app.BioDistances(:,ceil(rand()*length(app.BioDistances)))/2;
-            if strcmp(app.NumberofComplexesSwitch.Value, '1')
+            if strcmp(app.NumberofComplexesSwitch.Value, '1') % Check to see how many complexes are choosen and set the NoC variable to that value
                 NoC = 1;
             else
                 NoC = 2;
             end
-            if app.RotationCheckBox.Value == true
-                app.Rotation = rand(app.NumberofChromosomesSpinner.Value*NoC,3);
-                if app.FixedRotationButton.Value == true
-                    app.Rotation(:,1) = app.XSpinner.Value;
+            if app.RotationCheckBox.Value == true % Check to see if rotation is desired
+                app.Rotation = rand(app.NumberofChromosomesSpinner.Value*NoC,3); % If so, generate an array that is 3 by the total number of chromosomes needed
+                if app.FixedRotationButton.Value == true % Check to see what kind of rotation is desired
+                    app.Rotation(:,1) = app.XSpinner.Value; % If fixed rotation is desired, then store the fixed rotation values for X,Y, and Z in their respective column
                     app.Rotation(:,2) = app.YSpinner.Value;
                     app.Rotation(:,3) = app.ZSpinner.Value;
-                else
-                    rangediff = app.UpLimSpinner.Value - app.LowLimSpinner.Value;
-                    app.Rotation = app.Rotation*rangediff + app.LowLimSpinner.Value;
+                else % If random rotation,
+                    rangediff = app.UpLimSpinner.Value - app.LowLimSpinner.Value; % Calculate the difference between the upper and lower bounds
+                    app.Rotation = app.Rotation*rangediff + app.LowLimSpinner.Value; % Multiply the difference to an array of random values and add the lower limit, creating an array of random rotation values bounded between the lower and upper limits
                 end
             end
-            if ~strcmp(app.StaggerDropDown.Value, 'None')
-                if strcmp(app.StaggerDropDown.Value, 'Random')
-                    app.Stagger = (rand(1,app.NumberofChromosomesSpinner.Value*NoC)-0.5)*(app.RangenmSpinner.Value*2);
+            if ~strcmp(app.StaggerDropDown.Value, 'None') % Check to see if a stagger is desired
+                if strcmp(app.StaggerDropDown.Value, 'Random') % If so, check to see what kind of stagger is desired
+                    app.Stagger = (rand(1,app.NumberofChromosomesSpinner.Value*NoC)-0.5)*(app.RangenmSpinner.Value*2); % If random stagger is desired, create a vector that is as long as the total number of chromosomes that range from -1 to 1. Multiply that by the range to get the random stagger
                 else
-                    app.Stagger = (app.LengthSim(ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,1)),ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,2)))-3.5e-07)*1e9;
+                    app.Stagger = (app.LengthSim(ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,1)),ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,2)))-3.5e-07)*1e9; % If set stagger, create a vector of stagger values samples from LengthSim that is as long as the total number of chromosomes
                 end
             end
         end
 
         function N_Nuf2Calculate(app)
-            if strcmp(app.NumberofComplexesSwitch.Value, '1')
-                N_Nuf2Structure1(app)
+            % Function that generates the Nuf2 structure and saves the color vector
+            if strcmp(app.NumberofComplexesSwitch.Value, '1') % Check to see if the number of complexes is 1
+                N_Nuf2Structure1(app) % If so, generate 1 Nuf2 structure
             else
-                N_Nuf2Structure2(app)
+                N_Nuf2Structure2(app) % If no, generate 2 Nuf2 structures
             end
-            app.N_Nuf2PointInfo.Color = repmat(convertCharsToStrings(app.N_Nuf2ColorChannelDropDown.Value),1,size(app.N_Nuf2PointInfo.CoordPoints,2));
+            app.N_Nuf2PointInfo.Color = repmat(convertCharsToStrings(app.N_Nuf2ColorChannelDropDown.Value),1,size(app.N_Nuf2PointInfo.CoordPoints,2)); % Save a vector that contains channel color selected as many times as there are points in the Nuf2.Coordpoints property
         end
         
         function N_Nuf2Structure1(app)
-            RotationCheck = (strcmp(app.RotationParametersPanel.Visible,'on')) & (app.RotationCheckBox.Value == true);
-            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck);
+            % Function that generates 1 Nuf2 structure
+            RotationCheck = (strcmp(app.RotationParametersPanel.Visible,'on')) & (app.RotationCheckBox.Value == true); % Create a logical value that checks to see if rotation is desired
+            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck); % Generate a list of XYZ points that represent Nuf2 fluorophore locations for 1 complex
         end
     
         function N_Nuf2Structure2(app)
@@ -338,13 +347,13 @@ classdef StaticKinet < matlab.apps.AppBase
         end
     
         function KinetochoreStructure1(app)
-            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,app.DistanceofTapernmSpinner.Value,app.RadialDispofTapernmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofUnboundnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
         end
     
         function KinetochoreStructure2(app)
-            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,app.DistanceofTapernmSpinner.Value,app.RadialDispofTapernmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofUnboundnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
             app.KinetochorePointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.KinetochorePointInfo.CoordPoints) - app.BioDistanceCorrection;
-            app.KinetochorePointInfo.CoordPoints2 = KinetochoreGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,app.DistanceofTapernmSpinner.Value,app.RadialDispofTapernmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofUnboundnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+            app.KinetochorePointInfo.CoordPoints2 = KinetochoreGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
             app.KinetochorePointInfo.CoordPoints2 = (RotationMatrixGenerate(app,-app.BioDistanceCorrection)*app.KinetochorePointInfo.CoordPoints2) + app.BioDistanceCorrection;
             app.KinetochorePointInfo.CoordPoints = horzcat(app.KinetochorePointInfo.CoordPoints, app.KinetochorePointInfo.CoordPoints2);
             
@@ -609,12 +618,14 @@ classdef StaticKinet < matlab.apps.AppBase
             UpdatePlot(app)
         end
 
-        % Callback function: LowLimSpinner, 
-        % MicrotubuleDiameternmSpinner, NumberofChromosomesSpinner, 
-        % NumberofComplexesSwitch, RangenmSpinner, RotationCheckBox, 
-        % RotationParametersPanel, StaggerDropDown, 
-        % StructureDiameternmSpinner, UpLimSpinner, XSpinner, YSpinner, 
-        % ZSpinner
+        % Callback function: LowLimSpinner, LowLimSpinner, 
+        % MicrotubuleDiameternmSpinner, MicrotubuleDiameternmSpinner, 
+        % NumberofChromosomesSpinner, NumberofChromosomesSpinner, 
+        % NumberofComplexesSwitch, RangenmSpinner, RangenmSpinner, 
+        % RotationCheckBox, RotationParametersPanel, StaggerDropDown, 
+        % StructureDiameternmSpinner, StructureDiameternmSpinner, 
+        % UpLimSpinner, UpLimSpinner, XSpinner, XSpinner, YSpinner, 
+        % YSpinner, ZSpinner, ZSpinner
         function MainParameterChange(app, event)
             MainParameterCheck(app)
             UpdateData(app)
@@ -622,7 +633,8 @@ classdef StaticKinet < matlab.apps.AppBase
         end
 
         % Callback function: FileFolderNameStringEditField, 
-        % GenerateTIFsCheckBox, GenerateXMLCheckBox, SaveMATFileCheckBox
+        % FileFolderNameStringEditField, GenerateTIFsCheckBox, 
+        % GenerateXMLCheckBox, SaveMATFileCheckBox
         function OutputParameterChange(app, event)
             OutputParameterLocationCheck(app)
             OutputParameterCheck(app)
@@ -707,6 +719,7 @@ classdef StaticKinet < matlab.apps.AppBase
 
         % Callback function: N_Nuf2CheckBox, 
         % N_Nuf2ColorChannelDropDown, N_Nuf2LengthnmSpinner, 
+        % N_Nuf2LengthnmSpinner, N_Nuf2NumberofFluorophoreSpinner, 
         % N_Nuf2NumberofFluorophoreSpinner
         function N_Nuf2StructureValueChange(app, event)
             UpdateData(app)
@@ -715,19 +728,26 @@ classdef StaticKinet < matlab.apps.AppBase
 
         % Callback function: Spc29CheckBox, 
         % Spc29ColorChannelDropDown, Spc29DistancetonmSpinner, 
+        % Spc29DistancetonmSpinner, Spc29LengthnmSpinner, 
         % Spc29LengthnmSpinner, Spc29NumberofFluorophoreSpinner, 
-        % Spc29NumberofTubulesSpinner, Spc29StructureDiameternmSpinner, 
-        % Spc29TubuleDiameternmSpinner
+        % Spc29NumberofFluorophoreSpinner, 
+        % Spc29NumberofTubulesSpinner, Spc29NumberofTubulesSpinner, 
+        % Spc29StructureDiameternmSpinner, 
+        % Spc29StructureDiameternmSpinner, 
+        % Spc29TubuleDiameternmSpinner, Spc29TubuleDiameternmSpinner
         function Spc29StructureValueChange(app, event)
             UpdateData(app)
             UpdatePlot(app)
         end
 
-        % Callback function: DistanceofTapernmSpinner, 
-        % KinetochoreCheckBox, KinetochoreColorChannel, 
-        % LengthofUnboundnmSpinner, LowerAngleSpinner, 
+        % Callback function: AnglefromMTAxisnmSpinner, 
+        % AnglefromMTAxisnmSpinner, KinetochoreCheckBox, 
+        % KinetochoreColorChannel, LengthofArmnmSpinner, 
+        % LengthofArmnmSpinner, LowerAngleSpinner, LowerAngleSpinner, 
+        % NumberofBoundComplexesSpinner, 
         % NumberofBoundComplexesSpinner, NumberofComplexesSpinner, 
-        % RadialDispofTapernmSpinner, UpperAngleSpinner, 
+        % NumberofComplexesSpinner, UpperAngleSpinner, 
+        % UpperAngleSpinner, ofLengthMarkedSpinner, 
         % ofLengthMarkedSpinner
         function KinetochoreStructureValueChange(app, event)
             KinetochoreValueChangeCheck(app)
@@ -848,7 +868,7 @@ classdef StaticKinet < matlab.apps.AppBase
             app.N_Nuf2ColorChannelDropDown.ValueChangedFcn = createCallbackFcn(app, @N_Nuf2StructureValueChange, true);
             app.N_Nuf2ColorChannelDropDown.FontName = 'Arial';
             app.N_Nuf2ColorChannelDropDown.Position = [170 13 66 22];
-            app.N_Nuf2ColorChannelDropDown.Value = 'All';
+            app.N_Nuf2ColorChannelDropDown.Value = 'Green';
 
             % Create OutputPanel
             app.OutputPanel = uipanel(app.StaticKinetUIFigure);
@@ -1375,7 +1395,7 @@ classdef StaticKinet < matlab.apps.AppBase
             app.Spc29ColorChannelDropDown.ValueChangedFcn = createCallbackFcn(app, @Spc29StructureValueChange, true);
             app.Spc29ColorChannelDropDown.FontName = 'Arial';
             app.Spc29ColorChannelDropDown.Position = [145 8 66 22];
-            app.Spc29ColorChannelDropDown.Value = 'All';
+            app.Spc29ColorChannelDropDown.Value = 'Red';
 
             % Create Spc29NumberofTubulesSpinnerLabel
             app.Spc29NumberofTubulesSpinnerLabel = uilabel(app.Spc29StructurePanel);
@@ -1537,30 +1557,30 @@ classdef StaticKinet < matlab.apps.AppBase
             app.KinetochoreProteinPanel.BorderType = 'none';
             app.KinetochoreProteinPanel.Title = 'Kinetochore Protein';
             app.KinetochoreProteinPanel.FontSize = 24;
-            app.KinetochoreProteinPanel.Position = [540 509 260 278];
+            app.KinetochoreProteinPanel.Position = [540 485 260 244];
 
-            % Create LengthofUnboundnmSpinnerLabel
-            app.LengthofUnboundnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.LengthofUnboundnmSpinnerLabel.HorizontalAlignment = 'right';
-            app.LengthofUnboundnmSpinnerLabel.Position = [31 139 134 22];
-            app.LengthofUnboundnmSpinnerLabel.Text = 'Length of Unbound (nm)';
+            % Create LengthofArmnmSpinnerLabel
+            app.LengthofArmnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.LengthofArmnmSpinnerLabel.HorizontalAlignment = 'right';
+            app.LengthofArmnmSpinnerLabel.Position = [31 121 134 22];
+            app.LengthofArmnmSpinnerLabel.Text = 'Length of Arm (nm)';
 
-            % Create LengthofUnboundnmSpinner
-            app.LengthofUnboundnmSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.LengthofUnboundnmSpinner.Step = 10;
-            app.LengthofUnboundnmSpinner.LowerLimitInclusive = 'off';
-            app.LengthofUnboundnmSpinner.UpperLimitInclusive = 'off';
-            app.LengthofUnboundnmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.LengthofUnboundnmSpinner.Limits = [0 Inf];
-            app.LengthofUnboundnmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.LengthofUnboundnmSpinner.HorizontalAlignment = 'center';
-            app.LengthofUnboundnmSpinner.Position = [172 139 64 22];
-            app.LengthofUnboundnmSpinner.Value = 70;
+            % Create LengthofArmnmSpinner
+            app.LengthofArmnmSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.LengthofArmnmSpinner.Step = 10;
+            app.LengthofArmnmSpinner.LowerLimitInclusive = 'off';
+            app.LengthofArmnmSpinner.UpperLimitInclusive = 'off';
+            app.LengthofArmnmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LengthofArmnmSpinner.Limits = [0 Inf];
+            app.LengthofArmnmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LengthofArmnmSpinner.HorizontalAlignment = 'center';
+            app.LengthofArmnmSpinner.Position = [172 121 64 22];
+            app.LengthofArmnmSpinner.Value = 70;
 
             % Create NumberofComplexesSpinnerLabel
             app.NumberofComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.NumberofComplexesSpinnerLabel.HorizontalAlignment = 'right';
-            app.NumberofComplexesSpinnerLabel.Position = [42 213 125 22];
+            app.NumberofComplexesSpinnerLabel.Position = [42 179 125 22];
             app.NumberofComplexesSpinnerLabel.Text = 'Number of Complexes';
 
             % Create NumberofComplexesSpinner
@@ -1571,30 +1591,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.NumberofComplexesSpinner.RoundFractionalValues = 'on';
             app.NumberofComplexesSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.NumberofComplexesSpinner.HorizontalAlignment = 'center';
-            app.NumberofComplexesSpinner.Position = [172 213 64 22];
+            app.NumberofComplexesSpinner.Position = [172 179 64 22];
             app.NumberofComplexesSpinner.Value = 8;
-
-            % Create DistanceofTapernmSpinnerLabel
-            app.DistanceofTapernmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.DistanceofTapernmSpinnerLabel.HorizontalAlignment = 'right';
-            app.DistanceofTapernmSpinnerLabel.Position = [31 65 134 22];
-            app.DistanceofTapernmSpinnerLabel.Text = 'Distance of Taper (nm)';
-
-            % Create DistanceofTapernmSpinner
-            app.DistanceofTapernmSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.DistanceofTapernmSpinner.LowerLimitInclusive = 'off';
-            app.DistanceofTapernmSpinner.UpperLimitInclusive = 'off';
-            app.DistanceofTapernmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.DistanceofTapernmSpinner.Limits = [0 Inf];
-            app.DistanceofTapernmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.DistanceofTapernmSpinner.HorizontalAlignment = 'center';
-            app.DistanceofTapernmSpinner.Position = [172 65 64 22];
-            app.DistanceofTapernmSpinner.Value = 20;
 
             % Create NumberofBoundComplexesSpinnerLabel
             app.NumberofBoundComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.NumberofBoundComplexesSpinnerLabel.HorizontalAlignment = 'right';
-            app.NumberofBoundComplexesSpinnerLabel.Position = [4 192 163 22];
+            app.NumberofBoundComplexesSpinnerLabel.Position = [4 158 163 22];
             app.NumberofBoundComplexesSpinnerLabel.Text = 'Number of Bound Complexes';
 
             % Create NumberofBoundComplexesSpinner
@@ -1604,60 +1607,13 @@ classdef StaticKinet < matlab.apps.AppBase
             app.NumberofBoundComplexesSpinner.RoundFractionalValues = 'on';
             app.NumberofBoundComplexesSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.NumberofBoundComplexesSpinner.HorizontalAlignment = 'center';
-            app.NumberofBoundComplexesSpinner.Position = [172 192 64 22];
+            app.NumberofBoundComplexesSpinner.Position = [172 158 64 22];
             app.NumberofBoundComplexesSpinner.Value = 8;
-
-            % Create RadialDispofTapernmSpinnerLabel
-            app.RadialDispofTapernmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.RadialDispofTapernmSpinnerLabel.HorizontalAlignment = 'right';
-            app.RadialDispofTapernmSpinnerLabel.Position = [22 45 145 22];
-            app.RadialDispofTapernmSpinnerLabel.Text = 'Radial Disp. of Taper (nm)';
-
-            % Create RadialDispofTapernmSpinner
-            app.RadialDispofTapernmSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.RadialDispofTapernmSpinner.UpperLimitInclusive = 'off';
-            app.RadialDispofTapernmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.RadialDispofTapernmSpinner.Limits = [0 Inf];
-            app.RadialDispofTapernmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.RadialDispofTapernmSpinner.HorizontalAlignment = 'center';
-            app.RadialDispofTapernmSpinner.Position = [172 45 64 22];
-
-            % Create AngleRangeforUnbounddegSpinnerLabel
-            app.AngleRangeforUnbounddegSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.AngleRangeforUnbounddegSpinnerLabel.HorizontalAlignment = 'right';
-            app.AngleRangeforUnbounddegSpinnerLabel.Position = [44 114 179 22];
-            app.AngleRangeforUnbounddegSpinnerLabel.Text = 'Angle Range for Unbound (deg.)';
-
-            % Create LowerAngleSpinner
-            app.LowerAngleSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.LowerAngleSpinner.Step = 5;
-            app.LowerAngleSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.LowerAngleSpinner.Limits = [-90 90];
-            app.LowerAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.LowerAngleSpinner.HorizontalAlignment = 'center';
-            app.LowerAngleSpinner.Position = [49 91 67 22];
-            app.LowerAngleSpinner.Value = -90;
-
-            % Create UpperAngleLabel
-            app.UpperAngleLabel = uilabel(app.KinetochoreProteinPanel);
-            app.UpperAngleLabel.HorizontalAlignment = 'center';
-            app.UpperAngleLabel.Position = [122 91 21 22];
-            app.UpperAngleLabel.Text = 'to';
-
-            % Create UpperAngleSpinner
-            app.UpperAngleSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.UpperAngleSpinner.Step = 5;
-            app.UpperAngleSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.UpperAngleSpinner.Limits = [-90 90];
-            app.UpperAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
-            app.UpperAngleSpinner.HorizontalAlignment = 'center';
-            app.UpperAngleSpinner.Position = [154 91 67 22];
-            app.UpperAngleSpinner.Value = 90;
 
             % Create ofLengthMarkedSpinnerLabel
             app.ofLengthMarkedSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.ofLengthMarkedSpinnerLabel.HorizontalAlignment = 'right';
-            app.ofLengthMarkedSpinnerLabel.Position = [54 172 113 22];
+            app.ofLengthMarkedSpinnerLabel.Position = [54 138 113 22];
             app.ofLengthMarkedSpinnerLabel.Text = '% of Length Marked';
 
             % Create ofLengthMarkedSpinner
@@ -1667,13 +1623,14 @@ classdef StaticKinet < matlab.apps.AppBase
             app.ofLengthMarkedSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.ofLengthMarkedSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.ofLengthMarkedSpinner.HorizontalAlignment = 'center';
-            app.ofLengthMarkedSpinner.Position = [172 172 64 22];
+            app.ofLengthMarkedSpinner.Position = [172 138 64 22];
+            app.ofLengthMarkedSpinner.Value = 100;
 
             % Create KinetochoreColorChannelLabel
             app.KinetochoreColorChannelLabel = uilabel(app.KinetochoreProteinPanel);
             app.KinetochoreColorChannelLabel.HorizontalAlignment = 'center';
             app.KinetochoreColorChannelLabel.FontName = 'Arial';
-            app.KinetochoreColorChannelLabel.Position = [53 22 91 22];
+            app.KinetochoreColorChannelLabel.Position = [53 24 91 22];
             app.KinetochoreColorChannelLabel.Text = 'Color Channel';
 
             % Create KinetochoreColorChannel
@@ -1681,14 +1638,60 @@ classdef StaticKinet < matlab.apps.AppBase
             app.KinetochoreColorChannel.Items = {'All', 'Green', 'Red', 'Blue'};
             app.KinetochoreColorChannel.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.KinetochoreColorChannel.FontName = 'Arial';
-            app.KinetochoreColorChannel.Position = [170 23 66 22];
-            app.KinetochoreColorChannel.Value = 'All';
+            app.KinetochoreColorChannel.Position = [170 25 66 22];
+            app.KinetochoreColorChannel.Value = 'Green';
+
+            % Create AnglefromMTAxisnmSpinnerLabel
+            app.AnglefromMTAxisnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.AnglefromMTAxisnmSpinnerLabel.HorizontalAlignment = 'right';
+            app.AnglefromMTAxisnmSpinnerLabel.Position = [27 100 138 22];
+            app.AnglefromMTAxisnmSpinnerLabel.Text = 'Angle from MT Axis (nm)';
+
+            % Create AnglefromMTAxisnmSpinner
+            app.AnglefromMTAxisnmSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.AnglefromMTAxisnmSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.AnglefromMTAxisnmSpinner.Limits = [-180 180];
+            app.AnglefromMTAxisnmSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.AnglefromMTAxisnmSpinner.HorizontalAlignment = 'center';
+            app.AnglefromMTAxisnmSpinner.Position = [171 100 65 22];
+
+            % Create UpperAngleLabel
+            app.UpperAngleLabel = uilabel(app.KinetochoreProteinPanel);
+            app.UpperAngleLabel.HorizontalAlignment = 'center';
+            app.UpperAngleLabel.Position = [128 52 21 22];
+            app.UpperAngleLabel.Text = 'to';
+
+            % Create UpperAngleSpinner
+            app.UpperAngleSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.UpperAngleSpinner.Step = 5;
+            app.UpperAngleSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.UpperAngleSpinner.Limits = [-90 90];
+            app.UpperAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.UpperAngleSpinner.HorizontalAlignment = 'center';
+            app.UpperAngleSpinner.Position = [160 52 67 22];
+            app.UpperAngleSpinner.Value = 90;
+
+            % Create AngleRangeforUnbounddegSpinnerLabel
+            app.AngleRangeforUnbounddegSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.AngleRangeforUnbounddegSpinnerLabel.HorizontalAlignment = 'right';
+            app.AngleRangeforUnbounddegSpinnerLabel.Position = [50 75 179 22];
+            app.AngleRangeforUnbounddegSpinnerLabel.Text = 'Angle Range for Unbound (deg.)';
+
+            % Create LowerAngleSpinner
+            app.LowerAngleSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.LowerAngleSpinner.Step = 5;
+            app.LowerAngleSpinner.ValueChangingFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LowerAngleSpinner.Limits = [-90 90];
+            app.LowerAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
+            app.LowerAngleSpinner.HorizontalAlignment = 'center';
+            app.LowerAngleSpinner.Position = [55 52 67 22];
+            app.LowerAngleSpinner.Value = -90;
 
             % Create KinetochoreCheckBox
             app.KinetochoreCheckBox = uicheckbox(app.StaticKinetUIFigure);
             app.KinetochoreCheckBox.ValueChangedFcn = createCallbackFcn(app, @KinetochoreStructureValueChange, true);
             app.KinetochoreCheckBox.Text = '';
-            app.KinetochoreCheckBox.Position = [762 759 18 22];
+            app.KinetochoreCheckBox.Position = [761 704 18 22];
 
             % Create RotationPanel
             app.RotationPanel = uipanel(app.StaticKinetUIFigure);
