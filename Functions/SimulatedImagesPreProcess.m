@@ -5,18 +5,14 @@ mkdir('Images')
 mkdir('Quarantine')
 cd ..
 folderlist = dir('*_TIF');
-f = waitbar(0,'Editing and Color Combining Images');
-for folderidx = 1:numel(folderlist)
-    cd(folderlist(folderidx).name)
-    filelist = dir('*.tif');
+parfor folderidx = 1:numel(folderlist)
+    path = [pwd filesep folderlist(folderidx).name filesep '*.tif']
+    filelist = dir(path);
     for fileidx = 1:numel(filelist)
-        [dimensions] = Max3DProjection(filelist(fileidx).name);
+        [dimensions] = Max3DProjection(filelist(fileidx));
     end
     ColorCombine(folderlist(folderidx).name,dimensions)
-    cd ..
-    waitbar(folderidx/numel(folderlist),f,sprintf('%d/%d - Editing and Color Combining Images',folderidx,numel(folderlist)));
 end
-close(f)
 cd('ColorCombine')
 cd('Images')
 warning('off','all')

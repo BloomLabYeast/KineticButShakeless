@@ -26,6 +26,5 @@ parfor n = 1:numel(im_files)
         end
         movefile(im_files(n).name,'..\Quarantine');
     end
-    fprintf('Analyzed : %s\n',im_files(n).name);
 end
 end
