@@ -22,6 +22,6 @@ However, apart from small differences in interface and intended usage, both appl
   * [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html)
   * [Simulink](https://www.mathworks.com/products/simulink.html)
 * [Bio-Formats MATLAB Toolbox](https://www.openmicroscopy.org/bio-formats/downloads/)
-  * Download and extract. Add the toolbox folder and subfolders (i.e. add with subfolders) to MATLAB's path ([click here](https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html) for help).
+  * Download and extract in any directory. Add the toolbox folder and subfolders (i.e. add with subfolders) to MATLAB's path ([click here](https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html) for help).
 * [Microscope Simulator 2.x.x](http://cismm.web.unc.edu/software/)
   * Run the .exe. Save at the deafult path (C:\Program Files (x86)\CISMM\Microscope Simulator 2.x.x in Windows) and choose any directory for the PSF file. Do run the program beforehand and make sure the Gibson-Lanni Widefield (GWL) PSF has been added to the PSF list, using the "*Edit Point-Spread Functions*" button and adding it. Create a couple of random simulations to confirm proper image generations with the GLW PSF, as most problems in the program arise in the image generation step.
