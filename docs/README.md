@@ -1,9 +1,10 @@
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Getting Started](#gettingstarted)
+
   a. [Prerequisites](#prerequisites)
 
-<a name="introduction" />
+<a name="introduction"><a/>
 # Introduction
 KineticButShakeless contains MATLAB applications, and associated dependent functions, that can be used to create 3D models of the kinetochore of S. cerevisiae. It can be used in conjuction with Microscope Simulator 2 [(*Quammen et al.* 2008)](https://www.ncbi.nlm.nih.gov/pubmed/20431698) to generate simulated images of the kinetochore that can be used for explorative kinetochore research.
 
@@ -11,9 +12,9 @@ The repository contains two main MATLAB applications that are used for two disti
 
 However, apart from small differences in interface and intended usage, both applications support the same fine-grain control of the kinetochore structure as well as control of key Microscope Simulator 2 parameters for simulated image generation.
 
-<a name="gettingstarted" />
+<a name="gettingstarted"><a/>
 # Getting Started
-<a name="prerequisites" />
+<a name="prerequisites"><a/>
 ## Prerequisites
 * [MATLAB](https://www.mathworks.com/downloads/)
 * The following MATLAB Add-Ons ([click here](https://www.mathworks.com/help/matlab/matlab_env/get-add-ons.html) for help):
