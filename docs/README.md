@@ -1,8 +1,7 @@
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Getting Started](#gettingstarted)
-
-  a. [Prerequisites](#prerequisites)
+    - [Prerequisites](#prerequisites)
 
 <a name="introduction"><a/>
 # Introduction
