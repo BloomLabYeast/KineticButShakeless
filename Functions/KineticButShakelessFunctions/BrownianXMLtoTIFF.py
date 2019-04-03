@@ -34,8 +34,8 @@ class commandParams :
         self.name = arguments[0]
         # we must have at least one argument in addition to the name of the script
         if not ( len( arguments ) > 1 ) :
-            print( 'Too few arguments.' )
-            print( USAGE_STR.format( program_name = self.name ) )
+            #print( 'Too few arguments.' )
+            #print( USAGE_STR.format( program_name = self.name ) )
             sys.exit( -1 )
 
         # path of Microscope Simulator
@@ -69,21 +69,21 @@ class commandParams :
 
         # make sure that microscope_path is a file
         if not os.path.isfile( self.microscope_path ) :
-            print( "'{}' is not a file".format( self.microscope_path ) )
-            print( USAGE_STR.format( program_name = self.name ) )
+            #print( "'{}' is not a file".format( self.microscope_path ) )
+            #print( USAGE_STR.format( program_name = self.name ) )
             sys.exit( -2 )
         
         # make sure that input_folder is a folder
         if not os.path.isdir( self.input_folder ) :
-            print( "'{}' is not a directory".format( self.input_folder ) )
-            print( USAGE_STR.format( program_name = self.name ) )
+            #print( "'{}' is not a directory".format( self.input_folder ) )
+            #print( USAGE_STR.format( program_name = self.name ) )
             sys.exit( -3 )
         
         # deal with output_folder
         self.output_folder = os.path.realpath( self.output_folder )
         if os.path.isfile( self.output_folder ) :
-            print( "'{}' is an already existing file".format( self.output_folder ) )
-            print( USAGE_STR.format( program_name = self.name ) )
+            #print( "'{}' is an already existing file".format( self.output_folder ) )
+            #print( USAGE_STR.format( program_name = self.name ) )
             sys.exit( -4 )
         if not os.path.isdir( self.output_folder ) :
             os.mkdir( self.output_folder )
@@ -120,7 +120,7 @@ def main( ) :
         sys.exit(1)
     # parse our command line parameters
     params = commandParams( sys.argv )
-    print(params.out_list)
+    #print(params.out_list)
 
     # get our start time
     start_time = time.time( )
@@ -130,8 +130,8 @@ def main( ) :
 
     for i in range( len( params.file_list ) ) :
         # how much we have processed?
-        print( 'Processed {} out of {} files... {:.4f} seconds elapsed.'.format( i, 
-            len( params.file_list ), time.time( ) - start_time ) )
+        #print( 'Processed {} out of {} files... {:.4f} seconds elapsed.'.format( i, 
+            #len( params.file_list ), time.time( ) - start_time ) )
         # make a list with the arguments we are going to process
         call_list = [ params.microscope_path, '--batch-mode', '--open-simulation',
             params.file_list[i], '--save-fluorescence-stack' ] + params.rgb_flags + [ params.out_list[i] ]
@@ -139,8 +139,8 @@ def main( ) :
         subprocess.call( call_list, stdout = devnull, stderr = devnull )
     # end loop through all the files
 
-    print( 'Processed {0} out of {0} files...'.format( len( params.file_list ) ) )
-    print( 'Processing complete!' )
+    #print( 'Processed {0} out of {0} files...'.format( len( params.file_list ) ) )
+    #print( 'Processing complete!' )
     # do we need to rename the output?
     if params.rename :
         # loop through all the outfile templates
@@ -151,16 +151,16 @@ def main( ) :
             matches = glob.glob( params.out_list[i] + '*' )
 
             # rename each match
-            for path in matches :
+            #for path in matches :
                 # split apart the extension from the file path
-                spfext = os.path.splitext( path )
+                #spfext = os.path.splitext( path )
                 # make the new path
-                newpath = '{base}_{value}{ext}'.format( base = spfext[0], 
-                    value = params.values[i], ext = spfext[1] )
+                #newpath = '{base}_{value}{ext}'.format( base = spfext[0], 
+                #    value = params.values[i], ext = spfext[1] )
                 # rename
-                os.rename( path, newpath )
+                #os.rename( path, newpath )
         # end loop through all the files, done renaming
-        print( 'Renaming complete! You can import the different channels as image sequences in Fiji.' )
+        #print( 'Renaming complete! You can import the different channels as image sequences in Fiji.' )
     # we're done
 
 # if this is the script being run, call main
