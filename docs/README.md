@@ -27,6 +27,8 @@ However, apart from small differences in interface and intended usage, both appl
   * Download and extract in any directory. Add the toolbox folder and subfolders (i.e. add with subfolders) to MATLAB's path ([click here](https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html) for help).
 * [Microscope Simulator 2.x.x](http://cismm.web.unc.edu/software/)
   * Run the .exe. Save at the deafult path (C:\Program Files (x86)\CISMM\Microscope Simulator 2.x.x in Windows) and choose any directory for the PSF file. Do run the program beforehand and make sure the Gibson-Lanni Widefield (GWL) PSF has been added to the PSF list, using the "*Edit Point-Spread Functions*" button and adding it. Create a couple of random simulations to confirm proper image generations with the GLW PSF, as most problems in the program arise in the image generation step.
+* (Optional) Google account with less secure app access turned on ([click here](https://support.google.com/accounts/answer/6010255?hl=en) for help).
+  * This is needed if you choose to use the email notifications. One of files in the *Functions* folder  
 
 
 <a name="openingtheapplication"><a/>
