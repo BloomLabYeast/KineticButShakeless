@@ -7,8 +7,8 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         QuitMenu                        matlab.ui.container.Menu
         AboutMenu                       matlab.ui.container.Menu
         BloomLabWebsiteMenu             matlab.ui.container.Menu
-        OtherProgramsMenu               matlab.ui.container.Menu
         GitHubMenu                      matlab.ui.container.Menu
+        OtherProgramsMenu               matlab.ui.container.Menu
         HelpMenu                        matlab.ui.container.Menu
         DocumentationMenu               matlab.ui.container.Menu
         OutputPanel                     matlab.ui.container.Panel
@@ -34,22 +34,16 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         PixelSizenmSpinnerLabel         matlab.ui.control.Label
         PixelSizenmSpinner              matlab.ui.control.Spinner
         StatusOutputPanel               matlab.ui.container.Panel
-        GenerateOutputButton            matlab.ui.control.Button
         StatusEditFieldLabel            matlab.ui.control.Label
         StatusEditField                 matlab.ui.control.EditField
+        GenerateOutputButton            matlab.ui.control.Button
         GenerateTIFsCheckBox            matlab.ui.control.CheckBox
         PreProcessTIFsCheckBox          matlab.ui.control.CheckBox
-        EmailEditFieldLabel             matlab.ui.control.Label
+        EmailLabel                      matlab.ui.control.Label
         EmailEditField                  matlab.ui.control.EditField
+        EmailNotificationsCheckBox      matlab.ui.control.CheckBox
         NumberotXMLstoGenerateSpinnerLabel  matlab.ui.control.Label
         NumberofXMLstoGenerateSpinner   matlab.ui.control.Spinner
-        N_Nuf2StructurePanel            matlab.ui.container.Panel
-        N_Nuf2NumberofFluorophoreSpinnerLabel  matlab.ui.control.Label
-        N_Nuf2NumberofFluorophoreSpinner  matlab.ui.control.Spinner
-        N_Nuf2LengthnmSpinnerLabel      matlab.ui.control.Label
-        N_Nuf2LengthnmSpinner           matlab.ui.control.Spinner
-        N_Nuf2ColorChannelDropDownLabel  matlab.ui.control.Label
-        N_Nuf2ColorChannelDropDown      matlab.ui.control.DropDown
         Spc29StructurePanel             matlab.ui.container.Panel
         Spc29TubuleDiameternmSpinnerLabel  matlab.ui.control.Label
         Spc29TubuleDiameternmSpinner    matlab.ui.control.Spinner
@@ -65,25 +59,24 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         Spc29LengthnmSpinner            matlab.ui.control.Spinner
         Spc29DistancetonmSpinnerLabel   matlab.ui.control.Label
         Spc29DistancetonmSpinner        matlab.ui.control.Spinner
-        N_Nuf2CheckBox                  matlab.ui.control.CheckBox
         Spc29CheckBox                   matlab.ui.control.CheckBox
         KinetochoreProteinPanel         matlab.ui.container.Panel
         LengthofArmnmSpinnerLabel       matlab.ui.control.Label
         LengthofArmnmSpinner            matlab.ui.control.Spinner
-        NumberofComplexesSpinnerLabel   matlab.ui.control.Label
-        NumberofComplexesSpinner        matlab.ui.control.Spinner
-        NumberofBoundComplexesSpinnerLabel  matlab.ui.control.Label
-        NumberofBoundComplexesSpinner   matlab.ui.control.Spinner
+        NumberofArmsSpinnerLabel        matlab.ui.control.Label
+        NumberofArmsSpinner             matlab.ui.control.Spinner
+        NumberofBoundArmsSpinnerLabel   matlab.ui.control.Label
+        NumberofBoundArmsSpinner        matlab.ui.control.Spinner
         UpperAngleLabel                 matlab.ui.control.Label
         UpperAngleSpinner               matlab.ui.control.Spinner
-        ofLengthMarkedSpinnerLabel      matlab.ui.control.Label
-        ofLengthMarkedSpinner           matlab.ui.control.Spinner
         AnglefromMTAxisnmSpinnerLabel   matlab.ui.control.Label
         AnglefromMTAxisnmSpinner        matlab.ui.control.Spinner
         AngleRangeforUnbounddegSpinnerLabel  matlab.ui.control.Label
         LowerAngleSpinner               matlab.ui.control.Spinner
         KinetochoreColorChannelLabel    matlab.ui.control.Label
         KinetochoreColorChannel         matlab.ui.control.DropDown
+        PointMarkedSpinnerLabel         matlab.ui.control.Label
+        PointMarkedSpinner              matlab.ui.control.Spinner
         KinetochoreCheckBox             matlab.ui.control.CheckBox
         RotationPanel                   matlab.ui.container.Panel
         RotationParametersPanel         matlab.ui.container.ButtonGroup
@@ -105,16 +98,24 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         ZSpinner                        matlab.ui.control.Spinner
         MicrotubuleDiameternmSpinnerLabel  matlab.ui.control.Label
         MicrotubuleDiameternmSpinner    matlab.ui.control.Spinner
-        StructureDiameternmSpinnerLabel  matlab.ui.control.Label
-        StructureDiameternmSpinner      matlab.ui.control.Spinner
-        NumberofChromosomesSpinnerLabel  matlab.ui.control.Label
-        NumberofChromosomesSpinner      matlab.ui.control.Spinner
+        ComplexDiameternmSpinnerLabel   matlab.ui.control.Label
+        ComplexDiameternmSpinner        matlab.ui.control.Spinner
+        NumberofMicrotubulesSpinnerLabel  matlab.ui.control.Label
+        NumberofMicrotubulesSpinner     matlab.ui.control.Spinner
         StaggerDropDownLabel            matlab.ui.control.Label
         StaggerDropDown                 matlab.ui.control.DropDown
-        RangenmSpinnerLabel             matlab.ui.control.Label
+        RangenmLabel                    matlab.ui.control.Label
         RangenmSpinner                  matlab.ui.control.Spinner
         NumberofComplexesSwitchLabel    matlab.ui.control.Label
         NumberofComplexesSwitch         matlab.ui.control.Switch
+        N_Nuf2StructurePanel            matlab.ui.container.Panel
+        N_Nuf2NumberofFluorophoreSpinnerLabel  matlab.ui.control.Label
+        N_Nuf2NumberofFluorophoreSpinner  matlab.ui.control.Spinner
+        N_Nuf2LengthnmSpinnerLabel      matlab.ui.control.Label
+        N_Nuf2LengthnmSpinner           matlab.ui.control.Spinner
+        N_Nuf2ColorChannelDropDownLabel  matlab.ui.control.Label
+        N_Nuf2ColorChannelDropDown      matlab.ui.control.DropDown
+        N_Nuf2CheckBox                  matlab.ui.control.CheckBox
     end
 
     properties (Access = public)
@@ -144,10 +145,10 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             
             if strcmp(app.StaggerDropDown.Value, 'Random') % Make the spinner to control max range for random stagger visible if 'Random' is chosen
                 app.RangenmSpinner.Visible = "on";
-                app.RangenmSpinnerLabel.Visible = "on";
+                app.RangenmLabel.Visible = "on";
             else
                 app.RangenmSpinner.Visible = "off";
-                app.RangenmSpinnerLabel.Visible = "off";
+                app.RangenmLabel.Visible = "off";
             end  
             if app.RotationCheckBox.Value == false % Make the Rotation control panel visible is Rotation is selected
                 app.RotationParametersPanel.Visible = 'off';
@@ -163,13 +164,16 @@ classdef StaticKinetInMass < matlab.apps.AppBase
                     app.RandomRotationParametersdegPanel.Visible = 'on';
                 end
             end
+            if app.LowLimSpinner.Value > app.UpLimSpinner.Value
+                [app.UpLimSpinner.Value,app.LowLimSpinner.Value] = deal(app.LowLimSpinner.Value,app.UpLimSpinner.Value);
+            end
         end
             
         function KinetochoreParameterCheck(app)
             % KINETOCHOREPARAMETERCHECK Check the parameters for the kinetochore complex structure
             
-            if app.NumberofComplexesSpinner.Value < app.NumberofBoundComplexesSpinner.Value % Set the number of bound complexes = total number of complexes if user makes bound > total
-                app.NumberofBoundComplexesSpinner.Value = app.NumberofComplexesSpinner.Value;
+            if app.NumberofArmsSpinner.Value < app.NumberofBoundArmsSpinner.Value % Set the number of bound complexes = total number of complexes if user makes bound > total
+                app.NumberofBoundArmsSpinner.Value = app.NumberofArmsSpinner.Value;
             end
             if app.LowerAngleSpinner.Value > app.UpperAngleSpinner.Value % If Upper angle limit is smaller than Lower angle limit, flip their values
                 [app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value] = deal(app.LowerAngleSpinner.Value,app.UpperAngleSpinner.Value);
@@ -179,6 +183,13 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         function OutputParameterCheck(app)
             % OUTPUTPARAMETERCHECK Check the parameters for the output conditions and values
             
+            if app.EmailNotificationsCheckBox.Value == true
+                app.EmailEditField.Visible = "on";
+                app.EmailLabel.Visible = "on";
+            else
+                app.EmailEditField.Visible = "off";
+                app.EmailLabel.Visible = "off";
+            end
             if isempty(app.FileFolderNameStringEditField.Value) %Make output button unavailable if no filename is given
                 app.GenerateOutputButton.Enable = "off";
             else
@@ -188,6 +199,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
                 app.PreProcessTIFsCheckBox.Enable = "on";
             else
                 app.PreProcessTIFsCheckBox.Enable = "off";
+                app.PreProcessTIFsCheckBox.Value = false;
             end                
         end
     
@@ -243,7 +255,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
                 NoC = 2;
             end
             if app.RotationCheckBox.Value == true % Calculate possible splay if chosen
-                app.Rotation = rand(app.NumberofChromosomesSpinner.Value*NoC,3);
+                app.Rotation = rand(app.NumberofMicrotubulesSpinner.Value*NoC,3);
                 if app.FixedRotationButton.Value == true
                     app.Rotation(:,1) = app.XSpinner.Value;
                     app.Rotation(:,2) = app.YSpinner.Value;
@@ -255,9 +267,9 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             end
             if ~strcmp(app.StaggerDropDown.Value, 'None') % Calculate possible stagger, if any, based on the drop down selection
                 if strcmp(app.StaggerDropDown.Value, 'Random')
-                    app.Stagger = (rand(1,app.NumberofChromosomesSpinner.Value*NoC)-0.5)*(app.RangenmSpinner.Value*2);
+                    app.Stagger = (rand(1,app.NumberofMicrotubulesSpinner.Value*NoC)-0.5)*(app.RangenmSpinner.Value*2);
                 else
-                    app.Stagger = (app.LengthSim(ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,1)),ceil(rand(1,app.NumberofChromosomesSpinner.Value*NoC)*size(app.LengthSim,2)))-3.5e-07)*1e9;
+                    app.Stagger = (app.LengthSim(ceil(rand(1,app.NumberofMicrotubulesSpinner.Value*NoC)*size(app.LengthSim,1)),ceil(rand(1,app.NumberofMicrotubulesSpinner.Value*NoC)*size(app.LengthSim,2)))-3.5e-07)*1e9;
                 end
             end
         end
@@ -277,16 +289,16 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % N_NUF2STRUCTURE1 Calculate the coordinates for Nuf2 in 1 complex
             
             RotationCheck = (strcmp(app.RotationParametersPanel.Visible,'on')) & (app.RotationCheckBox.Value == true);
-            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck);
+            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofMicrotubulesSpinner.Value,app.StaggerDropDown.Value,app.ComplexDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck);
         end
     
         function N_Nuf2Structure2(app)
             % N_NUF2STRUCTURE1 Calculate the coordinates for Nuf2 in 2 complexs
             
             RotationCheck = (strcmp(app.RotationParametersPanel.Visible,'on')) & (app.RotationCheckBox.Value == true);
-            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck); % Calculate the Nuf2 coordinates for the 1st complex
+            app.N_Nuf2PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.NumberofMicrotubulesSpinner.Value,app.StaggerDropDown.Value,app.ComplexDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck); % Calculate the Nuf2 coordinates for the 1st complex
             app.N_Nuf2PointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.N_Nuf2PointInfo.CoordPoints) - app.BioDistanceCorrection; % Rotate based on the BioDistanceCorrection vector and offset from the center
-            app.N_Nuf2PointInfo.CoordPoints2 = StructurePointsGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck); % Calculate the Nuf2 coordinates for the 2nd complex
+            app.N_Nuf2PointInfo.CoordPoints2 = StructurePointsGenerate(app,1+app.NumberofMicrotubulesSpinner.Value,app.NumberofMicrotubulesSpinner.Value,app.StaggerDropDown.Value,app.ComplexDiameternmSpinner.Value,app.N_Nuf2NumberofFluorophoreSpinner.Value,app.N_Nuf2LengthnmSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,RotationCheck); % Calculate the Nuf2 coordinates for the 2nd complex
             app.N_Nuf2PointInfo.CoordPoints2 = (RotationMatrixGenerate(app,-app.BioDistanceCorrection)*app.N_Nuf2PointInfo.CoordPoints2) + app.BioDistanceCorrection; % Rotate based on the negative of the BioDistanceCorrection vector and offset from the center
             app.N_Nuf2PointInfo.CoordPoints = horzcat(app.N_Nuf2PointInfo.CoordPoints, app.N_Nuf2PointInfo.CoordPoints2); % Combine 1st and 2nd complex coordiante variables into 1
         end
@@ -305,15 +317,15 @@ classdef StaticKinetInMass < matlab.apps.AppBase
         function KinetochoreStructure1(app)
             % KINETOCHORESTRUCTURE1 Calculate the coordinates for kinetochore in 1 complex
             
-            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
+            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofMicrotubulesSpinner.Value,app.StaggerDropDown.Value,app.ComplexDiameternmSpinner.Value,app.NumberofArmsSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundArmsSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.PointMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value);
         end
     
         function KinetochoreStructure2(app)
             % KINETOCHORESTRUCTURE2 Calculate the coordinates for kinetochore in 2 complexs
             
-            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value); % Calculate the coordinates for the 1st kinetochore complex
+            app.KinetochorePointInfo.CoordPoints = KinetochoreGenerate(app,1,app.NumberofMicrotubulesSpinner.Value,app.StaggerDropDown.Value,app.ComplexDiameternmSpinner.Value,app.NumberofArmsSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundArmsSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.PointMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value); % Calculate the coordinates for the 1st kinetochore complex
             app.KinetochorePointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.KinetochorePointInfo.CoordPoints) - app.BioDistanceCorrection; % Rotate based on the BioDistanceCorrection vector and offest from the center
-            app.KinetochorePointInfo.CoordPoints2 = KinetochoreGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.NumberofChromosomesSpinner.Value,app.StaggerDropDown.Value,app.StructureDiameternmSpinner.Value,app.NumberofComplexesSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundComplexesSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.ofLengthMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value); % Calculate the coordinates for the 2nd kinetochore complex
+            app.KinetochorePointInfo.CoordPoints2 = KinetochoreGenerate(app,1+app.NumberofMicrotubulesSpinner.Value,app.NumberofMicrotubulesSpinner.Value,app.StaggerDropDown.Value,app.ComplexDiameternmSpinner.Value,app.NumberofArmsSpinner.Value,cosd(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,sind(app.AnglefromMTAxisnmSpinner.Value)*app.LengthofArmnmSpinner.Value,app.NumberofBoundArmsSpinner.Value,app.MicrotubuleDiameternmSpinner.Value,app.PointMarkedSpinner.Value,app.LengthofArmnmSpinner.Value,app.UpperAngleSpinner.Value,app.LowerAngleSpinner.Value); % Calculate the coordinates for the 2nd kinetochore complex
             app.KinetochorePointInfo.CoordPoints2 = (RotationMatrixGenerate(app,-app.BioDistanceCorrection)*app.KinetochorePointInfo.CoordPoints2) + app.BioDistanceCorrection; % Rotate based on the negative of the BioDistanceCorrection vector and offset from the center
             app.KinetochorePointInfo.CoordPoints = horzcat(app.KinetochorePointInfo.CoordPoints, app.KinetochorePointInfo.CoordPoints2); % Combine 1st and 2nd complex coordinate variables into 1
             
@@ -337,7 +349,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             Spc29Correction = (app.BioDistanceCorrection/norm(app.BioDistanceCorrection'))*(norm(app.BioDistanceCorrection') + app.Spc29DistancetonmSpinner.Value);
             app.Spc29PointInfo.CoordPoints = StructurePointsGenerate(app,1,app.Spc29NumberofTubulesSpinner.Value,"~",app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false);
             app.Spc29PointInfo.CoordPoints = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.Spc29PointInfo.CoordPoints) - Spc29Correction;
-            app.Spc29PointInfo.CoordPoints2 = StructurePointsGenerate(app,1+app.NumberofChromosomesSpinner.Value,app.Spc29NumberofTubulesSpinner.Value,"~",app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false);
+            app.Spc29PointInfo.CoordPoints2 = StructurePointsGenerate(app,1+app.NumberofMicrotubulesSpinner.Value,app.Spc29NumberofTubulesSpinner.Value,"~",app.Spc29StructureDiameternmSpinner.Value,app.Spc29NumberofFluorophoreSpinner.Value,app.Spc29LengthnmSpinner.Value,app.Spc29TubuleDiameternmSpinner.Value,false);
             app.Spc29PointInfo.CoordPoints2 = (RotationMatrixGenerate(app,app.BioDistanceCorrection)*app.Spc29PointInfo.CoordPoints2) + Spc29Correction;
             app.Spc29PointInfo.CoordPoints = horzcat(app.Spc29PointInfo.CoordPoints, app.Spc29PointInfo.CoordPoints2);
         end
@@ -532,25 +544,13 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             GenerateSimuLinkData(app)
         end
 
-        % Callback function: RotationCheckBox, 
-        % RotationParametersPanel, StaggerDropDown
-        function MainParameterChange(app, event)
-            MainParameterCheck(app)
-        end
-
-        % Callback function: FileFolderNameStringEditField, 
-        % FileFolderNameStringEditField, GenerateTIFsCheckBox
-        function OutputParameterChange(app, event)
-            OutputParameterCheck(app)
-        end
-
         % Callback function: LowerAngleSpinner, LowerAngleSpinner, 
         % UpperAngleSpinner, UpperAngleSpinner
         function KinetochoreParameterChange(app, event)
             KinetochoreParameterCheck(app)
         end
 
-        % Button pushed function: GenerateOutputButton
+        % Callback function
         function GenerateOutput(app, event)
             try
                 app.CurrentErrorMessage = "ERROR! - Something went wrong and I do not know what. Please fix me!";
@@ -563,15 +563,21 @@ classdef StaticKinetInMass < matlab.apps.AppBase
                     CopyBtoF(app)
                     cd(app.FileFolderNameStringEditField.Value)
                     MainLoop(app)
-                    SendEmailApp(app,app.FileFolderNameStringEditField.Value,"Finished generating xml's")
+                    if app.EmailNotificationsCheckBox.Value == true
+                        SendEmailApp(app,app.FileFolderNameStringEditField.Value,"Finished generating xml's")
+                    end
                     if app.GenerateTIFsCheckBox.Value == true
                         GenerateTIFs(app)
-                        SendEmailApp(app,app.FileFolderNameStringEditField.Value,"Finished generating TIF's")
+                        if app.EmailNotificationsCheckBox.Value == true
+                            SendEmailApp(app,app.FileFolderNameStringEditField.Value,"Finished generating TIF's")
+                        end
                     end
                     cd ..
                     if app.GenerateTIFsCheckBox.Value == true && strcmp(app.PreProcessTIFsCheckBox.Enable,"on") && app.PreProcessTIFsCheckBox.Value == true
                         PreProcess(app)
-                        SendEmailApp(app,app.FileFolderNameStringEditField.Value,"Finished pre-processing TIF's")
+                        if app.EmailNotificationsCheckBox.Value == true
+                            SendEmailApp(app,app.FileFolderNameStringEditField.Value,"Finished pre-processing TIF's")
+                        end
                     end
                     app.StatusEditField.Value = 'Finished!';
                 end
@@ -580,6 +586,46 @@ classdef StaticKinetInMass < matlab.apps.AppBase
                 fprintf(1,'\nThere was an error! The message was:\n%s',e.message);
                 SendEmailApp(app,app.FileFolderNameStringEditField.Value,app.CurrentErrorMessage);
             end
+        end
+
+        % Menu selected function: QuitMenu
+        function QuitMenuSelected(app, event)
+            delete(app)
+        end
+
+        % Menu selected function: BloomLabWebsiteMenu
+        function BloomLabWebsiteMenuSelected(app, event)
+            web('http://bloomlab.web.unc.edu/','-browser')
+        end
+
+        % Menu selected function: GitHubMenu
+        function GitHubMenuSelected(app, event)
+            web('https://github.com/BloomLabYeast','-browser');
+        end
+
+        % Menu selected function: OtherProgramsMenu
+        function OtherProgramsMenuSelected(app, event)
+            web('http://bloomlab.web.unc.edu/resources/programs/','-browser');
+        end
+
+        % Menu selected function: DocumentationMenu
+        function DocumentationMenuSelected(app, event)
+            web('https://bloomlabyeast.github.io/KineticButShakeless/','-browser');
+        end
+
+        % Value changed function: EmailNotificationsCheckBox, 
+        % FileFolderNameStringEditField, GenerateTIFsCheckBox, 
+        % PreProcessTIFsCheckBox
+        function OutputParameterChange(app, event)
+            OutputParameterCheck(app)
+        end
+
+        % Callback function: LowLimSpinner, LowLimSpinner, 
+        % RotationCheckBox, RotationParametersPanel, 
+        % RotationParametersPanel, StaggerDropDown, UpLimSpinner, 
+        % UpLimSpinner
+        function MainParameterChange(app, event)
+            MainParameterCheck(app)
         end
     end
 
@@ -600,6 +646,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create QuitMenu
             app.QuitMenu = uimenu(app.FileMenu);
+            app.QuitMenu.MenuSelectedFcn = createCallbackFcn(app, @QuitMenuSelected, true);
             app.QuitMenu.Text = 'Quit';
 
             % Create AboutMenu
@@ -608,15 +655,18 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create BloomLabWebsiteMenu
             app.BloomLabWebsiteMenu = uimenu(app.AboutMenu);
+            app.BloomLabWebsiteMenu.MenuSelectedFcn = createCallbackFcn(app, @BloomLabWebsiteMenuSelected, true);
             app.BloomLabWebsiteMenu.Text = 'Bloom Lab Website';
-
-            % Create OtherProgramsMenu
-            app.OtherProgramsMenu = uimenu(app.AboutMenu);
-            app.OtherProgramsMenu.Text = 'Other Programs';
 
             % Create GitHubMenu
             app.GitHubMenu = uimenu(app.AboutMenu);
+            app.GitHubMenu.MenuSelectedFcn = createCallbackFcn(app, @GitHubMenuSelected, true);
             app.GitHubMenu.Text = 'GitHub';
+
+            % Create OtherProgramsMenu
+            app.OtherProgramsMenu = uimenu(app.AboutMenu);
+            app.OtherProgramsMenu.MenuSelectedFcn = createCallbackFcn(app, @OtherProgramsMenuSelected, true);
+            app.OtherProgramsMenu.Text = 'Other Programs';
 
             % Create HelpMenu
             app.HelpMenu = uimenu(app.StaticKinetinMassUIFigure);
@@ -624,6 +674,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create DocumentationMenu
             app.DocumentationMenu = uimenu(app.HelpMenu);
+            app.DocumentationMenu.MenuSelectedFcn = createCallbackFcn(app, @DocumentationMenuSelected, true);
             app.DocumentationMenu.Text = 'Documentation';
 
             % Create OutputPanel
@@ -638,13 +689,13 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create FileFolderNameStringEditFieldLabel
             app.FileFolderNameStringEditFieldLabel = uilabel(app.OutputPanel);
             app.FileFolderNameStringEditFieldLabel.HorizontalAlignment = 'right';
+            app.FileFolderNameStringEditFieldLabel.Tooltip = {'The name of the structure. This will be used as the base string for all of the folders and files that are generated.'};
             app.FileFolderNameStringEditFieldLabel.Position = [8 358 136 22];
             app.FileFolderNameStringEditFieldLabel.Text = 'File/Folder Name String:';
 
             % Create FileFolderNameStringEditField
             app.FileFolderNameStringEditField = uieditfield(app.OutputPanel, 'text');
             app.FileFolderNameStringEditField.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
-            app.FileFolderNameStringEditField.ValueChangingFcn = createCallbackFcn(app, @OutputParameterChange, true);
             app.FileFolderNameStringEditField.HorizontalAlignment = 'center';
             app.FileFolderNameStringEditField.Position = [146 358 130 22];
 
@@ -658,6 +709,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create GainEditFieldLabel
             app.GainEditFieldLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.GainEditFieldLabel.HorizontalAlignment = 'center';
+            app.GainEditFieldLabel.Tooltip = {'Gain parameter for simulated image generation using Microscope Simulator.'};
             app.GainEditFieldLabel.Position = [9 29 30 22];
             app.GainEditFieldLabel.Text = 'Gain:';
 
@@ -672,6 +724,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create OffsetEditFieldLabel
             app.OffsetEditFieldLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.OffsetEditFieldLabel.HorizontalAlignment = 'center';
+            app.OffsetEditFieldLabel.Tooltip = {'Offset parameter for simulated image generation using Microscope Simulator.'};
             app.OffsetEditFieldLabel.Position = [7 3 41 22];
             app.OffsetEditFieldLabel.Text = 'Offset:';
 
@@ -685,6 +738,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create GaussianNoiseSDEditFieldLabel
             app.GaussianNoiseSDEditFieldLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.GaussianNoiseSDEditFieldLabel.HorizontalAlignment = 'center';
+            app.GaussianNoiseSDEditFieldLabel.Tooltip = {'Gaussian noise added to simulated image generation using Microscope Simulator in standard deviation.'};
             app.GaussianNoiseSDEditFieldLabel.Position = [106 29 113 22];
             app.GaussianNoiseSDEditFieldLabel.Text = 'Gaussian Noise SD:';
 
@@ -698,6 +752,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create MaxVoxelIntensityEditFieldLabel
             app.MaxVoxelIntensityEditFieldLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.MaxVoxelIntensityEditFieldLabel.HorizontalAlignment = 'right';
+            app.MaxVoxelIntensityEditFieldLabel.Tooltip = {'Max. Voxel Intensity parameter for simulated image generation using Microscope Simulator.'};
             app.MaxVoxelIntensityEditFieldLabel.Position = [107 3 111 22];
             app.MaxVoxelIntensityEditFieldLabel.Text = 'Max. Voxel Intensity:';
 
@@ -712,6 +767,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create NumberofPlanesSpinnerLabel
             app.NumberofPlanesSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.NumberofPlanesSpinnerLabel.HorizontalAlignment = 'center';
+            app.NumberofPlanesSpinnerLabel.Tooltip = {'The number of planes used to geneated the simulated images by Microscope Simulator.'};
             app.NumberofPlanesSpinnerLabel.Position = [65 118 102 22];
             app.NumberofPlanesSpinnerLabel.Text = 'Number of Planes';
 
@@ -720,13 +776,16 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.NumberofPlanesSpinner.LowerLimitInclusive = 'off';
             app.NumberofPlanesSpinner.UpperLimitInclusive = 'off';
             app.NumberofPlanesSpinner.Limits = [0 Inf];
+            app.NumberofPlanesSpinner.RoundFractionalValues = 'on';
             app.NumberofPlanesSpinner.HorizontalAlignment = 'center';
+            app.NumberofPlanesSpinner.Tooltip = {'The number of planes used to geneated the simulated images by Microscope Simulator.'};
             app.NumberofPlanesSpinner.Position = [171 118 51 22];
             app.NumberofPlanesSpinner.Value = 7;
 
             % Create SpacingBetweenPlanesnmSpinnerLabel
             app.SpacingBetweenPlanesnmSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.SpacingBetweenPlanesnmSpinnerLabel.HorizontalAlignment = 'center';
+            app.SpacingBetweenPlanesnmSpinnerLabel.Tooltip = {'Distance distance between each plane in nanometers.'};
             app.SpacingBetweenPlanesnmSpinnerLabel.Position = [26 97 167 22];
             app.SpacingBetweenPlanesnmSpinnerLabel.Text = 'Spacing Between Planes (nm)';
 
@@ -737,12 +796,14 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.SpacingBetweenPlanesnmSpinner.UpperLimitInclusive = 'off';
             app.SpacingBetweenPlanesnmSpinner.Limits = [0 Inf];
             app.SpacingBetweenPlanesnmSpinner.HorizontalAlignment = 'center';
+            app.SpacingBetweenPlanesnmSpinner.Tooltip = {'Distance distance between each plane in nanometers.'};
             app.SpacingBetweenPlanesnmSpinner.Position = [197 97 66 22];
             app.SpacingBetweenPlanesnmSpinner.Value = 300;
 
             % Create WidthpixelsSpinnerLabel
             app.WidthpixelsSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.WidthpixelsSpinnerLabel.HorizontalAlignment = 'center';
+            app.WidthpixelsSpinnerLabel.Tooltip = {'The width of the overall image in pixels.'};
             app.WidthpixelsSpinnerLabel.Position = [3 76 78 22];
             app.WidthpixelsSpinnerLabel.Text = 'Width (pixels)';
 
@@ -751,14 +812,17 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.WidthpixelsSpinner.Step = 10;
             app.WidthpixelsSpinner.UpperLimitInclusive = 'off';
             app.WidthpixelsSpinner.Limits = [1 Inf];
+            app.WidthpixelsSpinner.RoundFractionalValues = 'on';
             app.WidthpixelsSpinner.ValueDisplayFormat = '%.0f';
             app.WidthpixelsSpinner.HorizontalAlignment = 'center';
+            app.WidthpixelsSpinner.Tooltip = {'The width and the overall image in pixels.'};
             app.WidthpixelsSpinner.Position = [82 76 61 22];
             app.WidthpixelsSpinner.Value = 40;
 
             % Create HeightpixelsSpinnerLabel
             app.HeightpixelsSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.HeightpixelsSpinnerLabel.HorizontalAlignment = 'center';
+            app.HeightpixelsSpinnerLabel.Tooltip = {'The height of the overall image in pixels.'};
             app.HeightpixelsSpinnerLabel.Position = [148 76 82 22];
             app.HeightpixelsSpinnerLabel.Text = 'Height (pixels)';
 
@@ -767,14 +831,17 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.HeightpixelsSpinner.Step = 10;
             app.HeightpixelsSpinner.UpperLimitInclusive = 'off';
             app.HeightpixelsSpinner.Limits = [1 Inf];
+            app.HeightpixelsSpinner.RoundFractionalValues = 'on';
             app.HeightpixelsSpinner.ValueDisplayFormat = '%.0f';
             app.HeightpixelsSpinner.HorizontalAlignment = 'center';
+            app.HeightpixelsSpinner.Tooltip = {'The height and the overall image in pixels.'};
             app.HeightpixelsSpinner.Position = [231 76 57 22];
             app.HeightpixelsSpinner.Value = 40;
 
             % Create PixelSizenmSpinnerLabel
             app.PixelSizenmSpinnerLabel = uilabel(app.MicroscopeSimulatorParametersPanel);
             app.PixelSizenmSpinnerLabel.HorizontalAlignment = 'center';
+            app.PixelSizenmSpinnerLabel.Tooltip = {'The width and height of each pixel in nanometers.'};
             app.PixelSizenmSpinnerLabel.Position = [67 52 86 22];
             app.PixelSizenmSpinnerLabel.Text = 'Pixel Size (nm)';
 
@@ -791,14 +858,6 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.StatusOutputPanel = uipanel(app.OutputPanel);
             app.StatusOutputPanel.Position = [1 8 296 103];
 
-            % Create GenerateOutputButton
-            app.GenerateOutputButton = uibutton(app.StatusOutputPanel, 'push');
-            app.GenerateOutputButton.ButtonPushedFcn = createCallbackFcn(app, @GenerateOutput, true);
-            app.GenerateOutputButton.FontSize = 18;
-            app.GenerateOutputButton.Enable = 'off';
-            app.GenerateOutputButton.Position = [60 40 176 58];
-            app.GenerateOutputButton.Text = 'Generate Output!';
-
             % Create StatusEditFieldLabel
             app.StatusEditFieldLabel = uilabel(app.StatusOutputPanel);
             app.StatusEditFieldLabel.HorizontalAlignment = 'right';
@@ -810,30 +869,48 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.StatusEditField.HorizontalAlignment = 'center';
             app.StatusEditField.Position = [46 10 246 22];
 
+            % Create GenerateOutputButton
+            app.GenerateOutputButton = uibutton(app.StatusOutputPanel, 'push');
+            app.GenerateOutputButton.FontSize = 18;
+            app.GenerateOutputButton.Position = [74 40 166 54];
+            app.GenerateOutputButton.Text = 'Generate Outputs!';
+
             % Create GenerateTIFsCheckBox
             app.GenerateTIFsCheckBox = uicheckbox(app.OutputPanel);
             app.GenerateTIFsCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
+            app.GenerateTIFsCheckBox.Tooltip = {'Use Microscope Simulator to generate simulated microscope images based on the XML files generated.'};
             app.GenerateTIFsCheckBox.Text = 'Generate TIF''s';
             app.GenerateTIFsCheckBox.Position = [99 134 102 22];
 
             % Create PreProcessTIFsCheckBox
             app.PreProcessTIFsCheckBox = uicheckbox(app.OutputPanel);
+            app.PreProcessTIFsCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
+            app.PreProcessTIFsCheckBox.Tooltip = {'Pre-process the output TIFs from the Microscope Simulator program to generate denoised maximum-projection that have been normalized and rotated/flipped.'};
             app.PreProcessTIFsCheckBox.Text = 'Pre-Process TIF''s';
             app.PreProcessTIFsCheckBox.Position = [99 114 118 22];
 
-            % Create EmailEditFieldLabel
-            app.EmailEditFieldLabel = uilabel(app.OutputPanel);
-            app.EmailEditFieldLabel.HorizontalAlignment = 'right';
-            app.EmailEditFieldLabel.Position = [20 330 36 22];
-            app.EmailEditFieldLabel.Text = 'Email';
+            % Create EmailLabel
+            app.EmailLabel = uilabel(app.OutputPanel);
+            app.EmailLabel.HorizontalAlignment = 'right';
+            app.EmailLabel.Tooltip = {'Email address the notifications should be sent to.'};
+            app.EmailLabel.Position = [124 330 39 22];
+            app.EmailLabel.Text = 'Email:';
 
             % Create EmailEditField
             app.EmailEditField = uieditfield(app.OutputPanel, 'text');
-            app.EmailEditField.Position = [71 330 227 22];
+            app.EmailEditField.Position = [170 330 123 22];
+
+            % Create EmailNotificationsCheckBox
+            app.EmailNotificationsCheckBox = uicheckbox(app.OutputPanel);
+            app.EmailNotificationsCheckBox.ValueChangedFcn = createCallbackFcn(app, @OutputParameterChange, true);
+            app.EmailNotificationsCheckBox.Tooltip = {'Recieve email notifications of updates of the steps completed by the application.'};
+            app.EmailNotificationsCheckBox.Text = 'Email Notifications';
+            app.EmailNotificationsCheckBox.Position = [4 330 121 22];
 
             % Create NumberotXMLstoGenerateSpinnerLabel
             app.NumberotXMLstoGenerateSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.NumberotXMLstoGenerateSpinnerLabel.HorizontalAlignment = 'center';
+            app.NumberotXMLstoGenerateSpinnerLabel.Tooltip = {'The number of structures you want to generate. Each structure is saved as an XML file initially. These can be converted to simulated microscope images if the "Generate TIF''s" and/or "Pre-Process TIF''s" checkbox is selected.'};
             app.NumberotXMLstoGenerateSpinnerLabel.Position = [43 558 175 22];
             app.NumberotXMLstoGenerateSpinnerLabel.Text = 'Number ot XMLs to Generate';
 
@@ -842,74 +919,18 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.NumberofXMLstoGenerateSpinner.LowerLimitInclusive = 'off';
             app.NumberofXMLstoGenerateSpinner.UpperLimitInclusive = 'off';
             app.NumberofXMLstoGenerateSpinner.Limits = [0 Inf];
+            app.NumberofXMLstoGenerateSpinner.RoundFractionalValues = 'on';
             app.NumberofXMLstoGenerateSpinner.ValueDisplayFormat = '%.0f';
             app.NumberofXMLstoGenerateSpinner.HorizontalAlignment = 'center';
+            app.NumberofXMLstoGenerateSpinner.Tooltip = {'The number of structures you want to generate. Each structure is saved as an XML and'; ' depending on whether you chose to generate TIF''s and/or pre-process them'; ' converted to simulated microscope images.'};
             app.NumberofXMLstoGenerateSpinner.Position = [217 558 120 22];
             app.NumberofXMLstoGenerateSpinner.Value = 10000;
-
-            % Create N_Nuf2StructurePanel
-            app.N_Nuf2StructurePanel = uipanel(app.StaticKinetinMassUIFigure);
-            app.N_Nuf2StructurePanel.BorderType = 'none';
-            app.N_Nuf2StructurePanel.TitlePosition = 'centertop';
-            app.N_Nuf2StructurePanel.Title = 'N-Terminal Nuf2';
-            app.N_Nuf2StructurePanel.FontName = 'Arial';
-            app.N_Nuf2StructurePanel.FontSize = 24;
-            app.N_Nuf2StructurePanel.Position = [11 304 260 120];
-
-            % Create N_Nuf2NumberofFluorophoreSpinnerLabel
-            app.N_Nuf2NumberofFluorophoreSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2NumberofFluorophoreSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2NumberofFluorophoreSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Position = [26 38 145 22];
-            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Text = 'Number of Fluorophore';
-
-            % Create N_Nuf2NumberofFluorophoreSpinner
-            app.N_Nuf2NumberofFluorophoreSpinner = uispinner(app.N_Nuf2StructurePanel);
-            app.N_Nuf2NumberofFluorophoreSpinner.LowerLimitInclusive = 'off';
-            app.N_Nuf2NumberofFluorophoreSpinner.UpperLimitInclusive = 'off';
-            app.N_Nuf2NumberofFluorophoreSpinner.Limits = [0 Inf];
-            app.N_Nuf2NumberofFluorophoreSpinner.RoundFractionalValues = 'on';
-            app.N_Nuf2NumberofFluorophoreSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2NumberofFluorophoreSpinner.FontName = 'Arial';
-            app.N_Nuf2NumberofFluorophoreSpinner.Position = [170 38 66 22];
-            app.N_Nuf2NumberofFluorophoreSpinner.Value = 20;
-
-            % Create N_Nuf2LengthnmSpinnerLabel
-            app.N_Nuf2LengthnmSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2LengthnmSpinnerLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2LengthnmSpinnerLabel.FontName = 'Arial';
-            app.N_Nuf2LengthnmSpinnerLabel.Position = [77 59 83 22];
-            app.N_Nuf2LengthnmSpinnerLabel.Text = 'Length (nm)';
-
-            % Create N_Nuf2LengthnmSpinner
-            app.N_Nuf2LengthnmSpinner = uispinner(app.N_Nuf2StructurePanel);
-            app.N_Nuf2LengthnmSpinner.LowerLimitInclusive = 'off';
-            app.N_Nuf2LengthnmSpinner.UpperLimitInclusive = 'off';
-            app.N_Nuf2LengthnmSpinner.Limits = [0 Inf];
-            app.N_Nuf2LengthnmSpinner.HorizontalAlignment = 'center';
-            app.N_Nuf2LengthnmSpinner.FontName = 'Arial';
-            app.N_Nuf2LengthnmSpinner.Position = [170 59 66 22];
-            app.N_Nuf2LengthnmSpinner.Value = 2;
-
-            % Create N_Nuf2ColorChannelDropDownLabel
-            app.N_Nuf2ColorChannelDropDownLabel = uilabel(app.N_Nuf2StructurePanel);
-            app.N_Nuf2ColorChannelDropDownLabel.HorizontalAlignment = 'center';
-            app.N_Nuf2ColorChannelDropDownLabel.FontName = 'Arial';
-            app.N_Nuf2ColorChannelDropDownLabel.Position = [76 13 95 22];
-            app.N_Nuf2ColorChannelDropDownLabel.Text = 'Color Channel';
-
-            % Create N_Nuf2ColorChannelDropDown
-            app.N_Nuf2ColorChannelDropDown = uidropdown(app.N_Nuf2StructurePanel);
-            app.N_Nuf2ColorChannelDropDown.Items = {'All', 'Green', 'Red', 'Blue'};
-            app.N_Nuf2ColorChannelDropDown.FontName = 'Arial';
-            app.N_Nuf2ColorChannelDropDown.Position = [170 13 66 22];
-            app.N_Nuf2ColorChannelDropDown.Value = 'Green';
 
             % Create Spc29StructurePanel
             app.Spc29StructurePanel = uipanel(app.StaticKinetinMassUIFigure);
             app.Spc29StructurePanel.BorderType = 'none';
             app.Spc29StructurePanel.TitlePosition = 'centertop';
-            app.Spc29StructurePanel.Title = 'Spc-29';
+            app.Spc29StructurePanel.Title = 'Spc29';
             app.Spc29StructurePanel.FontName = 'Arial';
             app.Spc29StructurePanel.FontSize = 24;
             app.Spc29StructurePanel.Position = [277 231 221 193];
@@ -917,6 +938,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create Spc29TubuleDiameternmSpinnerLabel
             app.Spc29TubuleDiameternmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29TubuleDiameternmSpinnerLabel.HorizontalAlignment = 'center';
+            app.Spc29TubuleDiameternmSpinnerLabel.Tooltip = {'Diameter of the individual cylinders used to model the Spc29 complex in nanometers.'};
             app.Spc29TubuleDiameternmSpinnerLabel.Position = [1 95 145 22];
             app.Spc29TubuleDiameternmSpinnerLabel.Text = 'Tubule Diameter (nm)';
 
@@ -928,6 +950,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29TubuleDiameternmSpinner.Limits = [0 Inf];
             app.Spc29TubuleDiameternmSpinner.HorizontalAlignment = 'center';
             app.Spc29TubuleDiameternmSpinner.FontName = 'Arial';
+            app.Spc29TubuleDiameternmSpinner.Tooltip = {'Diameter of the individual cylinders used to model the Spc29 complex.'};
             app.Spc29TubuleDiameternmSpinner.Position = [145 95 66 22];
             app.Spc29TubuleDiameternmSpinner.Value = 25;
 
@@ -935,6 +958,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29StructureDiameternmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29StructureDiameternmSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29StructureDiameternmSpinnerLabel.FontName = 'Arial';
+            app.Spc29StructureDiameternmSpinnerLabel.Tooltip = {'The diameter of the Spc29 complex in nanometers. Specifically defined as the distance from the center of one tubule to another on the opposite side of the Spc29 complex.'};
             app.Spc29StructureDiameternmSpinnerLabel.Position = [1 74 145 22];
             app.Spc29StructureDiameternmSpinnerLabel.Text = 'Structure Diameter (nm)';
 
@@ -946,6 +970,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29StructureDiameternmSpinner.Limits = [0 Inf];
             app.Spc29StructureDiameternmSpinner.HorizontalAlignment = 'center';
             app.Spc29StructureDiameternmSpinner.FontName = 'Arial';
+            app.Spc29StructureDiameternmSpinner.Tooltip = {'The diameter of the Spc29 complex in nanometers. Specifically defined as the distance from the center of one tubule to another on the opposite side of the Spc29 complex.'};
             app.Spc29StructureDiameternmSpinner.Position = [145 74 66 22];
             app.Spc29StructureDiameternmSpinner.Value = 100;
 
@@ -953,12 +978,12 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29NumberofFluorophoreSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29NumberofFluorophoreSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29NumberofFluorophoreSpinnerLabel.FontName = 'Arial';
+            app.Spc29NumberofFluorophoreSpinnerLabel.Tooltip = {'The number of fluorophores that are attached to each microtubule.'};
             app.Spc29NumberofFluorophoreSpinnerLabel.Position = [1 53 145 22];
             app.Spc29NumberofFluorophoreSpinnerLabel.Text = 'Number of Fluorophore';
 
             % Create Spc29NumberofFluorophoreSpinner
             app.Spc29NumberofFluorophoreSpinner = uispinner(app.Spc29StructurePanel);
-            app.Spc29NumberofFluorophoreSpinner.LowerLimitInclusive = 'off';
             app.Spc29NumberofFluorophoreSpinner.UpperLimitInclusive = 'off';
             app.Spc29NumberofFluorophoreSpinner.Limits = [0 Inf];
             app.Spc29NumberofFluorophoreSpinner.RoundFractionalValues = 'on';
@@ -971,7 +996,8 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29ColorChannelDropDownLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29ColorChannelDropDownLabel.HorizontalAlignment = 'center';
             app.Spc29ColorChannelDropDownLabel.FontName = 'Arial';
-            app.Spc29ColorChannelDropDownLabel.Position = [28 7 91 22];
+            app.Spc29ColorChannelDropDownLabel.Tooltip = {'Color of Spc29 fluorophores in Microscope Simulator'};
+            app.Spc29ColorChannelDropDownLabel.Position = [1 7 137 22];
             app.Spc29ColorChannelDropDownLabel.Text = 'Color Channel';
 
             % Create Spc29ColorChannelDropDown
@@ -985,12 +1011,12 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29NumberofTubulesSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29NumberofTubulesSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29NumberofTubulesSpinnerLabel.FontName = 'Arial';
+            app.Spc29NumberofTubulesSpinnerLabel.Tooltip = {'Number of tubules per Spc29 complex.'};
             app.Spc29NumberofTubulesSpinnerLabel.Position = [19 32 107 22];
             app.Spc29NumberofTubulesSpinnerLabel.Text = 'Number of Tubules';
 
             % Create Spc29NumberofTubulesSpinner
             app.Spc29NumberofTubulesSpinner = uispinner(app.Spc29StructurePanel);
-            app.Spc29NumberofTubulesSpinner.LowerLimitInclusive = 'off';
             app.Spc29NumberofTubulesSpinner.UpperLimitInclusive = 'off';
             app.Spc29NumberofTubulesSpinner.Limits = [0 Inf];
             app.Spc29NumberofTubulesSpinner.RoundFractionalValues = 'on';
@@ -1003,6 +1029,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29LengthnmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29LengthnmSpinnerLabel.HorizontalAlignment = 'center';
             app.Spc29LengthnmSpinnerLabel.FontName = 'Arial';
+            app.Spc29LengthnmSpinnerLabel.Tooltip = {'Length of the Scp29 cylinders that the fluorophores can be randomly placed onto in nanometers.'};
             app.Spc29LengthnmSpinnerLabel.Position = [1 135 145 22];
             app.Spc29LengthnmSpinnerLabel.Text = 'Length (nm)';
 
@@ -1013,31 +1040,31 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.Spc29LengthnmSpinner.Limits = [0 Inf];
             app.Spc29LengthnmSpinner.HorizontalAlignment = 'center';
             app.Spc29LengthnmSpinner.FontName = 'Arial';
+            app.Spc29LengthnmSpinner.Tooltip = {'Length of the Scp29 cylinders that the fluorophores can be randomly placed onto.'};
             app.Spc29LengthnmSpinner.Position = [145 135 66 22];
             app.Spc29LengthnmSpinner.Value = 2;
 
             % Create Spc29DistancetonmSpinnerLabel
             app.Spc29DistancetonmSpinnerLabel = uilabel(app.Spc29StructurePanel);
             app.Spc29DistancetonmSpinnerLabel.HorizontalAlignment = 'center';
+            app.Spc29DistancetonmSpinnerLabel.Tooltip = {'Distance from the center of the Spc29 complex to the center of the (+)-end of the microtubule complex in nanometers.'};
             app.Spc29DistancetonmSpinnerLabel.Position = [18 116 112 22];
             app.Spc29DistancetonmSpinnerLabel.Text = 'Distance to (+) (nm)';
 
             % Create Spc29DistancetonmSpinner
             app.Spc29DistancetonmSpinner = uispinner(app.Spc29StructurePanel);
             app.Spc29DistancetonmSpinner.Step = 10;
+            app.Spc29DistancetonmSpinner.LowerLimitInclusive = 'off';
             app.Spc29DistancetonmSpinner.UpperLimitInclusive = 'off';
             app.Spc29DistancetonmSpinner.Limits = [0 Inf];
             app.Spc29DistancetonmSpinner.HorizontalAlignment = 'center';
+            app.Spc29DistancetonmSpinner.Tooltip = {'Distance from the center of the Spc29 complex to the center of the (+)-end of the microtubule complex in nanometers.'};
             app.Spc29DistancetonmSpinner.Position = [145 116 66 22];
             app.Spc29DistancetonmSpinner.Value = 350;
 
-            % Create N_Nuf2CheckBox
-            app.N_Nuf2CheckBox = uicheckbox(app.StaticKinetinMassUIFigure);
-            app.N_Nuf2CheckBox.Text = '';
-            app.N_Nuf2CheckBox.Position = [232 397 14 23];
-
             % Create Spc29CheckBox
             app.Spc29CheckBox = uicheckbox(app.StaticKinetinMassUIFigure);
+            app.Spc29CheckBox.Tooltip = {'Add Spc29 to the structures being generated.'};
             app.Spc29CheckBox.Text = '';
             app.Spc29CheckBox.Position = [430 397 14 23];
 
@@ -1046,54 +1073,56 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.KinetochoreProteinPanel.BorderType = 'none';
             app.KinetochoreProteinPanel.Title = 'Kinetochore Protein';
             app.KinetochoreProteinPanel.FontSize = 24;
-            app.KinetochoreProteinPanel.Position = [532 143 260 278];
+            app.KinetochoreProteinPanel.Position = [511 146 260 278];
 
             % Create LengthofArmnmSpinnerLabel
             app.LengthofArmnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.LengthofArmnmSpinnerLabel.HorizontalAlignment = 'right';
-            app.LengthofArmnmSpinnerLabel.Position = [31 151 134 22];
+            app.LengthofArmnmSpinnerLabel.HorizontalAlignment = 'center';
+            app.LengthofArmnmSpinnerLabel.Tooltip = {'The length of each arm in the kinetochore complexes in nanometers.'};
+            app.LengthofArmnmSpinnerLabel.Position = [28 171 137 22];
             app.LengthofArmnmSpinnerLabel.Text = 'Length of Arm (nm)';
 
             % Create LengthofArmnmSpinner
             app.LengthofArmnmSpinner = uispinner(app.KinetochoreProteinPanel);
             app.LengthofArmnmSpinner.Step = 10;
-            app.LengthofArmnmSpinner.LowerLimitInclusive = 'off';
             app.LengthofArmnmSpinner.UpperLimitInclusive = 'off';
             app.LengthofArmnmSpinner.Limits = [0 Inf];
             app.LengthofArmnmSpinner.HorizontalAlignment = 'center';
-            app.LengthofArmnmSpinner.Position = [172 151 64 22];
+            app.LengthofArmnmSpinner.Position = [172 171 64 22];
             app.LengthofArmnmSpinner.Value = 70;
 
-            % Create NumberofComplexesSpinnerLabel
-            app.NumberofComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.NumberofComplexesSpinnerLabel.HorizontalAlignment = 'right';
-            app.NumberofComplexesSpinnerLabel.Tooltip = {'The number of complexes over everything kjk akdfjaklfjkadsjfklasdjfkjsadkfj asdkfjalskfjskajflaskjflksajfkasjdflk afjlka jflkasjfkl asfjaslkd fklsdajflasdkf jklasdjfsdfj j'};
-            app.NumberofComplexesSpinnerLabel.Position = [42 213 125 22];
-            app.NumberofComplexesSpinnerLabel.Text = 'Number of Complexes';
+            % Create NumberofArmsSpinnerLabel
+            app.NumberofArmsSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.NumberofArmsSpinnerLabel.HorizontalAlignment = 'center';
+            app.NumberofArmsSpinnerLabel.Tooltip = {'The number of arms per kinetochore complex attached to each microtubule.'};
+            app.NumberofArmsSpinnerLabel.Position = [28 213 139 22];
+            app.NumberofArmsSpinnerLabel.Text = 'Number of Arms';
 
-            % Create NumberofComplexesSpinner
-            app.NumberofComplexesSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.NumberofComplexesSpinner.UpperLimitInclusive = 'off';
-            app.NumberofComplexesSpinner.Limits = [0 Inf];
-            app.NumberofComplexesSpinner.RoundFractionalValues = 'on';
-            app.NumberofComplexesSpinner.HorizontalAlignment = 'center';
-            app.NumberofComplexesSpinner.Tooltip = {'The number of complexes over everything'};
-            app.NumberofComplexesSpinner.Position = [172 213 64 22];
-            app.NumberofComplexesSpinner.Value = 8;
+            % Create NumberofArmsSpinner
+            app.NumberofArmsSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.NumberofArmsSpinner.UpperLimitInclusive = 'off';
+            app.NumberofArmsSpinner.Limits = [0 Inf];
+            app.NumberofArmsSpinner.RoundFractionalValues = 'on';
+            app.NumberofArmsSpinner.HorizontalAlignment = 'center';
+            app.NumberofArmsSpinner.Tooltip = {'The number of complexes over everything'};
+            app.NumberofArmsSpinner.Position = [172 213 64 22];
+            app.NumberofArmsSpinner.Value = 8;
 
-            % Create NumberofBoundComplexesSpinnerLabel
-            app.NumberofBoundComplexesSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.NumberofBoundComplexesSpinnerLabel.HorizontalAlignment = 'right';
-            app.NumberofBoundComplexesSpinnerLabel.Position = [4 192 163 22];
-            app.NumberofBoundComplexesSpinnerLabel.Text = 'Number of Bound Complexes';
+            % Create NumberofBoundArmsSpinnerLabel
+            app.NumberofBoundArmsSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.NumberofBoundArmsSpinnerLabel.HorizontalAlignment = 'center';
+            app.NumberofBoundArmsSpinnerLabel.Tooltip = {'The number of arms from the total number of arms that are bound.'};
+            app.NumberofBoundArmsSpinnerLabel.Position = [28 192 139 22];
+            app.NumberofBoundArmsSpinnerLabel.Text = 'Number of Bound Arms';
 
-            % Create NumberofBoundComplexesSpinner
-            app.NumberofBoundComplexesSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.NumberofBoundComplexesSpinner.Limits = [0 Inf];
-            app.NumberofBoundComplexesSpinner.RoundFractionalValues = 'on';
-            app.NumberofBoundComplexesSpinner.HorizontalAlignment = 'center';
-            app.NumberofBoundComplexesSpinner.Position = [172 192 64 22];
-            app.NumberofBoundComplexesSpinner.Value = 8;
+            % Create NumberofBoundArmsSpinner
+            app.NumberofBoundArmsSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.NumberofBoundArmsSpinner.UpperLimitInclusive = 'off';
+            app.NumberofBoundArmsSpinner.Limits = [0 Inf];
+            app.NumberofBoundArmsSpinner.RoundFractionalValues = 'on';
+            app.NumberofBoundArmsSpinner.HorizontalAlignment = 'center';
+            app.NumberofBoundArmsSpinner.Position = [172 192 64 22];
+            app.NumberofBoundArmsSpinner.Value = 8;
 
             % Create UpperAngleLabel
             app.UpperAngleLabel = uilabel(app.KinetochoreProteinPanel);
@@ -1111,35 +1140,24 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.UpperAngleSpinner.Position = [159 85 67 22];
             app.UpperAngleSpinner.Value = 90;
 
-            % Create ofLengthMarkedSpinnerLabel
-            app.ofLengthMarkedSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.ofLengthMarkedSpinnerLabel.HorizontalAlignment = 'right';
-            app.ofLengthMarkedSpinnerLabel.Position = [54 172 113 22];
-            app.ofLengthMarkedSpinnerLabel.Text = '% of Length Marked';
-
-            % Create ofLengthMarkedSpinner
-            app.ofLengthMarkedSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.ofLengthMarkedSpinner.LowerLimitInclusive = 'off';
-            app.ofLengthMarkedSpinner.UpperLimitInclusive = 'off';
-            app.ofLengthMarkedSpinner.HorizontalAlignment = 'center';
-            app.ofLengthMarkedSpinner.Position = [172 172 64 22];
-            app.ofLengthMarkedSpinner.Value = 100;
-
             % Create AnglefromMTAxisnmSpinnerLabel
             app.AnglefromMTAxisnmSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
-            app.AnglefromMTAxisnmSpinnerLabel.HorizontalAlignment = 'right';
+            app.AnglefromMTAxisnmSpinnerLabel.HorizontalAlignment = 'center';
+            app.AnglefromMTAxisnmSpinnerLabel.Tooltip = {'The angle of the vector that connects the center of the microtubule to the tapering point of the kinetochore complex relative to the microtubule''s central axis in degrees.'};
             app.AnglefromMTAxisnmSpinnerLabel.Position = [28 130 138 22];
             app.AnglefromMTAxisnmSpinnerLabel.Text = 'Angle from MT Axis (nm)';
 
             % Create AnglefromMTAxisnmSpinner
             app.AnglefromMTAxisnmSpinner = uispinner(app.KinetochoreProteinPanel);
-            app.AnglefromMTAxisnmSpinner.Limits = [-180 180];
+            app.AnglefromMTAxisnmSpinner.Limits = [-360 360];
             app.AnglefromMTAxisnmSpinner.HorizontalAlignment = 'center';
+            app.AnglefromMTAxisnmSpinner.Tooltip = {'The angle of the vector that connects the center of the microtubule to the tapering point of the kinetochore complex relative to the microtubule''s central axis in degrees.'};
             app.AnglefromMTAxisnmSpinner.Position = [172 129 64 22];
 
             % Create AngleRangeforUnbounddegSpinnerLabel
             app.AngleRangeforUnbounddegSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
             app.AngleRangeforUnbounddegSpinnerLabel.HorizontalAlignment = 'right';
+            app.AngleRangeforUnbounddegSpinnerLabel.Tooltip = {'The range of angles an unbound kinetochore arm can make relative to the microtubule''s central axis in degrees.'};
             app.AngleRangeforUnbounddegSpinnerLabel.Position = [49 105 179 22];
             app.AngleRangeforUnbounddegSpinnerLabel.Text = 'Angle Range for Unbound (deg.)';
 
@@ -1150,6 +1168,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.LowerAngleSpinner.Limits = [-90 90];
             app.LowerAngleSpinner.ValueChangedFcn = createCallbackFcn(app, @KinetochoreParameterChange, true);
             app.LowerAngleSpinner.HorizontalAlignment = 'center';
+            app.LowerAngleSpinner.Tooltip = {'The range of angles an unbound kinetochore arm can make relative to the microtubule''s central axis.'};
             app.LowerAngleSpinner.Position = [54 85 67 22];
             app.LowerAngleSpinner.Value = -90;
 
@@ -1157,7 +1176,8 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.KinetochoreColorChannelLabel = uilabel(app.KinetochoreProteinPanel);
             app.KinetochoreColorChannelLabel.HorizontalAlignment = 'center';
             app.KinetochoreColorChannelLabel.FontName = 'Arial';
-            app.KinetochoreColorChannelLabel.Position = [51 56 91 22];
+            app.KinetochoreColorChannelLabel.Tooltip = {'Color of the kinetochore protein fluorophores in Microscope Simulator'};
+            app.KinetochoreColorChannelLabel.Position = [28 56 139 22];
             app.KinetochoreColorChannelLabel.Text = 'Color Channel';
 
             % Create KinetochoreColorChannel
@@ -1167,10 +1187,27 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.KinetochoreColorChannel.Position = [168 57 66 22];
             app.KinetochoreColorChannel.Value = 'Green';
 
+            % Create PointMarkedSpinnerLabel
+            app.PointMarkedSpinnerLabel = uilabel(app.KinetochoreProteinPanel);
+            app.PointMarkedSpinnerLabel.HorizontalAlignment = 'right';
+            app.PointMarkedSpinnerLabel.Tooltip = {'The position along the arms of the kinetochore complex that is marked with a fluorophore represented as a percentage of the arm''s length.'};
+            app.PointMarkedSpinnerLabel.Position = [43 150 98 22];
+            app.PointMarkedSpinnerLabel.Text = 'Point Marked (%)';
+
+            % Create PointMarkedSpinner
+            app.PointMarkedSpinner = uispinner(app.KinetochoreProteinPanel);
+            app.PointMarkedSpinner.LowerLimitInclusive = 'off';
+            app.PointMarkedSpinner.UpperLimitInclusive = 'off';
+            app.PointMarkedSpinner.HorizontalAlignment = 'center';
+            app.PointMarkedSpinner.Tooltip = {'The position along the arms of the kinetochore complex that is marked with a fluorophore represented as a percentage of the arm''s length.'};
+            app.PointMarkedSpinner.Position = [172 150 64 22];
+            app.PointMarkedSpinner.Value = 100;
+
             % Create KinetochoreCheckBox
             app.KinetochoreCheckBox = uicheckbox(app.StaticKinetinMassUIFigure);
+            app.KinetochoreCheckBox.Tooltip = {'Add a kinetochore protein to the structures being generated.'};
             app.KinetochoreCheckBox.Text = '';
-            app.KinetochoreCheckBox.Position = [753 395 18 22];
+            app.KinetochoreCheckBox.Position = [735 397 18 22];
 
             % Create RotationPanel
             app.RotationPanel = uipanel(app.StaticKinetinMassUIFigure);
@@ -1182,23 +1219,27 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.RotationParametersPanel.SelectionChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
             app.RotationParametersPanel.BorderType = 'none';
             app.RotationParametersPanel.BackgroundColor = [0.9412 0.9412 0.9412];
+            app.RotationParametersPanel.SizeChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
             app.RotationParametersPanel.HandleVisibility = 'off';
             app.RotationParametersPanel.Position = [1 5 260 30];
 
             % Create FixedRotationButton
             app.FixedRotationButton = uiradiobutton(app.RotationParametersPanel);
+            app.FixedRotationButton.Tooltip = {'Fixed rotation is where the "splay" of the (+)-ends of microtubules are set by fixed degrees (counter clockwise) of rotation in the XYZ directions independently.'};
             app.FixedRotationButton.Text = 'Fixed Rotation';
             app.FixedRotationButton.Position = [25 9 99 19];
             app.FixedRotationButton.Value = true;
 
             % Create RandomRotationButton
             app.RandomRotationButton = uiradiobutton(app.RotationParametersPanel);
+            app.RandomRotationButton.Tooltip = {'Random rotation is where the "splay" of the (+)-ends of the microtubules are set due to rotations in the XYZ directions whose degree''s that are between a lower and upper limit.'};
             app.RandomRotationButton.Text = 'Random Rotation';
             app.RandomRotationButton.Position = [125 8 115 20];
 
             % Create RotationCheckBox
             app.RotationCheckBox = uicheckbox(app.RotationPanel);
             app.RotationCheckBox.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.RotationCheckBox.Tooltip = {'Rotate/"splay" the microtubue ends.'};
             app.RotationCheckBox.Text = '';
             app.RotationCheckBox.Position = [161 32 16 21];
 
@@ -1210,6 +1251,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create RandomRotationParametersdegPanel
             app.RandomRotationParametersdegPanel = uipanel(app.RotationPanel);
+            app.RandomRotationParametersdegPanel.Tooltip = {'The lower and upper limits of the possible degrees that the ends can rotate in the XYZ directions independently.'};
             app.RandomRotationParametersdegPanel.BorderType = 'none';
             app.RandomRotationParametersdegPanel.TitlePosition = 'centertop';
             app.RandomRotationParametersdegPanel.Title = 'Random Rotation Parameters (deg.)';
@@ -1223,7 +1265,9 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create LowLimSpinner
             app.LowLimSpinner = uispinner(app.RandomRotationParametersdegPanel);
-            app.LowLimSpinner.Limits = [0 360];
+            app.LowLimSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.LowLimSpinner.Limits = [-360 360];
+            app.LowLimSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
             app.LowLimSpinner.HorizontalAlignment = 'center';
             app.LowLimSpinner.Position = [63 3 51 22];
 
@@ -1235,12 +1279,15 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create UpLimSpinner
             app.UpLimSpinner = uispinner(app.RandomRotationParametersdegPanel);
-            app.UpLimSpinner.Limits = [0 360];
+            app.UpLimSpinner.ValueChangingFcn = createCallbackFcn(app, @MainParameterChange, true);
+            app.UpLimSpinner.Limits = [-360 360];
+            app.UpLimSpinner.ValueChangedFcn = createCallbackFcn(app, @MainParameterChange, true);
             app.UpLimSpinner.HorizontalAlignment = 'center';
             app.UpLimSpinner.Position = [178 3 52 22];
 
             % Create FixedRotationParametersdegPanel
             app.FixedRotationParametersdegPanel = uipanel(app.RotationPanel);
+            app.FixedRotationParametersdegPanel.Tooltip = {'The degrees (counter clockwise) for the rotations in the XYZ directions independently. The order of rotations is ZYX.'};
             app.FixedRotationParametersdegPanel.BorderType = 'none';
             app.FixedRotationParametersdegPanel.TitlePosition = 'centertop';
             app.FixedRotationParametersdegPanel.Title = 'Fixed Rotation Parameters (deg.)';
@@ -1255,7 +1302,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create XSpinner
             app.XSpinner = uispinner(app.FixedRotationParametersdegPanel);
-            app.XSpinner.Limits = [0 360];
+            app.XSpinner.Limits = [-360 360];
             app.XSpinner.HorizontalAlignment = 'center';
             app.XSpinner.FontName = 'Arial';
             app.XSpinner.Position = [23 4 51 22];
@@ -1269,7 +1316,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create YSpinner
             app.YSpinner = uispinner(app.FixedRotationParametersdegPanel);
-            app.YSpinner.Limits = [0 360];
+            app.YSpinner.Limits = [-360 360];
             app.YSpinner.HorizontalAlignment = 'center';
             app.YSpinner.FontName = 'Arial';
             app.YSpinner.Position = [101 4 51 22];
@@ -1283,7 +1330,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
 
             % Create ZSpinner
             app.ZSpinner = uispinner(app.FixedRotationParametersdegPanel);
-            app.ZSpinner.Limits = [0 360];
+            app.ZSpinner.Limits = [-360 360];
             app.ZSpinner.HorizontalAlignment = 'center';
             app.ZSpinner.FontName = 'Arial';
             app.ZSpinner.Position = [178 4 51 22];
@@ -1291,6 +1338,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             % Create MicrotubuleDiameternmSpinnerLabel
             app.MicrotubuleDiameternmSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.MicrotubuleDiameternmSpinnerLabel.HorizontalAlignment = 'center';
+            app.MicrotubuleDiameternmSpinnerLabel.Tooltip = {'The diameter of each microtubule in nanometers.'};
             app.MicrotubuleDiameternmSpinnerLabel.Position = [435 523 148 22];
             app.MicrotubuleDiameternmSpinnerLabel.Text = 'Microtubule Diameter (nm)';
 
@@ -1305,45 +1353,49 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.MicrotubuleDiameternmSpinner.Position = [586 523 66 22];
             app.MicrotubuleDiameternmSpinner.Value = 25;
 
-            % Create StructureDiameternmSpinnerLabel
-            app.StructureDiameternmSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
-            app.StructureDiameternmSpinnerLabel.HorizontalAlignment = 'center';
-            app.StructureDiameternmSpinnerLabel.FontName = 'Arial';
-            app.StructureDiameternmSpinnerLabel.Position = [17 496 134 22];
-            app.StructureDiameternmSpinnerLabel.Text = 'Structure Diameter (nm)';
+            % Create ComplexDiameternmSpinnerLabel
+            app.ComplexDiameternmSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
+            app.ComplexDiameternmSpinnerLabel.HorizontalAlignment = 'center';
+            app.ComplexDiameternmSpinnerLabel.FontName = 'Arial';
+            app.ComplexDiameternmSpinnerLabel.Tooltip = {'The diameter of a complex in nanometer. Specifically defined as the distance from the center of one microtubule to another on the opposite side of the complex.'};
+            app.ComplexDiameternmSpinnerLabel.Position = [17.5 496 133 22];
+            app.ComplexDiameternmSpinnerLabel.Text = 'Complex Diameter (nm)';
 
-            % Create StructureDiameternmSpinner
-            app.StructureDiameternmSpinner = uispinner(app.StaticKinetinMassUIFigure);
-            app.StructureDiameternmSpinner.Step = 10;
-            app.StructureDiameternmSpinner.LowerLimitInclusive = 'off';
-            app.StructureDiameternmSpinner.UpperLimitInclusive = 'off';
-            app.StructureDiameternmSpinner.Limits = [0 Inf];
-            app.StructureDiameternmSpinner.HorizontalAlignment = 'center';
-            app.StructureDiameternmSpinner.FontName = 'Arial';
-            app.StructureDiameternmSpinner.Position = [158 496 67 22];
-            app.StructureDiameternmSpinner.Value = 250;
+            % Create ComplexDiameternmSpinner
+            app.ComplexDiameternmSpinner = uispinner(app.StaticKinetinMassUIFigure);
+            app.ComplexDiameternmSpinner.Step = 10;
+            app.ComplexDiameternmSpinner.LowerLimitInclusive = 'off';
+            app.ComplexDiameternmSpinner.UpperLimitInclusive = 'off';
+            app.ComplexDiameternmSpinner.Limits = [0 Inf];
+            app.ComplexDiameternmSpinner.HorizontalAlignment = 'center';
+            app.ComplexDiameternmSpinner.FontName = 'Arial';
+            app.ComplexDiameternmSpinner.Tooltip = {'The diameter of a (+)-end of the microtubule complex in nanometer. Specifically defined as the distance from the center of one microtubule to another on the opposite side of the complex.'};
+            app.ComplexDiameternmSpinner.Position = [158 496 67 22];
+            app.ComplexDiameternmSpinner.Value = 250;
 
-            % Create NumberofChromosomesSpinnerLabel
-            app.NumberofChromosomesSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
-            app.NumberofChromosomesSpinnerLabel.HorizontalAlignment = 'center';
-            app.NumberofChromosomesSpinnerLabel.FontName = 'Arial';
-            app.NumberofChromosomesSpinnerLabel.Position = [215 523 143 22];
-            app.NumberofChromosomesSpinnerLabel.Text = 'Number of Chromosomes';
+            % Create NumberofMicrotubulesSpinnerLabel
+            app.NumberofMicrotubulesSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
+            app.NumberofMicrotubulesSpinnerLabel.HorizontalAlignment = 'center';
+            app.NumberofMicrotubulesSpinnerLabel.FontName = 'Arial';
+            app.NumberofMicrotubulesSpinnerLabel.Tooltip = {'The number of microtubules coming from a single pole. This affects the number of Nuf2 "rings" and kinetochore complexes that are present in each complex.'};
+            app.NumberofMicrotubulesSpinnerLabel.Position = [220 523 133 22];
+            app.NumberofMicrotubulesSpinnerLabel.Text = 'Number of Microtubules';
 
-            % Create NumberofChromosomesSpinner
-            app.NumberofChromosomesSpinner = uispinner(app.StaticKinetinMassUIFigure);
-            app.NumberofChromosomesSpinner.LowerLimitInclusive = 'off';
-            app.NumberofChromosomesSpinner.UpperLimitInclusive = 'off';
-            app.NumberofChromosomesSpinner.Limits = [0 Inf];
-            app.NumberofChromosomesSpinner.RoundFractionalValues = 'on';
-            app.NumberofChromosomesSpinner.HorizontalAlignment = 'center';
-            app.NumberofChromosomesSpinner.FontName = 'Arial';
-            app.NumberofChromosomesSpinner.Position = [359 523 66 22];
-            app.NumberofChromosomesSpinner.Value = 16;
+            % Create NumberofMicrotubulesSpinner
+            app.NumberofMicrotubulesSpinner = uispinner(app.StaticKinetinMassUIFigure);
+            app.NumberofMicrotubulesSpinner.LowerLimitInclusive = 'off';
+            app.NumberofMicrotubulesSpinner.UpperLimitInclusive = 'off';
+            app.NumberofMicrotubulesSpinner.Limits = [0 Inf];
+            app.NumberofMicrotubulesSpinner.RoundFractionalValues = 'on';
+            app.NumberofMicrotubulesSpinner.HorizontalAlignment = 'center';
+            app.NumberofMicrotubulesSpinner.FontName = 'Arial';
+            app.NumberofMicrotubulesSpinner.Position = [359 523 66 22];
+            app.NumberofMicrotubulesSpinner.Value = 16;
 
             % Create StaggerDropDownLabel
             app.StaggerDropDownLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.StaggerDropDownLabel.HorizontalAlignment = 'center';
+            app.StaggerDropDownLabel.Tooltip = {'Stagger refers to the method used to calculate the offset of the (+)-end of the microtubules relative to the initial calcuation point (the center) of the (+)-end of the microtubules.'; ''; 'None: There is not stagger and all of the (+)-end of the microtubules are perfectly aligned perpendicular to the spindle (x-) axis.'; ''; 'Random: The stagger is calculated randomly using a uniform distribution where the minimum and maximum values are defined by the "Range +/- (nm)" parameter.'; ''; 'SimuLink Data (Stevens et al.): The stagger is calculated using the Simulink simulation developed by Stevens et al. to calculate the difference in microtubule length over simulated catastrophe and growth.'};
             app.StaggerDropDownLabel.Position = [235 497 48 22];
             app.StaggerDropDownLabel.Text = 'Stagger';
 
@@ -1354,12 +1406,12 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.StaggerDropDown.Position = [289 496 187 22];
             app.StaggerDropDown.Value = 'None';
 
-            % Create RangenmSpinnerLabel
-            app.RangenmSpinnerLabel = uilabel(app.StaticKinetinMassUIFigure);
-            app.RangenmSpinnerLabel.HorizontalAlignment = 'center';
-            app.RangenmSpinnerLabel.Visible = 'off';
-            app.RangenmSpinnerLabel.Position = [486 493 87 22];
-            app.RangenmSpinnerLabel.Text = 'Range +/- (nm)';
+            % Create RangenmLabel
+            app.RangenmLabel = uilabel(app.StaticKinetinMassUIFigure);
+            app.RangenmLabel.HorizontalAlignment = 'center';
+            app.RangenmLabel.Visible = 'off';
+            app.RangenmLabel.Position = [486 493 87 22];
+            app.RangenmLabel.Text = 'Range +/- (nm)';
 
             % Create RangenmSpinner
             app.RangenmSpinner = uispinner(app.StaticKinetinMassUIFigure);
@@ -1371,6 +1423,7 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.NumberofComplexesSwitchLabel = uilabel(app.StaticKinetinMassUIFigure);
             app.NumberofComplexesSwitchLabel.HorizontalAlignment = 'center';
             app.NumberofComplexesSwitchLabel.FontName = 'Arial';
+            app.NumberofComplexesSwitchLabel.Tooltip = {'The number of complexes refers to the number of poles you want depicted per image.'; ''; '1 Complex: A single complex consistering of the structures chosen is alinged with the spindle (x-) axis. '; ''; '2 Complexes: Two complexes where each consist of the structures chosen. The relative distances and angles between the two structures are based on vector-calculations from experimentally acquired images.'};
             app.NumberofComplexesSwitchLabel.Position = [11 523 125 22];
             app.NumberofComplexesSwitchLabel.Text = 'Number of Complexes';
 
@@ -1380,6 +1433,75 @@ classdef StaticKinetInMass < matlab.apps.AppBase
             app.NumberofComplexesSwitch.FontName = 'Arial';
             app.NumberofComplexesSwitch.Position = [153 525 42 19];
             app.NumberofComplexesSwitch.Value = '1';
+
+            % Create N_Nuf2StructurePanel
+            app.N_Nuf2StructurePanel = uipanel(app.StaticKinetinMassUIFigure);
+            app.N_Nuf2StructurePanel.BorderType = 'none';
+            app.N_Nuf2StructurePanel.TitlePosition = 'centertop';
+            app.N_Nuf2StructurePanel.Title = 'N-Terminal Nuf2';
+            app.N_Nuf2StructurePanel.FontName = 'Arial';
+            app.N_Nuf2StructurePanel.FontSize = 24;
+            app.N_Nuf2StructurePanel.Position = [11 304 260 120];
+
+            % Create N_Nuf2NumberofFluorophoreSpinnerLabel
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel.HorizontalAlignment = 'center';
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel.FontName = 'Arial';
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Tooltip = {'The number of Nuf2 fluorophores that are attached to a single microtubule.'};
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Position = [15 38 145 22];
+            app.N_Nuf2NumberofFluorophoreSpinnerLabel.Text = 'Number of Fluorophore';
+
+            % Create N_Nuf2NumberofFluorophoreSpinner
+            app.N_Nuf2NumberofFluorophoreSpinner = uispinner(app.N_Nuf2StructurePanel);
+            app.N_Nuf2NumberofFluorophoreSpinner.LowerLimitInclusive = 'off';
+            app.N_Nuf2NumberofFluorophoreSpinner.UpperLimitInclusive = 'off';
+            app.N_Nuf2NumberofFluorophoreSpinner.Limits = [0 Inf];
+            app.N_Nuf2NumberofFluorophoreSpinner.RoundFractionalValues = 'on';
+            app.N_Nuf2NumberofFluorophoreSpinner.HorizontalAlignment = 'center';
+            app.N_Nuf2NumberofFluorophoreSpinner.FontName = 'Arial';
+            app.N_Nuf2NumberofFluorophoreSpinner.Tooltip = {'The number of Nuf2 fluorophores that are attached to a single microtubule.'};
+            app.N_Nuf2NumberofFluorophoreSpinner.Position = [170 38 66 22];
+            app.N_Nuf2NumberofFluorophoreSpinner.Value = 20;
+
+            % Create N_Nuf2LengthnmSpinnerLabel
+            app.N_Nuf2LengthnmSpinnerLabel = uilabel(app.N_Nuf2StructurePanel);
+            app.N_Nuf2LengthnmSpinnerLabel.HorizontalAlignment = 'center';
+            app.N_Nuf2LengthnmSpinnerLabel.FontName = 'Arial';
+            app.N_Nuf2LengthnmSpinnerLabel.Tooltip = {'The distance from the (+)-end of the microtubule that the Nuf2 fluorophores can be randomly added onto in nanometers. More specifically it is the length of the cynlinder used to model Nuf2 that its fluorophores can be randomly add onto.'};
+            app.N_Nuf2LengthnmSpinnerLabel.Position = [25 59 135 22];
+            app.N_Nuf2LengthnmSpinnerLabel.Text = 'Length (nm)';
+
+            % Create N_Nuf2LengthnmSpinner
+            app.N_Nuf2LengthnmSpinner = uispinner(app.N_Nuf2StructurePanel);
+            app.N_Nuf2LengthnmSpinner.LowerLimitInclusive = 'off';
+            app.N_Nuf2LengthnmSpinner.UpperLimitInclusive = 'off';
+            app.N_Nuf2LengthnmSpinner.Limits = [0 Inf];
+            app.N_Nuf2LengthnmSpinner.HorizontalAlignment = 'center';
+            app.N_Nuf2LengthnmSpinner.FontName = 'Arial';
+            app.N_Nuf2LengthnmSpinner.Tooltip = {'The distance from the (+)-end of the microtubule that the Nuf2 fluorophores can be randomly added onto in nanometers. More specifically it is the length of the cynlinder used to model Nuf2 that its fluorophores can be randomly add onto.'};
+            app.N_Nuf2LengthnmSpinner.Position = [170 59 66 22];
+            app.N_Nuf2LengthnmSpinner.Value = 2;
+
+            % Create N_Nuf2ColorChannelDropDownLabel
+            app.N_Nuf2ColorChannelDropDownLabel = uilabel(app.N_Nuf2StructurePanel);
+            app.N_Nuf2ColorChannelDropDownLabel.HorizontalAlignment = 'center';
+            app.N_Nuf2ColorChannelDropDownLabel.FontName = 'Arial';
+            app.N_Nuf2ColorChannelDropDownLabel.Tooltip = {'Color of Nuf2 fluorophores in Microscope Simulator'};
+            app.N_Nuf2ColorChannelDropDownLabel.Position = [45 13 95 22];
+            app.N_Nuf2ColorChannelDropDownLabel.Text = 'Color Channel';
+
+            % Create N_Nuf2ColorChannelDropDown
+            app.N_Nuf2ColorChannelDropDown = uidropdown(app.N_Nuf2StructurePanel);
+            app.N_Nuf2ColorChannelDropDown.Items = {'All', 'Green', 'Red', 'Blue'};
+            app.N_Nuf2ColorChannelDropDown.FontName = 'Arial';
+            app.N_Nuf2ColorChannelDropDown.Position = [170 13 66 22];
+            app.N_Nuf2ColorChannelDropDown.Value = 'Green';
+
+            % Create N_Nuf2CheckBox
+            app.N_Nuf2CheckBox = uicheckbox(app.StaticKinetinMassUIFigure);
+            app.N_Nuf2CheckBox.Tooltip = {'Add Nuf2 to the structures being generated.'};
+            app.N_Nuf2CheckBox.Text = '';
+            app.N_Nuf2CheckBox.Position = [236 397 14 23];
         end
     end
 
