@@ -4,7 +4,7 @@ import sys
 gmail_user = sys.argv[1]  
 gmail_password = sys.argv[2]
 
-sent_from = gmail_user  
+sent_from = gmail_user
 to = sys.argv[3]
 subject = 'OMG Super Important Message'
 
