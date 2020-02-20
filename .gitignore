@@ -1,3 +1,8 @@
 slprj/*
-Functions/KineticButShakelessFunctions/SendEmail.m
 bfmatlab/*
+*.xml
+*.tif
+KK*/*
+*.mat
+*.txt
+*_test_batch/*
